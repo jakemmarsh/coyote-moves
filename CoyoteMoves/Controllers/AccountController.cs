@@ -7,13 +7,11 @@ using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using CoyoteMoves.Filters;
 using CoyoteMoves.Models;
 
 namespace CoyoteMoves.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //

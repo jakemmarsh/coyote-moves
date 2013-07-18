@@ -4,13 +4,11 @@ using System.Data.Entity.Infrastructure;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CoyoteMoves.Filters;
 using CoyoteMoves.Models;
 
 namespace CoyoteMoves.Controllers
 {
     [Authorize]
-    [ValidateHttpAntiForgeryToken]
     public class TodoController : ApiController
     {
         private TodoItemContext db = new TodoItemContext();

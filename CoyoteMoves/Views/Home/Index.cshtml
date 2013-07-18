@@ -58,7 +58,6 @@ else
         </section>
         <section id="socialLoginPanel">
             <h2>Log in using another service</h2>
-            @Html.Action("ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl })
         </section>
         <p>First time here? <a id="showRegister">Sign up</a></p>
     </div>
@@ -73,8 +72,6 @@ else
 @if (@User.Identity.IsAuthenticated)
 {
     @section scripts {
-        @Scripts.Render("~/bundles/knockout")
-        @Scripts.Render("~/bundles/jqueryval")
         @Scripts.Render("~/bundles/todo")
     }
 }

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using CoyoteMoves.Filters;
 using CoyoteMoves.Models;
 
 namespace CoyoteMoves.Controllers
@@ -45,7 +44,6 @@ namespace CoyoteMoves.Controllers
         }
 
         // PUT api/TodoList/5
-        [ValidateHttpAntiForgeryToken]
         public HttpResponseMessage PutTodoList(int id, TodoListDto todoListDto)
         {
             if (!ModelState.IsValid)
@@ -80,7 +78,6 @@ namespace CoyoteMoves.Controllers
         }
 
         // POST api/TodoList
-        [ValidateHttpAntiForgeryToken]
         public HttpResponseMessage PostTodoList(TodoListDto todoListDto)
         {
             if (!ModelState.IsValid)
@@ -100,7 +97,6 @@ namespace CoyoteMoves.Controllers
         }
 
         // DELETE api/TodoList/5
-        [ValidateHttpAntiForgeryToken]
         public HttpResponseMessage DeleteTodoList(int id)
         {
             TodoList todoList = db.TodoLists.Find(id);
