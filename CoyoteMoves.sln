@@ -3,6 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoyoteMoves", "CoyoteMoves\CoyoteMoves.csproj", "{81F1A25C-C4ED-4259-956A-E8BD1218D128}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoyoteMoves.WebApi", "CoyoteMoves.WebApi\CoyoteMoves.WebApi.csproj", "{02C54F50-0A71-4B93-90FE-3BD2B213B5F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E703CC67-57AE-438A-945D-323FE462AF0D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +20,10 @@ Global
 		{81F1A25C-C4ED-4259-956A-E8BD1218D128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81F1A25C-C4ED-4259-956A-E8BD1218D128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81F1A25C-C4ED-4259-956A-E8BD1218D128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C54F50-0A71-4B93-90FE-3BD2B213B5F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C54F50-0A71-4B93-90FE-3BD2B213B5F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C54F50-0A71-4B93-90FE-3BD2B213B5F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C54F50-0A71-4B93-90FE-3BD2B213B5F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
