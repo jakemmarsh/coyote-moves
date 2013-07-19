@@ -233,18 +233,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DataObjects\EmployeeData\Employee.cs" />
-    <Compile Include="DataObjects\Enums\FloorTypes.cs" />
-    <Compile Include="DataObjects\SeatingData\Desk.cs" />
+    <Compile Include="Models\EmployeeData\Employee.cs" />
+    <Compile Include="Models\Enums\FloorTypes.cs" />
+    <Compile Include="Models\SeatingData\Desk.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\TodoItemDto.cs" />
-    <Compile Include="Models\TodoListDto.cs" />
-    <Compile Include="Models\TodoList.cs" />
-    <Compile Include="Models\TodoItem.cs" />
-    <Compile Include="Models\TodoItemContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,7 +254,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Public\css\Site.css" />
-    <Content Include="Public\css\TodoList.css" />
     <Content Include="Public\js\ajaxlogin.js" />
     <Content Include="Public\js\todo.viewmodel.js" />
     <Content Include="Public\js\todo.bindings.js" />
