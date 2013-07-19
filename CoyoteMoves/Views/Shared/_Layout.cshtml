@@ -9,14 +9,22 @@
     @Scripts.Render("~/bundles/libs")
 </head>
 <body>
-
+    <header>
+        <div class="container">
+            <img src="coyotemoves/public/img/coyote-symbol.png" />
+            <h1>Coyote Moves</h1>
+        </div>
+    </header>
     <div id="body">
-        @RenderBody()
+        <div class="container">
+            @RenderBody()
+        </div>
     </div>
 
     <footer>
-        <nav>
-        <p>&copy; @DateTime.Now.Year - Coyote Logistics</p>
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Coyote Logistics</p>
+        </div>
     </footer>
 
     @RenderSection("scripts", required: false)

@@ -246,6 +246,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Public\css\style.css" />
     <Content Include="Public\js\lib\angular.js" />
     <Content Include="Public\js\lib\modernizr.js" />
     <Content Include="Web.config" />
@@ -255,7 +256,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Public\css\Site.css" />
     <Content Include="Public\js\ajaxlogin.js" />
     <Content Include="Public\js\todo.viewmodel.js" />
     <Content Include="Public\js\todo.bindings.js" />
