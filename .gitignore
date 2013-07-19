@@ -1,3 +1,5 @@
 *.cache
 *.suo
 obj/Debug/
+*.orig
+obj/
