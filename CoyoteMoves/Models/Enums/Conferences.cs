@@ -5,5 +5,5 @@ using System.Web;
 
 namespace CoyoteMoves.Models.Enums
 {
-    public enum Floor {Third, Fourth, Fifth};
+    public enum Conference { None };
 }
