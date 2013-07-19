@@ -10,7 +10,7 @@ namespace CoyoteMoves.Models.SeatingData
     {
         public double XCoordinate { get; set; }
         public double YCoordinate { get; set; }
-        public Floor Floot { get; set; }
+        public Floor Floor { get; set; }
         public Conference Conference { get; set; }
 
         public Location()
