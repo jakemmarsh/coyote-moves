@@ -16,8 +16,8 @@ namespace CoyoteMoves
                         "~/Public/js/lib/angular.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
-                "~/Public/css/Site.css",
-                "~/Public/css/TodoList.css"));
+                "~/Public/css/style.css",
+                "~/Public/css/normalize.css"));
         }
     }
 }
