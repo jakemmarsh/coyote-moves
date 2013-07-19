@@ -1,10 +1,10 @@
-﻿using CoyoteMoves.DataObjects.EmployeeData;
+﻿using CoyoteMoves.Models.EmployeeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CoyoteMoves.DataObjects.SeatingData
+namespace CoyoteMoves.Models.SeatingData
 {
     public class Desk
     {
@@ -13,7 +13,7 @@ namespace CoyoteMoves.DataObjects.SeatingData
         public Floor Floor { get; set; }
         public bool Occupied { get; set; }
         public Employee CurrentTenant { get; set; } 
-
+        //this is just a comment by Mitch to learn how commits/branches work
         public Desk()
         {
             this.Occupied = false;
