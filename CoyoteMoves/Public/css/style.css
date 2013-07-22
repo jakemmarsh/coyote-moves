@@ -95,10 +95,10 @@ h2.black-bg {
             border-bottom: 1px solid #fff;
         }
 
-            #tabs > .tab {
-                color: #000;
-                text-decoration: none;
-            }
+        #tabs > .tab {
+            color: #000;
+            text-decoration: none;
+        }
 
 #map {
     float: left;
