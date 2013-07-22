@@ -1,0 +1,47 @@
+﻿{
+    "third": {
+        "1": {
+            "Location": {
+                "top right corner": {
+                    "x": "10",
+                    "y": "20",
+                },
+                "bottom left corner": {
+                    "x": "30", 
+                    "y": "40"
+                }
+            },
+            "Tenant": {
+                "name": "John Doe",
+                "id": "19878",
+                "email": "john.doe@coyote.com"
+            }
+        }, 
+
+        "2": {
+            "Location": {
+                "top right corner": {
+                    "x": "50",
+                    "y": "60",
+                },
+                "bottom left corner": {
+                    "x": "70", 
+                    "y": "80"
+                }
+            },
+            "Tenant": {
+                "name": "Darth Vader",
+                "id": "19879",
+                "email": "darth.vader@coyote.com"
+            }
+        }
+    },
+
+    "fourth": {
+
+    },
+
+    "fifth": {
+
+    }
+}
