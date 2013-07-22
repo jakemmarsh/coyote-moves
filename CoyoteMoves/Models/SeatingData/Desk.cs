@@ -17,6 +17,8 @@ namespace CoyoteMoves.Models.SeatingData
         public int Floor { get; set; }
         public Employee CurrentTenant { get; set; }
 
+        public Desk() { }
+
         public Desk(int FloorNumber, string DeskId)
         {
             this.CurrentTenant = null;
