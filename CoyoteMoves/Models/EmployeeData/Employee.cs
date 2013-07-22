@@ -10,6 +10,7 @@ namespace CoyoteMoves.Models.EmployeeData
         public string Name { get; set; }
         public string Email { get; set; }
         public string JobTitle { get; set; }
+        public string Office { get; set; }
         public string Department { get; set; }
         public string Group { get; set; }
         public int Id { get; set; }

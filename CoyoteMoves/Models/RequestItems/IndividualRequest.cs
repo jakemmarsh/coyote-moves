@@ -15,7 +15,6 @@ namespace CoyoteMoves.Models.RequestItems
         public DateTime DateToOccurOn { get; set; }
         public List<string> EmailListsToAddTo { get; set; }
         public List<string> EmailListsToBeRemovedFrom { get; set; }
-        public string CurrentOffice { get; set; }
         public string UltiProComment { get; set; }
         public string SecurityItemRights { get; set; }
     }
