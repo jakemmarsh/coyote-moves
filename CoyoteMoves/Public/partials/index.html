@@ -1,0 +1,22 @@
+﻿<h2 class="black-bg">Floor Plan</h2>
+<div class="clearfix">
+    <div id="tabs">
+        <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a>
+        <a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a>
+        <a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
+    </div>
+    <div id="map" ng-show="currentFloor == 3">
+        Third Floor
+    </div>
+    <div id="map" ng-show="currentFloor == 4">
+        Fourth Floor
+    </div>
+    <div id="map" ng-show="currentFloor == 5">
+        Fifth Floor
+    </div>
+    <div id="map-sidebar">
+        <h2>Displaced Employees</h2>
+    </div>
+</div>
+
+<h2 class="black-bg" style="margin-top:5px;">Forms</h2>

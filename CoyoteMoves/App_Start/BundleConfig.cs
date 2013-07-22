@@ -13,7 +13,9 @@ namespace CoyoteMoves
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                         "~/Public/js/lib/modernizr.js",
-                        "~/Public/js/lib/angular.js"));
+                        "~/Public/js/lib/angular.js",
+                        "~/Public/js/controllers.js",
+                        "~/Public/js/app.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/Public/css/style.css",

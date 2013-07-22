@@ -15,7 +15,7 @@
     <AssemblyName>CoyoteMoves</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -248,8 +248,13 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Public\css\style.css" />
+    <Content Include="Public\img\coyote-symbol.png" />
+    <Content Include="Public\img\coyote-text.png" />
+    <Content Include="Public\js\app.js" />
+    <Content Include="Public\js\controllers.js" />
     <Content Include="Public\js\lib\angular.js" />
     <Content Include="Public\js\lib\modernizr.js" />
+    <Content Include="Public\partials\index.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -257,11 +262,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Public\js\ajaxlogin.js" />
-    <Content Include="Public\js\todo.viewmodel.js" />
-    <Content Include="Public\js\todo.bindings.js" />
-    <Content Include="Public\js\todo.datacontext.js" />
-    <Content Include="Public\js\todo.model.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -270,7 +270,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Public\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -293,7 +292,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50896</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/CoyoteMoves</IISUrl>
+          <IISUrl>http://localhost:50896/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
