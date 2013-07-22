@@ -77,16 +77,50 @@ h2.black-bg {
 }
 
 /* Floor Map */
+#tabs {
+    margin-bottom: -1px;
+    z-index: 100;
+}
+
+    #tabs > .tab {
+        display: inline-block;
+        padding: 10px;
+        background: #c9cace;
+        border: 1px solid #c9cace;
+        font-weight: bold;
+    }
+
+        #tabs > .tab.active {
+            background: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+            #tabs > .tab {
+                color: #000;
+                text-decoration: none;
+            }
+
 #map {
     float: left;
-    width: 75%;
+    width: 80%;
     height: 500px;
-    background: #ff0000;
+    background:#fff;
+    border: 1px solid #c9cace;
+    z-index: 99;
 }
 
 #map-sidebar {
     float: left;
-    width: 25%;
+    width: 20%;
     height: 500px;
-    background: blue;
+    border: 1px solid #c9cace;
+    border-width: 1px 1px 1px 0;
 }
+
+    #map-sidebar > h2 {
+        margin: 0;
+        text-align: center;
+        background: #30d600;
+        color: #000;
+        font-weight: normal;
+    }
