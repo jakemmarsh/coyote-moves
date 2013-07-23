@@ -233,6 +233,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SeatingDataController\SeatingDataController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Models\EmployeeData\Employee.cs" />
     <Compile Include="Models\RequestItems\CarrierRepIndividualRequest.cs" />
@@ -243,7 +244,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\SeatingData\Floor.cs" />
+    <Compile Include="Models\SeatingData\Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -14,7 +14,6 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void JSONTest()
         {
-            JSONTranslator parser = new JSONTranslator();
 
             Desk myDesk = new Desk(3, "First Desk");
             Desk desktwo = new Desk(4, "Second Desk");
@@ -24,8 +23,7 @@ namespace CoyoteMovesTest
             deskcollection.Add(myDesk);
             deskcollection.Add(desktwo);
 
-            Floor floor = new Floor(1, deskcollection);
-            string result = parser.GetJSONFromFloor(floor);
+            string result = JSONTranslator.GetJSONFromListOfDesks(deskcollection);
 
             Console.WriteLine(result);
         }

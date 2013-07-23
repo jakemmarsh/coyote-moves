@@ -12,29 +12,21 @@ namespace CoyoteMoves.Models.SeatingData
         that already exists for when we make new desks. 
         the front end should do this! */
         public string DeskNumber { get; set; }
-        public CoordinatePoint TopLeft { get; set; }
-        public CoordinatePoint BottomRight { get; set; }
-        public int Floor { get; set; }
+        public Location Location { get; set; }
         public Employee CurrentTenant { get; set; }
-
-        public Desk() { }
 
         public Desk(int FloorNumber, string DeskId)
         {
             this.CurrentTenant = null;
-            this.TopLeft = new CoordinatePoint();
-            this.BottomRight = new CoordinatePoint();
+            this.Location = new Location(FloorNumber);
             this.DeskNumber = DeskId;
-            this.Floor = FloorNumber;
         }
 
         public Desk(int FloorNumber, string DeskId, Employee NewGuy)
         {
             this.CurrentTenant = NewGuy;
-            this.TopLeft = new CoordinatePoint();
-            this.BottomRight = new CoordinatePoint();
+            this.Location = new Location(FloorNumber);
             this.DeskNumber = DeskId;
-            this.Floor = FloorNumber;
         }
     }
 }

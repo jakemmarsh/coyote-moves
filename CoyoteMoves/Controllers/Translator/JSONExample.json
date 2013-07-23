@@ -1,21 +1,8 @@
-﻿{
-  "FloorNumber": 1,
-  "Desks": [
-    {
-      "DeskNumber": "First Desk",
-      "TopLeft": {
-        "XCoordinate": 0.0,
-        "YCoordinate": 0.0
-      },
-      "BottomRight": {
-        "XCoordinate": 0.0,
-        "YCoordinate": 0.0
-      },
+﻿[
+  {
+    "DeskNumber": "First Desk",
+    "Location": {
       "Floor": 3,
-      "CurrentTenant": null
-    },
-    {
-      "DeskNumber": "Second Desk",
       "TopLeft": {
         "XCoordinate": 0.0,
         "YCoordinate": 0.0
@@ -23,10 +10,24 @@
       "BottomRight": {
         "XCoordinate": 0.0,
         "YCoordinate": 0.0
-      },
+      }
+    },
+    "CurrentTenant": null
+  },
+  {
+    "DeskNumber": "Second Desk",
+    "Location": {
       "Floor": 4,
-      "CurrentTenant": null
-    }
-  ]
-}
+      "TopLeft": {
+        "XCoordinate": 0.0,
+        "YCoordinate": 0.0
+      },
+      "BottomRight": {
+        "XCoordinate": 0.0,
+        "YCoordinate": 0.0
+      }
+    },
+    "CurrentTenant": null
+  }
+]
 

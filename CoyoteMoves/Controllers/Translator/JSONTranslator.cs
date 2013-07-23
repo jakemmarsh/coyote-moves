@@ -17,24 +17,23 @@ namespace CoyoteMoves.Controllers
         }
 
         /// <summary>
-        /// Given a floor, returns a string in json format holding the same information as the floor structure
+        /// Given a list of desks, return a string in json format that contains the info on that list
         /// </summary>
-        /// <param name="floor"></param>
+        /// <param name="desks"></param>
         /// <returns></returns>
-        public string GetJSONFromFloor(Floor floor)
+        public static string GetJSONFromListOfDesks(List<Desk> desks)
         {
-            return JsonConvert.SerializeObject(floor, Formatting.Indented);
+            return JsonConvert.SerializeObject(desks, Formatting.Indented);
         }
 
         /// <summary>
-        /// Given a string in json format, turn that into a floor structure
+        /// Given a string in json format, create a list of desks with the information from the string
         /// </summary>
         /// <param name="jsonString"></param>
         /// <returns></returns>
-        public Floor GetFloorFromJSON(string jsonString)
+        public static List<Desk> GetListOfDesksFromJSON(string jsonString)
         {
-            return JsonConvert.DeserializeObject<Floor>(jsonString);
+            return JsonConvert.DeserializeObject<List<Desk>>(jsonString);
         }
-
     }
 }
