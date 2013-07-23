@@ -8,7 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E703CC
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiscoAXL", "CiscoAXL\CiscoAXL.csproj", "{9C19709E-691A-4DF3-8437-99E1CDFCE5A6}"
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoyoteMovesTest", "CoyoteMovesTest\CoyoteMovesTest.csproj", "{CCCFF944-79D0-4081-B591-9D2AFE1420C3}"
+>>>>>>> Features/Controllers
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +24,17 @@ Global
 		{81F1A25C-C4ED-4259-956A-E8BD1218D128}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81F1A25C-C4ED-4259-956A-E8BD1218D128}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81F1A25C-C4ED-4259-956A-E8BD1218D128}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{9C19709E-691A-4DF3-8437-99E1CDFCE5A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C19709E-691A-4DF3-8437-99E1CDFCE5A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C19709E-691A-4DF3-8437-99E1CDFCE5A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C19709E-691A-4DF3-8437-99E1CDFCE5A6}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+		{CCCFF944-79D0-4081-B591-9D2AFE1420C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCCFF944-79D0-4081-B591-9D2AFE1420C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCCFF944-79D0-4081-B591-9D2AFE1420C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCCFF944-79D0-4081-B591-9D2AFE1420C3}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Features/Controllers
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
