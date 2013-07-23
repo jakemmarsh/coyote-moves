@@ -256,6 +256,7 @@
     <None Include="Controllers\Translator\JSONExample.json" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Public\css\normalize.css" />
     <Content Include="Public\css\style.css" />
     <Content Include="Public\img\coyote-symbol.png" />
     <Content Include="Public\img\coyote-text.png" />
@@ -263,6 +264,8 @@
     <Content Include="Public\js\controllers.js" />
     <Content Include="Public\js\lib\angular.js" />
     <Content Include="Public\js\lib\modernizr.js" />
+    <Content Include="Public\js\lib\uiMap.js" />
+    <Content Include="Public\js\lib\uiUtils.js" />
     <Content Include="Public\partials\index.html" />
     <Content Include="Tests\JasonsTestHTML\HtmlPage1.html" />
     <Content Include="Tests\JasonsTestHTML\Jquery.min.js" />
@@ -281,6 +284,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Public\js\controllers\" />
+    <Folder Include="Public\js\services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

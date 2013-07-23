@@ -100,19 +100,25 @@ h2.black-bg {
             text-decoration: none;
         }
 
-#map {
+.map-container {
     float: left;
-    width: 80%;
+    width: 85%;
     height: 500px;
     background:#fff;
     border: 1px solid #c9cace;
     z-index: 99;
 }
 
+.map {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
 #map-sidebar {
     float: left;
-    width: 20%;
-    height: 500px;
+    width: 15%;
+    height: 400px;
     border: 1px solid #c9cace;
     border-width: 1px 1px 1px 0;
 }
