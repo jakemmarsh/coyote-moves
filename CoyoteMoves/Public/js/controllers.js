@@ -1,5 +1,25 @@
 ﻿function IndexCtrl($scope, $routeParams) {
     $scope.currentFloor = 3;
+    $scope.currentEmployee = 0;
+
+    $scope.changeCurrentForm = function (index) {
+        $scope.currentEmployee = index;
+        $scope.$apply();
+        console.log(index);
+    }
+
+    $scope.movedEmployees = [{
+        name: "Jake"
+    },
+    {
+        name: "Magic"
+    },
+    {
+        name: "Brandon"
+    },
+    {
+        name: "Ian"
+    }];
 
     $scope.$watch('currentFloor', function () {
         window.setTimeout(function () {

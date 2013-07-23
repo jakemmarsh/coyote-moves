@@ -1,9 +1,7 @@
 ﻿<h2 class="black-bg">Floor Plan</h2>
 <div class="clearfix">
-    <div id="tabs">
-        <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a>
-        <a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a>
-        <a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
+    <div class="tabs">
+        <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
     </div>
     <div id="map-third" class="map-container" ng-show="currentFloor == 3">
         <div ui-map="thirdFloorMap" class="map"
@@ -24,8 +22,267 @@
         </div>
     </div>
     <div id="map-sidebar">
-        <h2>Displaced Employees</h2>
+        <h3>Displaced Employees</h3>
     </div>
 </div>
-
 <h2 class="black-bg" style="margin-top:5px;">Forms</h2>
+<div class="tabs">
+    <a href ng-click="$parent.currentEmployee = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentEmployee == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
+
+</div>
+<form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentEmployee == $index">
+    <div class="table">
+
+        <div class="tr">
+            <div class="td">
+                Form for: {{employee.name}}
+            </div>
+            <div class="td">
+                
+            </div>
+            <div class="td">
+                
+            </div>
+        </div>
+
+        <div class="tr title">
+            <h3>Bazooka Changes</h3>
+        </div>
+
+        <div class="tr label">
+            <div class="td">
+                
+            </div>
+            <div class="td">
+                Current
+            </div>
+            <div class="td">
+                Future
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Job Title:
+            </div>
+            <div class="td">
+                <input type="text" id="job-title-current" placeholder="Current Title" />
+            </div>
+            <div class="td">
+                <input type="text" id="job-title-future" placeholder="Future Title" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Department:
+            </div>
+            <div class="td">
+                <input type="text" id="department-current" placeholder="Current Department" />
+            </div>
+            <div class="td">
+                <input type="text" id="department-future" placeholder="Future Department" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Group:
+            </div>
+            <div class="td">
+                <input type="text" id="group-current" placeholder="Current Group" />
+            </div>
+            <div class="td">
+                <input type="text" id="group-future" placeholder="Future Group" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Manager:
+            </div>
+            <div class="td">
+                <input type="text" id="manager-current" placeholder="Current Manager" />
+            </div>
+            <div class="td">
+                <input type="text" id="manager-future" placeholder="Future Manager" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Job Template:
+            </div>
+            <div class="td">
+                <input type="text" id="template-current" placeholder="Carrier Sales" />
+            </div>
+            <div class="td">
+                <input type="text" id="template-future" placeholder="Carrier Sales Manager" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Security Item/Rights
+            </div>
+            <div class="td">
+                <input type="text" id="Text1" disabled />
+            </div>
+            <div class="td">
+                <input type="text" id="security-rights" placeholder="" />
+            </div>
+        </div>
+        
+        <div class="tr title">
+            <h3>Ultipro Changes</h3>
+        </div>
+
+        <div class="tr label">
+            <div class="td">
+                
+            </div>
+            <div class="td">
+                Current
+            </div>
+            <div class="td">
+                Future
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Job Title:
+            </div>
+            <div class="td">
+                <input type="text" id="Text10" placeholder="Current Title" />
+            </div>
+            <div class="td">
+                <input type="text" id="Text11" placeholder="Future Title" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Department:
+            </div>
+            <div class="td">
+                <input type="text" id="Text4" placeholder="Current Department" />
+            </div>
+            <div class="td">
+                <input type="text" id="Text5" placeholder="Future Department" />
+            </div>
+        </div>
+        
+        <div class="tr">
+            <div class="td">
+                Supervisor:
+            </div>
+            <div class="td">
+                <input type="text" id="Text8" placeholder="Current Manager" />
+            </div>
+            <div class="td">
+                <input type="text" id="Text9" placeholder="Future Manager" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Other:
+            </div>
+            <div class="td">
+                <input type="text" id="Text12" disabled />
+            </div>
+            <div class="td">
+                <input type="text" id="Text13" placeholder="" />
+            </div>
+        </div>
+
+        <div class="tr title">
+            <h3>Desk Changes</h3>
+        </div>
+
+        <div class="tr label">
+            <div class="td">
+                
+            </div>
+            <div class="td">
+                Current
+            </div>
+            <div class="td">
+                Future
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Desk Number:
+            </div>
+            <div class="td">
+                <input type="text" id="current-desk" placeholder="Current Number" />
+            </div>
+            <div class="td">
+                <input type="text" id="future-desk" placeholder="Future Number" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Office Relocation:
+            </div>
+            <div class="td">
+                <input type="text" id="current-office" placeholder="Current Office" />
+            </div>
+            <div class="td">
+                <input type="text" id="future-office" placeholder="Future Office" />
+            </div>
+        </div>
+
+        <div class="tr title">
+            <h3>Phone Changes (TODO)</h3>
+        </div>
+        
+        <div class="tr">
+            <div class="td">
+                Phone changes (TODO):
+            </div>
+
+            <div class="td">
+                <input type="text" id="current-phone-number" placeholder="Old digitz" />
+            </div>
+            <div class="td">
+                <input type="text" id="future-phone-number" placeholder="Wats yo digitz gurl" />
+            </div>
+        </div>
+
+        <div class="tr title">
+            <h3>Email Distribution Changes</h3>
+        </div>
+        
+        <div class="tr">
+            <div class="td">
+                Add Person to:
+            </div>
+            <div class="td">
+                <input type="text" disabled />
+            </div>
+            <div class="td">
+                <input type="text" id="added-phone-group" placeholder="Add to group" />
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Remove Person from:
+            </div>
+            <div class="td">
+                <input type="text" disabled />
+            </div>
+            <div class="td">
+                <input type="text" placeholder="Remove from group" />
+            </div>
+        </div>
+
+    </div>
+</form>
+<input type="submit" value="Submit Moves" ng-show="movedEmployees.length > 1" />
+<input type="submit" value="Submit Move" ng-show="movedEmployees.length <= 1" />
