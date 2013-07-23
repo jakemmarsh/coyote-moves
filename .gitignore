@@ -4,3 +4,4 @@ obj/Debug/
 *.orig
 obj/
 bin/
+*.user

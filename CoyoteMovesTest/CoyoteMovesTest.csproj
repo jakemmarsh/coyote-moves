@@ -52,12 +52,16 @@
   <ItemGroup>
     <Compile Include="JSONTranslatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlConnectionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoyoteMoves\CoyoteMoves.csproj">
       <Project>{81f1a25c-c4ed-4259-956a-e8bd1218d128}</Project>
       <Name>CoyoteMoves</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
