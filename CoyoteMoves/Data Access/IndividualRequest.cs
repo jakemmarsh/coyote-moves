@@ -9,25 +9,25 @@ namespace CoyoteMoves.Data_Access
 {
     public class IndividualRequest
     {
-        string connectionString = "server=AnalyticsProd;database=Intern_CoyoteMoves;User Id=Intern;Password=Intern2013!;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False";
+        string _connectionString;
 
         public IndividualRequest()
         {
-           // connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
+            _connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
 
         }
 
-        public int test()
+        public int GenericIntCall(string query) //all you get is 1 int
         {
-            SqlConnection myConnection = new SqlConnection(connectionString);
-            string testQuery = "SELECT TOP 1 [EmployeeID] FROM [Intern_CoyoteMoves].[dbo].[InternalEmployee]";
-            SqlCommand myCommand = new SqlCommand(testQuery);
+            SqlConnection myConnection = new SqlConnection(_connectionString);
+            //string testQuery = "SELECT TOP 1 [EmployeeID] FROM [Intern_CoyoteMoves].[dbo].[InternalEmployee]";
+            SqlCommand myCommand = new SqlCommand(query);
             myCommand.Connection = myConnection;
             myConnection.Open();
-            int pleasebe46 = (int)myCommand.ExecuteScalar();
+            int intCall = (int)myCommand.ExecuteScalar();
             myConnection.Close();
 
-            return pleasebe46;
+            return intCall;
 
         }
 
