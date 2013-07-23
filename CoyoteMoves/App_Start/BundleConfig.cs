@@ -9,11 +9,13 @@ namespace CoyoteMoves
         public static void RegisterBundles(BundleCollection bundles)
         {
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                         "~/Public/js/lib/modernizr.js",
                         "~/Public/js/lib/angular.js",
+                        "~/Public/js/lib/uiUtils.js",
+                        "~/Public/js/lib/uiMap.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js").Include(
                         "~/Public/js/controllers.js",
                         "~/Public/js/app.js"));
 
