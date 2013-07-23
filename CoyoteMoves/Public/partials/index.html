@@ -3,14 +3,23 @@
     <div class="tabs">
         <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
     </div>
-    <div id="map" ng-show="currentFloor == 3">
-        Third Floor
+    <div id="map-third" class="map-container" ng-show="currentFloor == 3">
+        <div ui-map="thirdFloorMap" class="map"
+          ui-event="{'map-click': 'addThirdFloorMarker($event)', 'map-zoom_changed': 'setThirdFloorZoomMessage(thirdFloorMap.getZoom())' }"
+          ui-options="thirdFloorMapOptions">
+        </div>
     </div>
-    <div id="map" ng-show="currentFloor == 4">
-        Fourth Floor
+    <div id="map-fourth" class="map-container" ng-show="currentFloor == 4">
+        <div id="Div1" ui-map="fourthFloorMap" class="map"
+          ui-event="{'map-click': 'addFourthFloorMarker($event)', 'map-zoom_changed': 'setFourthFloorZoomMessage(fourthFloorMap.getZoom())' }"
+          ui-options="fourthFloorMapOptions">
+        </div>
     </div>
-    <div id="map" ng-show="currentFloor == 5">
-        Fifth Floor
+    <div id="map-fifth" class="map-container" ng-show="currentFloor == 5">
+        <div ui-map="fifthFloorMap" class="map"
+          ui-event="{'map-click': 'addFifthFloorMarker($event)', 'map-zoom_changed': 'setFifthFloorZoomMessage(fifthFloorMap.getZoom())' }"
+          ui-options="fifthFloorMapOptions">
+        </div>
     </div>
     <div id="map-sidebar">
         <h3>Displaced Employees</h3>
@@ -18,10 +27,10 @@
 </div>
 <h2 class="black-bg" style="margin-top:5px;">Forms</h2>
 <div class="tabs">
-    <a href ng-click="$parent.currentEmployee = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentEmployee == $index]" ng-repeat="employee in displacedEmployees">{{ employee.name }}</a>
+    <a href ng-click="$parent.currentEmployee = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentEmployee == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
 
 </div>
-<form class="employee-form" novalidate ng-repeat="employee in displacedEmployees" ng-show="currentEmployee == $index">
+<form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentEmployee == $index">
     <div class="table">
 
         <div class="tr">
@@ -275,5 +284,5 @@
 
     </div>
 </form>
-<input type="submit" value="Submit Moves" ng-show="displacedEmployees.length > 1" />
-<input type="submit" value="Submit Move" ng-show="displacedEmployees.length <= 1" />
+<input type="submit" value="Submit Moves" ng-show="movedEmployees.length > 1" />
+<input type="submit" value="Submit Move" ng-show="movedEmployees.length <= 1" />

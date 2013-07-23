@@ -19,6 +19,10 @@ body {
     color: #000;
 }
 
+textarea, input { 
+    outline: none; 
+}
+
 .container {
     min-width: 1000px;
     margin: 0 auto;
@@ -105,19 +109,25 @@ h2.black-bg {
             text-decoration: none;
         }
 
-#map {
+.map-container {
     float: left;
-    width: 80%;
-    height: 500px;
+    width: 85%;
+    height: 600px;
     background:#fff;
     border: 1px solid #c9cace;
     z-index: 99;
 }
 
+.map {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
 #map-sidebar {
     float: left;
-    width: 20%;
-    height: 500px;
+    width: 15%;
+    height: 600px;
     border: 1px solid #c9cace;
     border-width: 1px 1px 1px 0;
 }
@@ -137,12 +147,14 @@ footer {
 
 .table {
     display: table;
+    border-collapse: collapse;
 }
 
 .tr {
     display: table-row;
     padding: 10px 0;
     height: 40px;
+    width: 100%;
 }
 
     .tr.label {
@@ -158,6 +170,7 @@ footer {
         text-transform: uppercase;
         margin: 0;
         border-bottom: 2px solid #000;
+        width: 100%;
     }
 
 .td {
@@ -176,6 +189,15 @@ footer {
     width: 100%;
     padding: 10px;
 }
+
+input[type=text] {
+    padding: 3px 5px;
+    border: 1px solid #c9cace;
+}
+
+    input[type=text]:focus {
+        border: 1px solid #30d600;
+    }
 
 input[type=submit] {
     background: #000;
