@@ -21,5 +21,10 @@ namespace CoyoteMoves.Models.SeatingData
             this.XCoordinate = 0.0;
             this.YCoordinate = 0.0;
         }
+
+        public bool IsEqualTo(CoordinatePoint other)
+        {
+            return (this.XCoordinate == other.XCoordinate) && (this.YCoordinate == other.YCoordinate);
+        }
     }
 }
