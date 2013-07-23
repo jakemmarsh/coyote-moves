@@ -19,6 +19,10 @@ body {
     color: #000;
 }
 
+textarea, input { 
+    outline: none; 
+}
+
 .container {
     min-width: 1000px;
     margin: 0 auto;
@@ -77,25 +81,30 @@ h2.black-bg {
 }
 
 /* Floor Map */
-#tabs {
+.tabs {
     margin-bottom: -1px;
     z-index: 100;
 }
 
-    #tabs > .tab {
+    .tabs > .tab {
         display: inline-block;
         padding: 10px;
         background: #c9cace;
         border: 1px solid #c9cace;
         font-weight: bold;
+        margin: 0 10px 0 0;
     }
 
-        #tabs > .tab.active {
+        .tabs > .tab:last-child {
+            margin: 0;
+        }
+
+        .tabs > .tab.active {
             background: #fff;
             border-bottom: 1px solid #fff;
         }
 
-        #tabs > .tab {
+        .tabs > .tab {
             color: #000;
             text-decoration: none;
         }
@@ -103,7 +112,7 @@ h2.black-bg {
 .map-container {
     float: left;
     width: 85%;
-    height: 500px;
+    height: 600px;
     background:#fff;
     border: 1px solid #c9cace;
     z-index: 99;
@@ -118,15 +127,97 @@ h2.black-bg {
 #map-sidebar {
     float: left;
     width: 15%;
-    height: 400px;
+    height: 600px;
     border: 1px solid #c9cace;
     border-width: 1px 1px 1px 0;
 }
 
-    #map-sidebar > h2 {
+    #map-sidebar > h3 {
         margin: 0;
         text-align: center;
-        background: #30d600;
+        background: #000;
+        color: #30d600;
+        text-transform: uppercase;
+    }
+
+footer {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.table {
+    display: table;
+    border-collapse: collapse;
+}
+
+.tr {
+    display: table-row;
+    padding: 10px 0;
+    height: 40px;
+    width: 100%;
+}
+
+    .tr.label {
+        padding: 0;
+        height: 30px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .tr.title > h3 {
         color: #000;
-        font-weight: normal;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin: 0;
+        border-bottom: 2px solid #000;
+        width: 100%;
+    }
+
+.td {
+    display: table-cell;
+    padding: 0 10px;
+}
+
+    .td:first-child {
+        padding: 0;
+    }
+
+.employee-form {
+    background: #fff;
+    border: 1px solid #c9cace;
+    z-index: 99;
+    width: 100%;
+    padding: 10px;
+}
+
+input[type=text] {
+    padding: 3px 5px;
+    border: 1px solid #c9cace;
+}
+
+    input[type=text]:focus {
+        border: 1px solid #30d600;
+    }
+
+input[type=submit] {
+    background: #000;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    margin-top: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+    input[type=submit]:disabled {
+        color: #000;
+        background: #c9cace;
+    }
+
+        input[type=submit]:disabled:hover, input[type=submit]:disabled:active {
+            color: #000;
+        }
+
+    input[type=submit]:hover, input[type=submit]:active {
+        color: #30d600;
     }
