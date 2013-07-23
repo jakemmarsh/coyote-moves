@@ -109,6 +109,9 @@
       <HintPath>..\packages\DotNetOpenAuth.OpenIdOAuth.4.3.1.13153\lib\net45-full\DotNetOpenAuth.OpenIdOAuth.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="NuGet.Core, Version=2.6.40619.9041, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NuGet.Core.2.6.0\lib\net40-Client\NuGet.Core.dll</HintPath>
@@ -232,6 +235,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\DeskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndividualRequestController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
@@ -260,6 +264,8 @@
     <Content Include="Public\js\lib\angular.js" />
     <Content Include="Public\js\lib\modernizr.js" />
     <Content Include="Public\partials\index.html" />
+    <Content Include="Tests\JasonsTestHTML\HtmlPage1.html" />
+    <Content Include="Tests\JasonsTestHTML\Jquery.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
