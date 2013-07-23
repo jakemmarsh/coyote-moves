@@ -7,7 +7,8 @@ namespace CoyoteMoves.Models.EmployeeData
 {
     public class Employee
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
         public string JobTitle { get; set; }
         public string Office { get; set; }
