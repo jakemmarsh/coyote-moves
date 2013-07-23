@@ -2,9 +2,6 @@
     $scope.currentFloor = 3;
     $scope.currentEmployee = 0;
 
-    $scope.showBazookaChanges = false;
-    $scope.showUltiproChanges = false;
-
     $scope.changeCurrentForm = function (index) {
         $scope.currentEmployee = index;
         $scope.$apply();
