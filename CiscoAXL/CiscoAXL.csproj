@@ -72,6 +72,7 @@
     <Compile Include="AXLAPIService.cs" />
     <Compile Include="BruteForcePolicy.cs" />
     <Compile Include="DBOps.cs" />
+    <Compile Include="PhoneDisplay.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\AXLAPI\Reference.cs">

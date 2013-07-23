@@ -13,6 +13,10 @@ namespace CiscoAXL
     /// </summary>
     class Program
     {
+        /// <summary>
+        /// Main method used for testing only, I think this will be replaced by a controller.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             string ccmIP = "10.3.221.1";
@@ -24,7 +28,7 @@ namespace CiscoAXL
 
            // callGetPhone(service);
             //callUpdateLine(service);
-            string ext = "6340";
+            string ext = "7534";
             //callGetLine(service, ext);
            // callExecuteQuery(service);
            // callUpdatePhone(service);
@@ -34,6 +38,7 @@ namespace CiscoAXL
         
 
         }
+        /*
         /// <summary>
         /// Gets details about a device. A device could be a 7965/7962 physical device or it could be a soft phone or a udp profile. 
         /// </summary>
@@ -158,6 +163,7 @@ namespace CiscoAXL
             req.devicePoolName = xfktype;
             StandardResponse res = service.updatePhone(req);
         }
-    
+    * */
     }
+         
 }

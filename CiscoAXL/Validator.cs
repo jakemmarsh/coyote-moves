@@ -10,10 +10,10 @@ namespace CiscoAXL
     class Validator
     {
         /// <summary>
-        /// Check if dnorpattern input is valid
+        /// Check if dnorpattern input is valid. should be handled at database level too.
         /// </summary>
         /// <param name="dnorpattern"></param>
-        /// <returns></returns>
+        /// <returns>True if input matches the pattern, False otherwise</returns>
         public bool checkDNORPATTERN(string dnorpattern) 
         {
             Match matcher = Regex.Match(dnorpattern, "^[]0-9*#X[^-]{1,50}$");
@@ -26,6 +26,14 @@ namespace CiscoAXL
             {
                 return false;
             }
+        }
+        /// <summary>
+        /// TODO: check if fkdevice is valid. 
+        /// </summary>
+        /// <returns>True if input matches the pattern, False otherwise</returns>
+        public bool checkFKDEVICE()
+        {
+            return true;
         }
     }
 }
