@@ -237,9 +237,9 @@
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Data Access\IndividualRequest.cs" />
     <Compile Include="Models\EmployeeData\Employee.cs" />
-    <Compile Include="Public\RequestItems\CarrierRepIndividualRequest.cs" />
-    <Compile Include="Public\RequestItems\RequestFutureProperties.cs" />
-    <Compile Include="Public\RequestItems\IndividualRequest.cs" />
+    <Compile Include="Models\RequestItems\CarrierRepIndividualRequest.cs" />
+    <Compile Include="Models\RequestItems\IndividualRequest.cs" />
+    <Compile Include="Models\RequestItems\RequestFutureProperties.cs" />
     <Compile Include="Models\SeatingData\CoordinatePoint.cs" />
     <Compile Include="Models\SeatingData\Desk.cs" />
     <Compile Include="Global.asax.cs">
