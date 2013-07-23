@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Jquery.min.js"></script>
+    <script>
+        $.ajax(
+                {
+                    url: "http://localhost/CoyoteMoves/Api/IndividualRequest/Create",
+                    type: "Post",
+                    data: {
+                        name: "Bob"
+                    },
+                    success: function () {
+                        console.log("hey ah");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log("That sucked");
+                    }
+                }
+            );
+    </script>
+</head>
+<body>
+
+</body>
+</html>
