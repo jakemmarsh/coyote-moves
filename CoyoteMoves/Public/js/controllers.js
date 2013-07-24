@@ -44,12 +44,12 @@
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    $scope.addThirdFloorMarker = function ($event) {
-        $scope.thirdFloorMarkers.push(new google.maps.Marker({
-            map: $scope.thirdFloorMap,
-            position: $event.latLng
-        }));
-    };
+    //$scope.addThirdFloorMarker = function ($event) {
+    //    $scope.thirdFloorMarkers.push(new google.maps.Marker({
+    //        map: $scope.thirdFloorMap,
+    //        position: $event.latLng
+    //    }));
+    //};
     $scope.setThirdFloorZoomMessage = function (zoom) {
         $scope.thirdFloorZoomMessage = 'You just zoomed to ' + zoom + '!';
         console.log(zoom, 'zoomed')
@@ -71,12 +71,12 @@
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    $scope.addFourthFloorMarker = function ($event) {
-        $scope.fourthFloorMarkers.push(new google.maps.Marker({
-            map: $scope.fourthFloorMap,
-            position: $event.latLng
-        }));
-    };
+    //$scope.addFourthFloorMarker = function ($event) {
+    //    $scope.fourthFloorMarkers.push(new google.maps.Marker({
+    //        map: $scope.fourthFloorMap,
+    //        position: $event.latLng
+    //    }));
+    //};
     $scope.setFourthFloorZoomMessage = function (zoom) {
         $scope.fourthFloorZoomMessage = 'You just zoomed to ' + zoom + '!';
         console.log(zoom, 'zoomed')
@@ -98,12 +98,12 @@
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    $scope.addFifthFloorMarker = function ($event) {
-        $scope.fifthFloorMarkers.push(new google.maps.Marker({
-            map: $scope.fifthFloorMap,
-            position: $event.latLng
-        }));
-    };
+    //$scope.addFifthFloorMarker = function ($event) {
+    //    $scope.fifthFloorMarkers.push(new google.maps.Marker({
+    //        map: $scope.fifthFloorMap,
+    //        position: $event.latLng
+    //    }));
+    //};
     $scope.setFifthFloorZoomMessage = function (zoom) {
         $scope.fifthFloorZoomMessage = 'You just zoomed to ' + zoom + '!';
         console.log(zoom, 'zoomed')
