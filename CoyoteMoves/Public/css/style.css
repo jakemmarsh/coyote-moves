@@ -143,11 +143,13 @@ h2.black-bg {
 footer {
     font-weight: bold;
     text-transform: uppercase;
+    padding: 10px;
 }
 
 .table {
     display: table;
     border-collapse: collapse;
+    width: 50%;
 }
 
 .tr {
@@ -155,6 +157,7 @@ footer {
     padding: 10px 0;
     height: 40px;
     width: 100%;
+    vertical-align: middle;
 }
 
     .tr.label {
@@ -162,24 +165,36 @@ footer {
         height: 30px;
         text-transform: uppercase;
         font-weight: bold;
+        background: none !important;
     }
 
-    .tr.title > h3 {
-        color: #000;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin: 0;
-        border-bottom: 2px solid #000;
-        width: 100%;
+    .tr:nth-last-child(2n+1) {
+        background:#f0f0f0;
+    }
+
+h3.title {
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+    border-bottom: 2px solid #000;
+    width: 50%;
+     
+}
+
+    h3.title:not(:first-of-type) {
+        margin: 20px 0 20px 0;
     }
 
 .td {
     display: table-cell;
-    padding: 0 10px;
+    padding: 0 40px;
+    width: 33%;
+    vertical-align: middle;
 }
 
     .td:first-child {
-        padding: 0;
+        padding: 0 0 0 10px;
     }
 
 .employee-form {
@@ -207,6 +222,7 @@ input[type=submit] {
     margin-top: 10px;
     font-size: 16px;
     text-transform: uppercase;
+    float: right;
 }
 
     input[type=submit]:disabled {
