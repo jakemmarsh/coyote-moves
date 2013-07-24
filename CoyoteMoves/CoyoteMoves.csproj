@@ -239,7 +239,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndividualRequestController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
-    <Compile Include="Data Access\IndividualRequest.cs" />
+    <Compile Include="Data Access\IndividualRequestDB.cs" />
     <Compile Include="Models\EmployeeData\Employee.cs" />
     <Compile Include="Models\RequestItems\CarrierRepIndividualRequest.cs" />
     <Compile Include="Models\RequestItems\IndividualRequest.cs" />
@@ -269,7 +269,9 @@
     <Content Include="Public\partials\index.html" />
     <Content Include="Tests\JasonsTestHTML\HtmlPage1.html" />
     <Content Include="Tests\JasonsTestHTML\Jquery.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
