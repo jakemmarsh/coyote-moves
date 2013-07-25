@@ -1,4 +1,5 @@
-﻿using CoyoteMoves.Models.SeatingData;
+﻿using CoyoteMoves.Data_Access;
+using CoyoteMoves.Models.SeatingData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,9 @@ namespace CoyoteMoves.Controllers
         // GET api/desk
         public HttpResponseMessage Get(int floor)
         {
-            Desk temp = new Desk(5, "ABC123");
-            return Request.CreateResponse(HttpStatusCode.OK, temp);
+            DeskDB DeskDataBaseConnection = new DeskDB();
+            List<Desk> DeskList = DeskDataBaseConnection.GetDesksFromFloor(floor);
+            return Request.CreateResponse(HttpStatusCode.OK, DeskList);
         }
 
         //// GET api/desk/5
