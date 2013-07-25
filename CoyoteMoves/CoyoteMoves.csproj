@@ -244,7 +244,14 @@
     <Compile Include="Models\EmployeeData\Employee.cs" />
     <Compile Include="Models\RequestItems\CarrierRepIndividualRequest.cs" />
     <Compile Include="Models\RequestItems\IndividualRequest.cs" />
+    <Compile Include="Models\RequestItems\RequestForm.cs" />
     <Compile Include="Models\RequestItems\RequestFutureProperties.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\BazookaChangeRequest.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\EmployeeReviewFileChanges.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\DeskChangeRequest.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\EmailDistributionChangeRequest.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\PhoneChangeRequest.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\UltiproChangeRequest.cs" />
     <Compile Include="Models\SeatingData\CoordinatePoint.cs" />
     <Compile Include="Models\SeatingData\Desk.cs" />
     <Compile Include="Global.asax.cs">

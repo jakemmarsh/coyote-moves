@@ -10,15 +10,16 @@ namespace CoyoteMoves.Models.RequestItems
     {
         /// <summary>
         /// So this is the class that will deal with 'storing' all the data from the json passed from the frontend
+        /// just has a bunch of request types (based off of pdf we got from Mario)
         /// </summary>
 
-        public string EmployeeName { get; set; }
+        public int EmployeeId { get; set; }
         public BazookaChangeRequest BazookaChanges { get; set; }
         public UltiproChangeRequest UltiproChanges { get; set; }
         public DeskChangeRequest DeskChanges { get; set; }
         public PhoneChangeRequest PhoneChanges { get; set; }
         public EmailDistributionChangeRequest EmailDistChange { get; set; }
-        public CarrierRepChangeRequest CarrierRepChanges { get; set; }
+        public EmployeeReviewFileChangesRequest EmployeeReviewFileChange { get; set; }
 
     }
 }
