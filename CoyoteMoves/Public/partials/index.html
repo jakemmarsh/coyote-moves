@@ -31,24 +31,17 @@
 
 </div>
 <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentEmployee == $index">
+
+    Name: {{employee.name | json}} <br />
+    Bazooka: {{employee.bazooka | json}} <br />
+    Ultipro: {{employee.ultipro | json}} <br />
+    Desk: {{employee.desk | json}} <br />
+    Email: {{employee.email | json}} <br />
+    Phone: TODO <br />
+    CarrierRep: {{employee.carrierRep | json}} <br /><br />
+
+    <h3 class="title">Bazooka Changes</h3>
     <div class="table">
-
-        <div class="tr">
-            <div class="td">
-                Form for: {{employee.name}}
-            </div>
-            <div class="td">
-                
-            </div>
-            <div class="td">
-                
-            </div>
-        </div>
-
-        <div class="tr title">
-            <h3>Bazooka Changes</h3>
-        </div>
-
         <div class="tr label">
             <div class="td">
                 
@@ -66,10 +59,10 @@
                 Job Title:
             </div>
             <div class="td">
-                <input type="text" id="job-title-current" placeholder="Current Title" />
+                <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.bazooka.current.jobTitle" />
             </div>
             <div class="td">
-                <input type="text" id="job-title-future" placeholder="Future Title" />
+                <input type="text" id="job-title-future" placeholder="Future Title" ng-model="employee.bazooka.future.jobTitle"/>
             </div>
         </div>
 
@@ -78,10 +71,10 @@
                 Department:
             </div>
             <div class="td">
-                <input type="text" id="department-current" placeholder="Current Department" />
+                <input type="text" id="department-current" placeholder="Current Department" ng-model="employee.bazooka.current.department"/>
             </div>
             <div class="td">
-                <input type="text" id="department-future" placeholder="Future Department" />
+                <input type="text" id="department-future" placeholder="Future Department" ng-model="employee.bazooka.future.department"/>
             </div>
         </div>
 
@@ -90,10 +83,10 @@
                 Group:
             </div>
             <div class="td">
-                <input type="text" id="group-current" placeholder="Current Group" />
+                <input type="text" id="group-current" placeholder="Current Group" ng-model="employee.bazooka.current.group"/>
             </div>
             <div class="td">
-                <input type="text" id="group-future" placeholder="Future Group" />
+                <input type="text" id="group-future" placeholder="Future Group" ng-model="employee.bazooka.future.group"/>
             </div>
         </div>
 
@@ -102,10 +95,10 @@
                 Manager:
             </div>
             <div class="td">
-                <input type="text" id="manager-current" placeholder="Current Manager" />
+                <input type="text" id="manager-current" placeholder="Current Manager" ng-model="employee.bazooka.current.manager"/>
             </div>
             <div class="td">
-                <input type="text" id="manager-future" placeholder="Future Manager" />
+                <input type="text" id="manager-future" placeholder="Future Manager" ng-model="employee.bazooka.future.manager"/>
             </div>
         </div>
 
@@ -114,10 +107,10 @@
                 Job Template:
             </div>
             <div class="td">
-                <input type="text" id="template-current" placeholder="Carrier Sales" />
+                <input type="text" id="template-current" placeholder="Carrier Sales" ng-model="employee.bazooka.current.jobTemplate"/>
             </div>
             <div class="td">
-                <input type="text" id="template-future" placeholder="Carrier Sales Manager" />
+                <input type="text" id="template-future" placeholder="Carrier Sales Manager" ng-model="employee.bazooka.future.jobTemplate"/>
             </div>
         </div>
 
@@ -129,14 +122,14 @@
                 <input type="text" id="Text1" disabled />
             </div>
             <div class="td">
-                <input type="text" id="security-rights" placeholder="" />
+                <input type="text" id="security-rights" placeholder="" ng-model="employee.bazooka.future.securityRights"/>
             </div>
         </div>
-        
-        <div class="tr title">
-            <h3>Ultipro Changes</h3>
-        </div>
+    </div>
 
+    <h3 class="title">Ultipro Changes</h3>
+
+    <div class="table">
         <div class="tr label">
             <div class="td">
                 
@@ -154,10 +147,10 @@
                 Job Title:
             </div>
             <div class="td">
-                <input type="text" id="Text10" placeholder="Current Title" />
+                <input type="text" id="ultipro-title-current" placeholder="Current Title" ng-model="employee.ultipro.current.jobTitle" />
             </div>
             <div class="td">
-                <input type="text" id="Text11" placeholder="Future Title" />
+                <input type="text" id="ultipro-title-future" placeholder="Future Title" ng-model="employee.ultipro.future.jobTitle"/>
             </div>
         </div>
 
@@ -166,10 +159,10 @@
                 Department:
             </div>
             <div class="td">
-                <input type="text" id="Text4" placeholder="Current Department" />
+                <input type="text" id="Text4" placeholder="Current Department" ng-model="employee.ultipro.current.department"/>
             </div>
             <div class="td">
-                <input type="text" id="Text5" placeholder="Future Department" />
+                <input type="text" id="Text5" placeholder="Future Department" ng-model="employee.ultipro.future.department"/>
             </div>
         </div>
         
@@ -178,10 +171,10 @@
                 Supervisor:
             </div>
             <div class="td">
-                <input type="text" id="Text8" placeholder="Current Manager" />
+                <input type="text" id="Text8" placeholder="Current Manager" ng-model="employee.ultipro.current.supervisor"/>
             </div>
             <div class="td">
-                <input type="text" id="Text9" placeholder="Future Manager" />
+                <input type="text" id="Text9" placeholder="Future Manager" ng-model="employee.ultipro.future.supervisor"/>
             </div>
         </div>
 
@@ -193,14 +186,14 @@
                 <input type="text" id="Text12" disabled />
             </div>
             <div class="td">
-                <input type="text" id="Text13" placeholder="" />
+                <input type="text" id="Text13" ng-model="employee.ultipro.future.other"/>
             </div>
         </div>
+    </div>
 
-        <div class="tr title">
-            <h3>Desk Changes</h3>
-        </div>
+    <h3 class="title">Desk Changes</h3>
 
+    <div class="table">
         <div class="tr label">
             <div class="td">
                 
@@ -218,10 +211,10 @@
                 Desk Number:
             </div>
             <div class="td">
-                <input type="text" id="current-desk" placeholder="Current Number" />
+                <input type="text" id="current-desk" placeholder="Current Number" ng-model="employee.desk.current.desk"/>
             </div>
             <div class="td">
-                <input type="text" id="future-desk" placeholder="Future Number" />
+                <input type="text" id="future-desk" placeholder="Future Number" ng-model="employee.desk.future.desk"/>
             </div>
         </div>
 
@@ -230,34 +223,34 @@
                 Office Relocation:
             </div>
             <div class="td">
-                <input type="text" id="current-office" placeholder="Current Office" />
+                <input type="text" id="current-office" placeholder="Current Office" ng-model="employee.desk.current.office"/>
             </div>
             <div class="td">
-                <input type="text" id="future-office" placeholder="Future Office" />
+                <input type="text" id="future-office" placeholder="Future Office" ng-model="employee.desk.future.office"/>
             </div>
         </div>
+    </div>
 
-        <div class="tr title">
-            <h3>Phone Changes (TODO)</h3>
-        </div>
-        
+    <h3 class="title">Phone Changes (TODO)</h3>
+
+    <div class="table">   
         <div class="tr">
             <div class="td">
                 Phone changes (TODO):
             </div>
 
             <div class="td">
-                <input type="text" id="current-phone-number" placeholder="Old digitz" />
+                <input type="text" id="current-phone-number" placeholder="Old Number" disabled/>
             </div>
             <div class="td">
-                <input type="text" id="future-phone-number" placeholder="Wats yo digitz gurl" />
+                <input type="text" id="future-phone-number" placeholder="New Number" disabled/>
             </div>
         </div>
+    </div>
 
-        <div class="tr title">
-            <h3>Email Distribution Changes</h3>
-        </div>
-        
+    <h3 class="title">Email Distribution Changes</h3>
+
+    <div class="table">    
         <div class="tr">
             <div class="td">
                 Add Person to:
@@ -266,7 +259,7 @@
                 <input type="text" disabled />
             </div>
             <div class="td">
-                <input type="text" id="added-phone-group" placeholder="Add to group" />
+                <input type="text" id="added-phone-group" placeholder="Add to group" ng-model="employee.email.addToGroup"/>
             </div>
         </div>
 
@@ -278,11 +271,39 @@
                 <input type="text" disabled />
             </div>
             <div class="td">
-                <input type="text" placeholder="Remove from group" />
+                <input type="text" placeholder="Remove from group" ng-model="employee.email.removeFromGroup"/>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="title">Employee Review Files Changes (Carrier Reps)</h3>
+
+    <div class="table">    
+        <div class="tr">
+            <div class="td">
+                Need to be added to:
+            </div>
+            <div class="td">
+                <input type="text" disabled />
+            </div>
+            <div class="td">
+                <input type="text" id="Text2" placeholder="Add to group" ng-model="employee.carrierRep.addToGroup"/>
+            </div>
+        </div>
+
+        <div class="tr">
+            <div class="td">
+                Need to be removed from:
+            </div>
+            <div class="td">
+                <input type="text" disabled />
+            </div>
+            <div class="td">
+                <input type="text" placeholder="Remove from group" ng-model="employee.carrierRep.removeFromGroup"/>
             </div>
         </div>
 
     </div>
 </form>
-<input type="submit" value="Submit Moves" ng-show="movedEmployees.length > 1" />
-<input type="submit" value="Submit Move" ng-show="movedEmployees.length <= 1" />
+<input type="submit" value="Submit Moves" class="clearfix" ng-show="movedEmployees.length > 1" />
+<input type="submit" value="Submit Move" class="clearfix" ng-show="movedEmployees.length <= 1" />
