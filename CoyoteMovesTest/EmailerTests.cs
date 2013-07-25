@@ -9,6 +9,7 @@ namespace CoyoteMovesTest
     [TestClass]
     public class EmailerTests
     {
+        [TestCategory ("Unit")]
         [TestMethod]
         public void firstPDFTest()
         {

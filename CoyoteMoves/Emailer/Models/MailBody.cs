@@ -30,9 +30,11 @@ namespace CoyoteMoves.Emailer.Models
                 Console.WriteLine(line);
             }
 
+
+            outputStream.Close();
             inputFile.Close();
             pdfStamper.Close();
-            outputStream.Close();
+           
 
         }
 
