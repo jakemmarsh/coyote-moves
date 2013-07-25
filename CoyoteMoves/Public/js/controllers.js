@@ -33,9 +33,7 @@
                     google.maps.event.trigger($scope.fifthFloorMap, 'resize');
                 }
             }, 100);
-
     });
-
 
     // THIRD FLOOR MAP
     $scope.thirdFloorMarkers = [];
@@ -81,6 +79,7 @@
         $scope.fourthFloorZoomMessage = 'You just zoomed to ' + zoom + '!';
         console.log(zoom, 'zoomed')
     };
+
     $scope.openFourthFloorMarkerInfo = function (marker) {
         $scope.currentFourthFloorMarker = marker;
         $scope.currentFourthFloorMarkerLat = marker.getPosition().lat();
