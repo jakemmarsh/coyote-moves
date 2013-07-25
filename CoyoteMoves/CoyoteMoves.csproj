@@ -108,6 +108,9 @@
     <Reference Include="DotNetOpenAuth.OpenIdOAuth">
       <HintPath>..\packages\DotNetOpenAuth.OpenIdOAuth.4.3.1.13153\lib\net45-full\DotNetOpenAuth.OpenIdOAuth.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.4.2\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
@@ -240,6 +243,7 @@
     <Compile Include="Controllers\IndividualRequestController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Data Access\IndividualRequestDB.cs" />
+    <Compile Include="Emailer\Models\MailBody.cs" />
     <Compile Include="Models\EmployeeData\Employee.cs" />
     <Compile Include="Models\RequestItems\CarrierRepIndividualRequest.cs" />
     <Compile Include="Models\RequestItems\IndividualRequest.cs" />

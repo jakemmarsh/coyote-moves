@@ -39,6 +39,13 @@ namespace CoyoteMoves.Data_Access
             return nameCollection[0];
         }
 
+        public Employee GetEmployeeById(int Id)
+        {
+            //Collection<string> 
+            //Need to account for template and security settings - refactor employee object or find them
+            return null;
+        }
+                
         public Collection<int> GetEmployeeIdsByGroupId(int groupId)
         {
             Collection<int> returnToSender = new Collection<int>();
