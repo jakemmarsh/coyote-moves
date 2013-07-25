@@ -16,5 +16,7 @@ namespace CoyoteMoves.Models.RequestItems
         public string FutureSecurityItemRights { get; set; }
         public string FutureDeskNumber { get; set; }
         public string FutureOffice { get; set; }
+        public string SecurityItemRights { get; set; }
+        public string Template { get; set; }
     }
 }
