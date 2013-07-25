@@ -16,7 +16,7 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
             public string JobTitle { get; set; }
             public string Department { get; set; }
             public string Supervisor { get; set; }
-            public string other { get; set; }
+            public string Other { get; set; }
         }
 
     }

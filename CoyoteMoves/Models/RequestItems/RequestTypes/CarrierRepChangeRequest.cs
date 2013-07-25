@@ -12,7 +12,7 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
 
         public class CarrierRepChange
         {
-
+            //idk what goes here
         }
     }
 }
