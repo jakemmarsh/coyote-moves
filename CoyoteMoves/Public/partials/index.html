@@ -59,7 +59,7 @@
                 Job Title:
             </div>
             <div class="td">
-                <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.bazooka.current.jobTitle" />
+                <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.bazooka.current.jobTitle" typeahead="title for title in titles | filter:$viewValue" />
             </div>
             <div class="td">
                 <input type="text" id="job-title-future" placeholder="Future Title" ng-model="employee.bazooka.future.jobTitle"/>
@@ -107,10 +107,10 @@
                 Job Template:
             </div>
             <div class="td">
-                <input type="text" id="template-current" placeholder="Carrier Sales" ng-model="employee.bazooka.current.jobTemplate"/>
+                <input type="text" id="template-current" placeholder="Current Template" ng-model="employee.bazooka.current.jobTemplate"/>
             </div>
             <div class="td">
-                <input type="text" id="template-future" placeholder="Carrier Sales Manager" ng-model="employee.bazooka.future.jobTemplate"/>
+                <input type="text" id="template-future" placeholder="Future Template" ng-model="employee.bazooka.future.jobTemplate"/>
             </div>
         </div>
 

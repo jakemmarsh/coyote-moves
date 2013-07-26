@@ -256,6 +256,7 @@
     <None Include="Controllers\Translator\JSONExample.json" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Public\css\bootstrap.css" />
     <Content Include="Public\css\normalize.css" />
     <Content Include="Public\css\style.css" />
     <Content Include="Public\img\coyote-symbol.png" />

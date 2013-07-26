@@ -12,6 +12,7 @@ namespace CoyoteMoves
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                         "~/Public/js/lib/modernizr.js",
                         "~/Public/js/lib/angular.js",
+                        "~/Public/js/lib/ui-bootstrap.js",
                         "~/Public/js/lib/uiUtils.js",
                         "~/Public/js/lib/uiMap.js"));
 
