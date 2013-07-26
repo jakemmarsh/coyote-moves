@@ -34,40 +34,8 @@ namespace CoyoteMoves.Data_Access
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
 
-            while (reader.Read())
-            {
-                string deskNumber = reader["DeskNumber"].ToString();
-                CoordinatePoint TopRight = new CoordinatePoint((double)reader["TopRightX"], (double)reader["TopRightY"]);
-                CoordinatePoint TopLeft = new CoordinatePoint((double)reader["TopLeftX"], (double)reader["TopLeftY"]);
-                CoordinatePoint BottomRight = new CoordinatePoint((double)reader["BottomRightX"], (double)reader["BottomRightY"]);
-                CoordinatePoint BottomLeft = new CoordinatePoint((double)reader["BottomLeftX"], (double)reader["BottomLeftY"]);
-                Location loc = new Location(floor, TopLeft, TopRight, BottomRight, BottomLeft);
-
-                string FirstName = reader["FirstName"].ToString();
-                string LastName = reader["LastName"].ToString();
-                string Email = reader["WorkEmail"].ToString();
-                string JobTitle = reader["JobTitle"].ToString();
-                //template
-                string Department = reader["Department"].ToString();
-                string Group = reader["Group"].ToString();
-                int ID = (int)reader["PersonID"];
-                string ManagerName = reader["ManagerFirstName"].ToString() + " " + reader["ManagerLastName"].ToString();
-                //security items rights
-                Employee TempGuy = new Employee()
-                {
-                    FirstName = FirstName,
-                    LastName = LastName,
-                    Email = Email,
-                    JobTitle = JobTitle,
-                    Department = Department,
-                    Group = Group,
-                    Id = ID,
-                    ManagerName = ManagerName,
-                };
-
-                Desk TempDesk = new Desk(loc, deskNumber, TempGuy);
-                deskList.Add(TempDesk);
-            }
+            SqlToModelFactory DeskFactory = new SqlToModelFactory(reader);
+            deskList = DeskFactory.GetAllDesks(floor);
             connection.Close();
             return deskList;
         }
