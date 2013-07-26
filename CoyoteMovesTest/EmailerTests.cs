@@ -18,6 +18,20 @@ namespace CoyoteMovesTest
 
             Assert.IsNotNull(_mailBody);
         }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void apocalypticEmailTest()
+        {
+            var _mailBody = new MailBody();
+
+            bool mailTest = _mailBody.sendTestEmail("jake.marsh@coyote.com");
+            bool otherMailTest = _mailBody.sendTestEmail("kevin.jasieniecki@coyote.com");
+
+            Assert.IsTrue(mailTest);
+            Assert.IsTrue(otherMailTest);
+        }
            
     }
+
 }
