@@ -38,7 +38,7 @@
 
     $scope.$watch('currentFloor', function () {
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
-            $scope.floorDesks = data;
+            $scope.currentFloorDesks = data;
         },
         function (errorMessage) {
             console.log(errorMessage);
