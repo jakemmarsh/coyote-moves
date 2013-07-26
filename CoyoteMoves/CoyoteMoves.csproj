@@ -270,6 +270,7 @@
     <Content Include="Public\img\coyote-text.png" />
     <Content Include="Public\js\app.js" />
     <Content Include="Public\js\controllers.js" />
+    <Content Include="Public\js\lib\angular-dragdrop.js" />
     <Content Include="Public\js\lib\angular-strap.js" />
     <Content Include="Public\js\lib\angular.js" />
     <Content Include="Public\js\lib\bootstrap.js" />

@@ -16,7 +16,8 @@ namespace CoyoteMoves
                         "~/Public/js/lib/uiMap.js",
                         "~/Public/js/lib/jquery-1.10.2.js",
                         "~/Public/js/lib/bootstrap.js",
-                        "~/Public/js/lib/angular-strap.js"));
+                        "~/Public/js/lib/angular-strap.js",
+                        "~/Public/js/lib/angular-dragdrop.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                         "~/Public/js/controllers.js",
