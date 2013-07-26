@@ -263,7 +263,10 @@
     <Content Include="Public\img\coyote-text.png" />
     <Content Include="Public\js\app.js" />
     <Content Include="Public\js\controllers.js" />
+    <Content Include="Public\js\lib\angular-strap.js" />
     <Content Include="Public\js\lib\angular.js" />
+    <Content Include="Public\js\lib\bootstrap.js" />
+    <Content Include="Public\js\lib\jquery-1.10.2.js" />
     <Content Include="Public\js\lib\modernizr.js" />
     <Content Include="Public\js\lib\uiMap.js" />
     <Content Include="Public\js\lib\uiUtils.js" />
@@ -280,14 +283,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Public\js\controllers\" />
     <Folder Include="Public\js\services\" />
   </ItemGroup>
   <ItemGroup>

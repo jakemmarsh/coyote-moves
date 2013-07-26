@@ -13,12 +13,14 @@ namespace CoyoteMoves
                         "~/Public/js/lib/modernizr.js",
                         "~/Public/js/lib/angular.js",
                         "~/Public/js/lib/uiUtils.js",
-                        "~/Public/js/lib/uiMap.js"));
+                        "~/Public/js/lib/uiMap.js",
+                        "~/Public/js/lib/jquery-1.10.2.js",
+                        "~/Public/js/lib/bootstrap.js",
+                        "~/Public/js/lib/angular-strap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                         "~/Public/js/controllers.js",
-                        "~/Public/js/app.js",
-                        "~/Public/js/directives/inputFocus.js"));
+                        "~/Public/js/app.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/Public/css/style.css",
