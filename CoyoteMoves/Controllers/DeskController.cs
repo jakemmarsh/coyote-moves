@@ -19,10 +19,5 @@ namespace CoyoteMoves.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, DeskList);
         }
 
-        //// GET api/desk/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
     }
 }
