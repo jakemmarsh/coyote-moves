@@ -19,7 +19,7 @@ namespace CoyoteMoves.Models.RequestItems
         public DeskChangeRequest DeskChanges { get; set; }
         public PhoneChangeRequest PhoneChanges { get; set; }
         public EmailDistributionChangeRequest EmailDistChange { get; set; }
-        public EmployeeReviewFileChangesRequest EmployeeReviewFileChange { get; set; }
+        public EmployeeReviewFileChangeRequest EmployeeReviewFileChange { get; set; }
 
     }
 }
