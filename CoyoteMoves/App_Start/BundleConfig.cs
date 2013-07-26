@@ -12,6 +12,7 @@ namespace CoyoteMoves
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                         "~/Public/js/lib/modernizr.js",
                         "~/Public/js/lib/angular.js",
+                        "~/Public/js/lib/ui-bootstrap.js",
                         "~/Public/js/lib/uiUtils.js",
                         "~/Public/js/lib/uiMap.js",
                         "~/Public/js/lib/jquery-1.10.2.js",
@@ -21,7 +22,8 @@ namespace CoyoteMoves
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                         "~/Public/js/controllers.js",
-                        "~/Public/js/app.js"));
+                        "~/Public/js/app.js",    
+                        "~/Public/js/services.js"));
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/Public/css/style.css",

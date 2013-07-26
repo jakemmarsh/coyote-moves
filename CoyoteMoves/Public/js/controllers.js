@@ -1,6 +1,12 @@
-﻿function IndexCtrl($scope, $routeParams) {
+﻿function IndexCtrl($scope, $routeParams, desks) {
     $scope.currentFloor = 3;
     $scope.currentEmployee = 0;
+    $scope.floorDesks = [];
+
+    var initialize = function () {
+    };
+
+    initialize();
 
     $scope.changeCurrentForm = function (index) {
         $scope.currentEmployee = index;
@@ -31,6 +37,12 @@
     }];
 
     $scope.$watch('currentFloor', function () {
+        desks.getDesksByFloor($scope.currentFloor).then(function (data) {
+            $scope.floorDesks = data;
+        },
+        function (errorMessage) {
+            console.log(errorMessage);
+        });
         window.setTimeout(function () {
                 if($scope.currentFloor === 3) { 
                     google.maps.event.trigger($scope.thirdFloorMap, 'resize');
