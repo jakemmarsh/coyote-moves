@@ -247,7 +247,7 @@
     <Compile Include="Models\RequestItems\RequestForm.cs" />
     <Compile Include="Models\RequestItems\RequestFutureProperties.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\BazookaChangeRequest.cs" />
-    <Compile Include="Models\RequestItems\RequestTypes\EmployeeReviewFileChanges.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\EmployeeReviewFileChangeRequest.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\DeskChangeRequest.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\EmailDistributionChangeRequest.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\PhoneChangeRequest.cs" />
