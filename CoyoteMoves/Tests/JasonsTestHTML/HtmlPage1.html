@@ -4,10 +4,15 @@
     <title></title>
     <script src="Jquery.min.js"></script>
     <script>
+        var data = "hello";
         $.ajax(
                 {
-                    url: "http://localhost/CoyoteMoves/Api/Desk?floor=4",
-                    type: "Get",
+                    url: "http://localhost/CoyoteMoves/api/Requestform/ReceiveFormChangeRequest/",
+                    //url: "http://localhost/CoyoteMoves/api/Desk/GetDesksByFloor/5",
+                    type: "POST",
+                    //type: "GET",
+                    dataType: 'json',
+                    data: { "deskNumber": "ABC666", "location": { "floor": 5, "topLeft": { "xCoordinate": 0.0, "yCoordinate": 1.0 }, "orientation": 0.0 }, "currentTenant": { "firstName": "Jason", "lastName": "DiBabbo", "email": "jason.dibabbo@coyote.com", "jobTitle": "Intern", "department": "IT", "group": "Unknown", "id": 301758, "managerName": "Joe Kolodz", "template": null } },
                     success: function () {
                         console.log("hey ah");
                     },

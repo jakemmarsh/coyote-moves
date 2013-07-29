@@ -7,27 +7,36 @@ using System.Web.Http;
 using CoyoteMoves.Models.RequestItems;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using System.IO;
+using CoyoteMoves.Models.SeatingData;
+using CoyoteMoves.Models.EmployeeData;
 
 namespace CoyoteMoves.Controllers
 {
-    public class FormController : ApiController
+    public class RequestformController : ApiController
     {
-
         /*
          * Frontend will send us json (or just the object?) with the future (and current?) coyote moves form information
          * This controller is for receiving it and turning it into data objects to work with easier
          * */
         // POST api/Form/ReceiveFormChangeRequest
-        [HttpPost]
-        public HttpResponseMessage ReceiveFormChangeRequest(RequestForm changes)
+        public HttpResponseMessage ReceiveFormChangeRequest(JObject json)
         {
+            using(var sr = new StringReader(json.ToString()))
+            using(var jr = new JsonTextReader(sr))
+            {
+                var js = new JsonSerializer();
+                RequestForm obj = js.Deserialize<RequestForm>(jr);
+            }
             //turn the json into data objects
-
             //send the email (with the old and changed info) to service desk and HR to approve of the changes
 
             //add it to the queue of "unapproved", log the attempt to change?
 
-            return Request.CreateResponse(HttpStatusCode.OK, new RequestForm());
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         /*
@@ -44,5 +53,6 @@ namespace CoyoteMoves.Controllers
             //send the updated info to the proper data source (have to talk to Bazooka, Active Directory, Cisco, (Ultipro?)
             //probably a helper function for updating each source...
         }
+
     }
 }

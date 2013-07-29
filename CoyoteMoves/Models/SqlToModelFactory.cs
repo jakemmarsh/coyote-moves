@@ -72,11 +72,9 @@ namespace CoyoteMoves.Models
         public Desk CreateDesk(int floor)
         {
             string deskNumber = reader["DeskNumber"].ToString();
-            CoordinatePoint TopRight = new CoordinatePoint((double)reader["TopRightX"], (double)reader["TopRightY"]);
             CoordinatePoint TopLeft = new CoordinatePoint((double)reader["TopLeftX"], (double)reader["TopLeftY"]);
-            CoordinatePoint BottomRight = new CoordinatePoint((double)reader["BottomRightX"], (double)reader["BottomRightY"]);
-            CoordinatePoint BottomLeft = new CoordinatePoint((double)reader["BottomLeftX"], (double)reader["BottomLeftY"]);
-            Location loc = new Location(floor, TopLeft, TopRight, BottomRight, BottomLeft);
+            double Orientation = (double)reader["Orientation"];
+            Location loc = new Location(floor, TopLeft, Orientation);
             Employee TempGuy = this.CreateEmployee();
 
             Desk TempDesk = new Desk(loc, deskNumber, TempGuy);
