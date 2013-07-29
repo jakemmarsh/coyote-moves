@@ -35,7 +35,6 @@ namespace CoyoteMovesTest
             string lastName = "Stacy-Blake";
             string jobTitle = "17";
             string email = "kevin.stacyblake@coyote.com";
-            string office = "GX";
             string department = "5";
             string group = "6";
             string managerName = "Bobby Bruno";  //get by Manager ID
@@ -52,7 +51,6 @@ namespace CoyoteMovesTest
             Assert.AreEqual(lastName, testEmployee.LastName);
             Assert.AreEqual(email, testEmployee.Email);
             Assert.AreEqual(jobTitle, testEmployee.JobTitle);
-            Assert.AreEqual(office, testEmployee.Office);
             Assert.AreEqual(department, testEmployee.Department);
             Assert.AreEqual(group, testEmployee.Group);
             Assert.AreEqual(managerName, testEmployee.ManagerName);
