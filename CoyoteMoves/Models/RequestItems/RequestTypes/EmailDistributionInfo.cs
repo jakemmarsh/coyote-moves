@@ -7,7 +7,8 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
 {
     public class EmailDistributionInfo
     {
-        public List<string> GroupsToAddPersonTo { get; set; }
-        public List<string> GroupsToRemovePersonFrom { get; set; }
+        //not sure how exactly we plan on doing this, but a list of strings seems like a good way...
+        public List<string> GroupsToBeAddedTo { get; set; }
+        public List<string> GroupsToBeRemovedFrom { get; set; }
     }
 }
