@@ -16,6 +16,9 @@ namespace CoyoteMoves.Data_Access
             _connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
         }
 
+        /// <summary>
+        /// Log the request in the database. Only mark it as pending until it is approved
+        /// </summary>
         public void StoreRequestFormInDatabaseAsPending(RequestForm form)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
@@ -30,13 +33,38 @@ namespace CoyoteMoves.Data_Access
 
             int result = command.ExecuteNonQuery();
 
+            command.Connection.Close();
+
             if (result != 1)
             {
                 //error
             }
+            
+        }
+
+        /// <summary>
+        /// Once the request has been approved by HR and service desk, then we need to mark that in the database
+        /// Given the requestid, find the request and change the pending to false and approved to true
+        /// Do we have to keep a date of when it was approved(i.e. when the last of HR or service desk approved)? when it was marked as approve in the database?
+        /// </summary>
+        public void UpdateRequestToApprovedStatus(int RequestID)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending='0', Approved='1', WHERE RequestID="+ RequestID);
+
+            command.Connection = connection;
+
+            command.Connection.Open();
+
+            int result = command.ExecuteNonQuery();
 
             command.Connection.Close();
-            
+
+            if (result != 1)
+            {
+                //error
+            }
         }
 
         /// <summary>
