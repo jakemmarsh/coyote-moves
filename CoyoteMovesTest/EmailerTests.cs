@@ -31,6 +31,20 @@ namespace CoyoteMovesTest
             Assert.IsTrue(mailTest);
             Assert.IsTrue(otherMailTest);
         }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void sendEmailAttachment()
+        {
+            var _mailBody = new MailBody();
+
+         
+            bool testMail = _mailBody.sendTestAttachment("coyoteinterns2013@googlegroups.com");
+            bool otherMailTest = _mailBody.sendTestAttachment("kevin.jasieniecki@coyote.com");
+
+            Assert.IsTrue(otherMailTest);
+            Assert.IsTrue(testMail);
+        }
            
     }
 

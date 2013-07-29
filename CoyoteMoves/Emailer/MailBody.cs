@@ -7,6 +7,7 @@ using iTextSharp.text.pdf;
 using System.IO;
 using System.Configuration;
 using System.Reflection;
+using System.Net.Mail;
 
 namespace CoyoteMoves.Emailer.Models
 {
@@ -26,7 +27,6 @@ namespace CoyoteMoves.Emailer.Models
             /*Might need to be completely redone w/ Server.MapPath . . . depends if we're running this off of a server at some point. */
 
             PdfReader reader = new PdfReader(mapPathString);
-    
 
             using (PdfStamper stamper = new PdfStamper(reader, new FileStream (Path.GetFullPath("../../../CoyoteMoves/testdoc.pdf"), FileMode.Create)))
             {             
@@ -64,7 +64,59 @@ namespace CoyoteMoves.Emailer.Models
             return (smtp != null);
         }
 
+        public bool sendTestAttachment(string address)
+        {
+            string mapPathString = Path.GetFullPath("../../../CoyoteMoves/CoyoteMovesTemplate.pdf");    //hack city bitch hack hack city
+            bool maybe;
 
+            /*Might need to be completely redone w/ Server.MapPath . . . depends if we're running this off of a server at some point. */
+
+            PdfReader reader = new PdfReader(mapPathString);
+           // MemoryStream memoryStream = new MemoryStream();
+            using (MemoryStream memory = new MemoryStream())
+            //using (PdfStamper stamper = new PdfStamper(reader, MemoryStream memoryStream = new MemoryStream()))
+            {
+                PdfStamper stamper = new PdfStamper(reader, memory);
+                AcroFields form = stamper.AcroFields;
+                var fieldKeys = form.Fields.Keys;
+                //foreach (string fieldKey in fieldKeys)
+                //{
+                //    if (fieldKey.Contains("Name"))
+                //    {
+                //        form.SetField(fieldKey, "Ivanna Humpalot");
+                //    }
+                //}
+
+                stamper.FormFlattening = true;
+
+                
+                System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+                message.To.Add(address);
+                message.Subject = "A new PDF for you!";
+                message.From = new System.Net.Mail.MailAddress("alerts@coyote.com");
+                message.Body = "We have a new employee! Here's the info!";
+                System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("10.3.10.112"); //Magic numbers for SMTP server, could store in DB . . .
+                memory.Position = 0;
+                message.Attachments.Add(new Attachment(memory, "MovesForm.pdf"));
+                smtp.Send(message);
+
+                stamper.Close();
+
+                maybe = (smtp != null);
+            }
+
+            reader.Close();
+           
+
+ 
+
+
+
+
+
+            return maybe;
+
+        }
 
     }
 
