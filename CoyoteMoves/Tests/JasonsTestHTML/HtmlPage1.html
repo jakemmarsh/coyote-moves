@@ -6,11 +6,8 @@
     <script>
         $.ajax(
                 {
-                    url: "http://localhost/CoyoteMoves/Api/IndividualRequest/Create",
-                    type: "Post",
-                    data: {
-                        name: "Bob"
-                    },
+                    url: "http://localhost/CoyoteMoves/Api/Desk?floor=4",
+                    type: "Get",
                     success: function () {
                         console.log("hey ah");
                     },

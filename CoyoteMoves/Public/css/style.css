@@ -13,7 +13,7 @@ body, html {
 }
 
 body {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Univers", Arial, sans-serif;
     font-size: 14px;
     background-color: #fff;
     color: #000;
@@ -140,14 +140,46 @@ h2.black-bg {
         text-transform: uppercase;
     }
 
+#displaced-employees {
+    margin: 0;
+    list-style-type: none;
+    -webkit-padding-start: 0px;
+}
+
+    #displaced-employees > li {
+        padding: 10px;
+        cursor: pointer;
+        text-align: center;
+        background: #f0f0f0;
+        margin: 5px 0;
+        font-weight: bold;
+        color: #000;
+    }
+
+        #displaced-employees > li:hover {
+            background: #c9cace;
+        }
+
+        #displaced-employees > li:first-child {
+            margin: 0;
+        }
+
 footer {
     font-weight: bold;
     text-transform: uppercase;
+    padding: 10px;
+}
+
+.form-half {
+    vertical-align: top !important;
+    width: 50%;
+    padding: 10px !important;
 }
 
 .table {
     display: table;
     border-collapse: collapse;
+    width: 100%;
 }
 
 .tr {
@@ -155,6 +187,7 @@ footer {
     padding: 10px 0;
     height: 40px;
     width: 100%;
+    vertical-align: middle;
 }
 
     .tr.label {
@@ -162,24 +195,36 @@ footer {
         height: 30px;
         text-transform: uppercase;
         font-weight: bold;
+        background: none !important;
     }
 
-    .tr.title > h3 {
-        color: #000;
-        font-weight: bold;
-        text-transform: uppercase;
-        margin: 0;
-        border-bottom: 2px solid #000;
-        width: 100%;
+    .tr:nth-last-child(2n+1) {
+        background:#f0f0f0;
+    }
+
+h3.title {
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    border-bottom: 2px solid #000;
+    width: 100%;
+     
+}
+
+    h3.title:not(:first-of-type) {
+        margin: 20px 0 10px 0;
     }
 
 .td {
     display: table-cell;
-    padding: 0 10px;
+    padding: 0 40px;
+    width: 33%;
+    vertical-align: middle;
 }
 
     .td:first-child {
-        padding: 0;
+        padding: 0 0 0 10px;
     }
 
 .employee-form {
@@ -207,6 +252,7 @@ input[type=submit] {
     margin-top: 10px;
     font-size: 16px;
     text-transform: uppercase;
+    float: right;
 }
 
     input[type=submit]:disabled {

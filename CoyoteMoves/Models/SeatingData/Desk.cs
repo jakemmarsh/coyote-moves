@@ -22,10 +22,10 @@ namespace CoyoteMoves.Models.SeatingData
             this.DeskNumber = DeskId;
         }
 
-        public Desk(int FloorNumber, string DeskId, Employee NewGuy)
+        public Desk(Location loc, string DeskId, Employee NewGuy)
         {
             this.CurrentTenant = NewGuy;
-            this.Location = new Location(FloorNumber);
+            this.Location = loc;
             this.DeskNumber = DeskId;
         }
     }
