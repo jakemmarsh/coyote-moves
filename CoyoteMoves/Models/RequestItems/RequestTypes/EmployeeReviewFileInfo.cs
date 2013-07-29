@@ -5,11 +5,10 @@ using System.Web;
 
 namespace CoyoteMoves.Models.RequestItems.RequestTypes
 {
-    public class EmployeeReviewFileChangeRequest
+    public class EmployeeReviewFileInfo
     {
-        //i don't really know what information would go in here, so these might need to be redone
+        //need to change names of these
         public List<string> ThingsToBeAddedTo { get; set; }
         public List<string> ThingsToBeRemovedFrom { get; set; }
-
     }
 }
