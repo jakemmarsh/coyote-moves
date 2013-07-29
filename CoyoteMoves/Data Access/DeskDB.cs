@@ -29,15 +29,24 @@ namespace CoyoteMoves.Data_Access
             SqlConnection connection = new SqlConnection(_connectionString);
             string commandString = "EXEC dbo.spDesk_GetDesksByFloor @FloorNumber = @floor";
             SqlCommand command = new SqlCommand(commandString);
-            command.Parameters.AddWithValue("@floor", floor);
-            command.Connection = connection;
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
 
-            SqlToModelFactory DeskFactory = new SqlToModelFactory(reader);
-            deskList = DeskFactory.GetAllDesks(floor);
-            connection.Close();
-            return deskList;
+            try
+            {
+                command.Parameters.AddWithValue("@floor", floor);
+                command.Connection = connection;
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                SqlToModelFactory DeskFactory = new SqlToModelFactory(reader);
+                deskList = DeskFactory.GetAllDesks(floor);
+                connection.Close();
+                return deskList;
+            }
+            
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
