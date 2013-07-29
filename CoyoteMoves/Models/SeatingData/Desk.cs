@@ -15,6 +15,13 @@ namespace CoyoteMoves.Models.SeatingData
         public Location Location { get; set; }
         public Employee CurrentTenant { get; set; }
 
+        public Desk()
+        {
+            this.DeskNumber = null;
+            this.Location = null;
+            this.CurrentTenant = null;
+        }
+
         public Desk(int FloorNumber, string DeskId)
         {
             this.CurrentTenant = null;
