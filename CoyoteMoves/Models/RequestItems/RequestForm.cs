@@ -16,6 +16,10 @@ namespace CoyoteMoves.Models.RequestItems
         public int EmployeeId { get; set; }
         public CoyoteMovesFormEmployeeInfo Current { get; set; }
         public CoyoteMovesFormEmployeeInfo Future { get; set; }
+        public List<string> EmailGroupsToBeAddedTo { get; set; }
+        public List<string> EmailGroupsToBeRemovedFrom { get; set; }
+        public List<string> FilesToBeAddedTo { get; set; }
+        public List<string> FilesToBeRemovedFrom { get; set; }
 
     }
 }
