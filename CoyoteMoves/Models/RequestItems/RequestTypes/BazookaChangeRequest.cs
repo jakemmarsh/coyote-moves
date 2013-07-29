@@ -16,7 +16,7 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
             public string JobTitle { get; set; }
             public string Department { get; set; }
             public string Group { get; set; }
-            public string Manager { get; set; }
+            public string ManagerName { get; set; }
             public string JobTemplate { get; set; }
             public string SecurityItemRights { get; set; }
         }
