@@ -1,11 +1,26 @@
-﻿function IndexCtrl($scope, $routeParams) {
+﻿function IndexCtrl($scope, $routeParams, desks) {
     $scope.currentFloor = 3;
     $scope.currentEmployee = 0;
+    $scope.floorDesks = [];
+
+    var initialize = function () {
+    };
+
+    initialize();
 
     $scope.changeCurrentForm = function (index) {
         $scope.currentEmployee = index;
         $scope.$apply();
         console.log(index);
+    }
+
+    $scope.states = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
+
+    $scope.typeaheadFn = function (query) {
+        return $.map($scope.states, function (state) {
+            console.log('typeahead');
+            return state;
+        });
     }
 
     $scope.movedEmployees = [{
@@ -22,6 +37,12 @@
     }];
 
     $scope.$watch('currentFloor', function () {
+        desks.getDesksByFloor($scope.currentFloor).then(function (data) {
+            $scope.currentFloorDesks = data;
+        },
+        function (errorMessage) {
+            console.log(errorMessage);
+        });
         window.setTimeout(function () {
                 if($scope.currentFloor === 3) { 
                     google.maps.event.trigger($scope.thirdFloorMap, 'resize');

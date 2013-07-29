@@ -14,12 +14,8 @@ namespace CoyoteMoves.Models.RequestItems
         /// </summary>
 
         public int EmployeeId { get; set; }
-        public BazookaChangeRequest BazookaChanges { get; set; }
-        public UltiproChangeRequest UltiproChanges { get; set; }
-        public DeskChangeRequest DeskChanges { get; set; }
-        public PhoneChangeRequest PhoneChanges { get; set; }
-        public EmailDistributionChangeRequest EmailDistChange { get; set; }
-        public EmployeeReviewFileChangeRequest EmployeeReviewFileChange { get; set; }
+        public CoyoteMovesFormEmployeeInfo Current { get; set; }
+        public CoyoteMovesFormEmployeeInfo Future { get; set; }
 
     }
 }
