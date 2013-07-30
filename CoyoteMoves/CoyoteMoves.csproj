@@ -254,6 +254,8 @@
     <Compile Include="Models\RequestItems\RequestTypes\BazookaInfo.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\CoyoteMovesFormEmployeeInfo.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\DeskInfo.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\EmailDistributionInfo.cs" />
+    <Compile Include="Models\RequestItems\RequestTypes\EmployeeReviewFileInfo.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\PhoneInfo.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\UltiproInfo.cs" />
     <Compile Include="Models\SqlToModelFactory.cs" />

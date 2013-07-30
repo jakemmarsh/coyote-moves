@@ -19,13 +19,18 @@ namespace CoyoteMoves.Models.RequestItems
         public EmailDistributionInfo EmailInfo { get; set; }
         public EmployeeReviewFileInfo ReviewInfo { get; set; }
 
+        public RequestForm()
+        {
+
+        }
+
         public RequestForm(int EmployeeID)
         {
             this.EmployeeId = EmployeeID;
             this.Current = new CoyoteMovesFormEmployeeInfo();
             this.Future = new CoyoteMovesFormEmployeeInfo();
-            this.EmailDistributionInfo = new EmailDistributionInfo();
-            this.EmployeeReviewFileInfo = new EmployeeReviewFileInfo();
+            this.EmailInfo = new EmailDistributionInfo();
+            this.ReviewInfo = new EmployeeReviewFileInfo();
         }
 
     }

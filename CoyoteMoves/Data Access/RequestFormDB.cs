@@ -99,10 +99,10 @@ namespace CoyoteMoves.Data_Access
                 "@F_PhoneNumber='" + form.Future.PhoneInfo.PhoneNumber + "', " +
                 "@F_Other='" + form.Future.UltiproInfo.Other + "', " +
                 //need to change these...
-                "@EmailListsToBeAddedTo='" + form.EmailGroupsToBeAddedTo.ToString() + "', " +
-                "@EmailListsToBeRemovedFrom='" + form.EmailGroupsToBeRemovedFrom.ToString() + "', " +
-                "@FilesToBeAddedTo='" + form.FilesToBeAddedTo.ToString() + "', " +
-                "@FilesToBeRemovedFrom='" + form.FilesToBeRemovedFrom.ToString() + "'";
+                "@EmailListsToBeAddedTo='" + form.EmailInfo.GroupsToBeAddedTo.ToString() + "', " +
+                "@EmailListsToBeRemovedFrom='" + form.EmailInfo.GroupsToBeRemovedFrom.ToString() + "', " +
+                "@FilesToBeAddedTo='" + form.ReviewInfo.FilesToBeAddedTo.ToString() + "', " +
+                "@FilesToBeRemovedFrom='" + form.ReviewInfo.FilesToBeRemovedFrom.ToString() + "'";
 
 
             SqlCommand command = new SqlCommand(commandString);
