@@ -13,15 +13,6 @@ namespace CoyoteMovesTest
     [TestClass]
     public class EmailerTests
     {
-        //[TestCategory("Unit")]
-        //[TestMethod]
-        //public void sendEmailAttachment()
-        //{
-        //    var _EmailSender = new EmailSender();
-        //    bool otherMailTest = _EmailSender.sendTestAttachment("kevin.jasieniecki@coyote.com");
-        //    Assert.IsTrue(otherMailTest);
-      
-        //}
 
         [TestCategory("Unit")]
         [TestMethod]

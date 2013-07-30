@@ -32,71 +32,6 @@ namespace CoyoteMoves.Emailer.Models
             
         }
 
-        public void getFieldNames(string pdfPath)
-        {
-            string mapPathString = Path.GetFullPath(pdfPath);
-            PdfReader reader = new PdfReader(mapPathString);
-            MemoryStream memory = new MemoryStream();
-            PdfStamper stamper = new PdfStamper(reader, memory);
-
-            AcroFields form = stamper.AcroFields;
-
-            foreach (var field in stamper.AcroFields.Fields)
-            {
-                var line = string.Format("[{0}]", field.Key);
-                Console.WriteLine(line);
-            } 
-            stamper.Close();  
-            memory.Close();
-            reader.Close();       
-
-        }
-
-
-        public bool sendTestAttachment(string address)
-        {
-            string mapPathString = Path.GetFullPath("../../../CoyoteMoves/testdoc.pdf");    
-
-            /*Might need to be completely redone w/ Server.MapPath . . . depends if we're running this off of a server at some point. */
-
-            PdfReader reader = new PdfReader(mapPathString);
-            MemoryStream memory = new MemoryStream(); 
-            PdfStamper stamper = new PdfStamper(reader, memory);   
-               
-            AcroFields form = stamper.AcroFields;
-               
-            var fieldKeys = form.Fields.Keys;
-            
-            foreach (string fieldKey in fieldKeys)
-            {
-                if (fieldKey.Contains("Name"))
-                {
-                    form.SetField(fieldKey, "Ivanna Humpalot");
-                }
-            }
-  
-            stamper.FormFlattening = true;
-            stamper.Writer.CloseStream = false;
-            stamper.Close();
-       
-            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
-            message.To.Add(address);
-            message.Subject = "A new PDF for you!";
-            message.From = new System.Net.Mail.MailAddress("MovesRequest@coyote.com");
-            message.Body = "We have a new employee! Here's the info!";
-            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(_smtp); 
-            memory.Position = 0;
-          
-            message.Attachments.Add(new Attachment(memory, "MovesForm.pdf"));
-            smtp.Send(message);
-
-           
-            reader.Close();
-
-            return (smtp != null);
-
-        }
-
         public bool sendMovesRequest(RequestForm req)
         {
             if (req == null)
@@ -114,7 +49,7 @@ namespace CoyoteMoves.Emailer.Models
         }
 
       
-        public bool storeRequestInfo(RequestForm req)
+        public bool storeRequestInfo(RequestForm req) //TODO: store the info in DB along w/ reference number. Can generate here or have as part of the actual request object
         {
             return false;
         }
