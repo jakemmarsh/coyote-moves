@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CoyoteMoves.Emailer;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CoyoteMoves.Emailer.Models;
 using CoyoteMoves.Models.RequestItems;
 using CoyoteMoves.Models.RequestItems.RequestTypes;
@@ -41,8 +39,8 @@ namespace CoyoteMovesTest
             req.Future.BazookaInfo.Department = "THE SWARM";
             req.Current.BazookaInfo.Group = "The Backstreet Boys";
             req.Future.BazookaInfo.Group = "One Direction";
-            req.Current.BazookaInfo.Manager = "Bob from Accounting";
-            req.Future.BazookaInfo.Manager = "Korlash, Lord of Lies";
+            req.Current.BazookaInfo.ManagerID = 49;
+            req.Future.BazookaInfo.ManagerID = 50;
             req.Current.BazookaInfo.JobTemplate = "wtf";
             req.Future.BazookaInfo.JobTemplate = "srsly";
             req.Current.BazookaInfo.SecurityItemRights = "Snowden-level";
