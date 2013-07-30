@@ -84,7 +84,9 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("CurrentGroup"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.Group);
                 if (fieldKey.Equals("CurrentManager") || fieldKey.Equals("Current Manager Name"))
-                    form.SetField(fieldKey, req.Current.BazookaInfo.Manager);
+                    //Mitch editted this, I changed the way the manager is stored for the form, it's stored by the managers employee id, not name
+                    //we'll have to go back and change this to convert the id to a name
+                    form.SetField(fieldKey, req.Current.BazookaInfo.ManagerID.ToString());
                 if (fieldKey.Equals("CurrentTemplate"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTemplate);
                 if (fieldKey.Equals("CurrentSecurity ItemRights"))
@@ -96,7 +98,9 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("FutureGroup"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.Group);
                 if (fieldKey.Equals("FutureManager"))
-                    form.SetField(fieldKey, req.Future.BazookaInfo.Manager);
+                    //Mitch editted this, I changed the way the manager is stored for the form, it's stored by the managers employee id, not name
+                    //we'll have to go back and change this to convert the id to a name
+                    form.SetField(fieldKey, req.Future.BazookaInfo.ManagerID.ToString());
                 if (fieldKey.Equals("FutureTemplate"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.JobTemplate);
                 if (fieldKey.Equals("FutureSecurity ItemRights"))

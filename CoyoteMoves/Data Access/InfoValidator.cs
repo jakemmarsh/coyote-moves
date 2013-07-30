@@ -33,7 +33,7 @@ namespace CoyoteMoves.Data_Access
         }
 
         /// <summary>
-        /// Returns a list of Employees
+        /// Returns a list of Employees with the same first and last name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>

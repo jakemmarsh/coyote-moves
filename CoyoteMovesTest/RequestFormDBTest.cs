@@ -64,7 +64,7 @@ namespace CoyoteMovesTest
         public void TestUpdateRequestToApprovedStatus()
         {
             RequestFormDB tester = new RequestFormDB();
-            tester.UpdateRequestToApprovedStatus(5);
+            tester.UpdateRequestToApprovedStatus(6);
 
             //now check the database for the update
             //...for now, just go look manually...

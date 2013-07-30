@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CoyoteMoves.Emailer;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CoyoteMoves.Emailer.Models;
 using CoyoteMoves.Models.RequestItems;
 using CoyoteMoves.Models.RequestItems.RequestTypes;
