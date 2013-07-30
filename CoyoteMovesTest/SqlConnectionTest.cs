@@ -73,5 +73,12 @@ namespace CoyoteMovesTest
                 Assert.AreEqual(retrievedIds[i], expectedIds[i]);
             }
         }
+
+        [TestCategory("Unit"), TestMethod]
+        public void GetIdFromName()
+        {
+            EmployeeDB empDb = new EmployeeDB();
+            Assert.AreEqual(301758, empDb.GetIdFromName("Jason DiBabbo"));
+        }
     }
 }

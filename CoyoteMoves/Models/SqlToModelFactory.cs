@@ -46,6 +46,7 @@ namespace CoyoteMoves.Models
             {
                 string LastName = reader["LastName"].ToString();
                 string Email = reader["WorkEmail"].ToString();
+                string Phone = reader["WorkPhoneNumber"].ToString();
                 string JobTitle = reader["JobTitle"].ToString();
                 //template
                 string Department = reader["Department"].ToString();
@@ -63,6 +64,7 @@ namespace CoyoteMoves.Models
                     Group = Group,
                     Id = ID,
                     ManagerName = ManagerName,
+                    PhoneNumber = Phone
                 };
 
                 return TempGuy;
