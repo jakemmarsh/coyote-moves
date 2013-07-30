@@ -5,6 +5,7 @@ using CoyoteMoves.Emailer.Models;
 using CoyoteMoves.Models.RequestItems;
 using CoyoteMoves.Models.RequestItems.RequestTypes;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 
 namespace CoyoteMovesTest
@@ -12,60 +13,15 @@ namespace CoyoteMovesTest
     [TestClass]
     public class EmailerTests
     {
-        [TestCategory ("Unit")]
-        [TestMethod]
-        public void gimmeDaFields()
-        {
-            var _EmailSender = new EmailSender();
-            _EmailSender.getFieldNames("../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
-
-            Assert.IsNotNull(_EmailSender);
-        }
-
-        [TestCategory("Unit")]
-        [TestMethod]
-        public void apocalypticEmailTest()
-        {
-            var _EmailSender = new EmailSender();
-
-            bool mailTest = _EmailSender.sendTestEmail("jake.marsh@coyote.com");
-            bool otherMailTest = _EmailSender.sendTestEmail("kevin.jasieniecki@coyote.com");
-
-            Assert.IsTrue(mailTest);
-            Assert.IsTrue(otherMailTest);
-        }
-
-        [TestCategory("Unit")]
-        [TestMethod]
-        public void sendEmailAttachment()
-        {
-            var _EmailSender = new EmailSender();
-            bool otherMailTest = _EmailSender.sendTestAttachment("kevin.jasieniecki@coyote.com");
-            Assert.IsTrue(otherMailTest);
+        //[TestCategory("Unit")]
+        //[TestMethod]
+        //public void sendEmailAttachment()
+        //{
+        //    var _EmailSender = new EmailSender();
+        //    bool otherMailTest = _EmailSender.sendTestAttachment("kevin.jasieniecki@coyote.com");
+        //    Assert.IsTrue(otherMailTest);
       
-        }
-
-        [TestCategory("Unit")]
-        [TestMethod]
-        public void celebrationBraggingTest()
-        {
-            var _EmailSender = new EmailSender();
-            bool mailMeBro = _EmailSender.sendTestAttachment("ian.lovrich@coyote.com");
-            bool mailmetoo = _EmailSender.sendTestAttachment("jason.dibabbo@coyote.com");
-            bool mailmethree = _EmailSender.sendTestAttachment("brandon.dsouza@coyote.com");
-            bool mailmefour = _EmailSender.sendTestAttachment("mitchell.hymel@coyote.com");
-            bool mailmefive = _EmailSender.sendTestAttachment("stephen.wan@coyote.com");
-            bool fukthapolice = _EmailSender.sendTestAttachment("kevin.jasieniecki@coyote.com");
-
-
-            Assert.IsTrue(mailMeBro);
-            Assert.IsTrue(mailmetoo);
-            Assert.IsTrue(mailmethree);
-            Assert.IsTrue(mailmefour);
-            Assert.IsTrue(mailmefive);
-            Assert.IsTrue(fukthapolice);
-
-        }
+        //}
 
         [TestCategory("Unit")]
         [TestMethod]
@@ -85,7 +41,8 @@ namespace CoyoteMovesTest
             req.EmailInfo = new EmailDistributionInfo();
             req.ReviewInfo = new EmployeeReviewFileInfo();
 
-            EmailSender _emailer = new EmailSender();
+            Collection<string> to = new Collection<string> {"kevin.jasieniecki@coyote.com"};
+            EmailSender _emailer = new EmailSender("New Coyote Moves Request", to, "CoyoteMovesRequest@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
 
             req.Current.BazookaInfo.JobTitle = "Fisherman";
             req.Future.BazookaInfo.JobTitle = "Whaler";
@@ -123,37 +80,10 @@ namespace CoyoteMovesTest
             req.ReviewInfo.FilesToBeAddedTo = new List<string> { "the", "files", "are" };
             req.ReviewInfo.FilesToBeRemovedFrom = new List<string> { "in", "the", "computer" };
 
-            bool testSent = _emailer.sendMovesRequest(req, "kevin.jasieniecki@coyote.com");
-            bool mailMeBro = _emailer.sendMovesRequest(req,"ian.lovrich@coyote.com");
-            bool mailmetoo = _emailer.sendMovesRequest(req,"jason.dibabbo@coyote.com");
-            bool mailmethree =_emailer.sendMovesRequest(req,"brandon.dsouza@coyote.com");
-            bool mailmefour = _emailer.sendMovesRequest(req,"mitchell.hymel@coyote.com");
-            bool mailmefive = _emailer.sendMovesRequest(req,"stephen.wan@coyote.com");
-
-
-            Assert.IsTrue(mailMeBro);
-            Assert.IsTrue(mailmetoo);
-            Assert.IsTrue(mailmethree);
-            Assert.IsTrue(mailmefour);
-            Assert.IsTrue(mailmefive);
+            bool testSent = _emailer.sendMovesRequest(req);
 
             Assert.IsTrue(testSent);
-            
-
         }
-
-        [TestCategory("Unit")]
-        [TestMethod]
-        public void readFieldsWhatTheFuck()
-        {
-
-            EmailSender _emailSender = new EmailSender();
-            _emailSender.getFieldNames("../../../CoyoteMoves/testdoc.pdf");
-
-            Assert.IsTrue(true);
-
-        }
-           
     }
 
 }
