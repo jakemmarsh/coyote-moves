@@ -18,7 +18,6 @@ namespace CoyoteMoves.Data_Access
         public object GetIdFromName(string name)
         {
             string[] names = name.Split(' ');
-            int Id =-1;
             SqlConnection connection = new SqlConnection(_connectionString);
             string commandString = "select PersonID from dbo.Person AS P where P.FirstName = @Fname AND P.LastName = @Lname";
             SqlCommand command = new SqlCommand(commandString);
@@ -29,15 +28,18 @@ namespace CoyoteMoves.Data_Access
                 command.Parameters.AddWithValue("@Lname", names[1]);
                 command.Connection = connection;
                 connection.Open();
-                Id = (int)command.ExecuteScalar();
+                var temp = command.ExecuteScalar();
                 connection.Close();
-                return Id;
+                if ((temp == null) || (temp == DBNull.Value))
+                {
+                    return -1;
+                }
+                return (int)temp;
             }
-            
-            catch(NullReferenceException ex)
+
+            catch (NullReferenceException ex)
             {
-                //nothing was returned! ;_;
-                return -1;
+                throw new Exception(ex.Message);
             }
         }
     }
