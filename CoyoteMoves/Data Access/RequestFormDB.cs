@@ -19,7 +19,7 @@ namespace CoyoteMoves.Data_Access
         /// <summary>
         /// Log the request in the database. Only mark it as pending until it is approved
         /// </summary>
-        public void StoreRequestFormInDatabaseAsPending(RequestForm form)
+        public bool StoreRequestFormInDatabaseAsPending(RequestForm form)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
 
@@ -35,10 +35,7 @@ namespace CoyoteMoves.Data_Access
 
             command.Connection.Close();
 
-            if (result != 1)
-            {
-                //error
-            }
+            return (result == 1);
             
         }
 

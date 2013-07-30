@@ -16,7 +16,7 @@ using CoyoteMoves.Models.EmployeeData;
 
 namespace CoyoteMoves.Controllers
 {
-    public class RequestformController : ApiController
+    public class RequestFormController : ApiController
     {
         /*
          * Frontend will send us json (or just the object?) with the future (and current?) coyote moves form information
