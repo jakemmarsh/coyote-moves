@@ -75,34 +75,36 @@ namespace CoyoteMoves.Data_Access
         /// <returns></returns>
         private SqlCommand AddParametersForStoreRequestFormInDatabaseHelper(RequestForm form)
         {
-            SqlCommand command = new SqlCommand("EXEC dbo.spRequestData_StoreRequestAsPending");
+            string commandString = "EXEC dbo.spRequestData_StoreRequestAsPending " +
+                "@EmployeeID=" + form.EmployeeId + ", " +
+                "@C_JobTitle='" + form.Current.BazookaInfo.JobTitle + "', " +
+                "@C_Department='" + form.Current.BazookaInfo.Department + "', " +
+                "@C_Group='" + form.Current.BazookaInfo.Group + "', " +
+                "@C_Manager='" + form.Current.BazookaInfo.ManagerID + "', " +
+                "@C_JobTemplate='" + form.Current.BazookaInfo.JobTemplate + "', " +
+                "@C_SecurityItemRights='" + form.Current.BazookaInfo.SecurityItemRights + "', " +
+                "@C_DeskNumber='" + form.Current.DeskInfo.DeskNumber + "', " +
+                "@C_Office='" + form.Current.DeskInfo.Office + "', " +
+                "@C_PhoneNumber='" + form.Current.PhoneInfo.PhoneNumber + "', " +
+                "@C_Other='" + form.Current.UltiproInfo.Other + "', " +
+                "@F_JobTitle='" + form.Future.BazookaInfo.JobTitle + "', " +
+                "@F_Department='" + form.Future.BazookaInfo.Department + "', " +
+                "@F_Group='" + form.Future.BazookaInfo.Group + "', " +
+                "@F_Manager='" + form.Future.BazookaInfo.ManagerID + "', " +
+                "@F_JobTemplate='" + form.Future.BazookaInfo.JobTemplate + "', " +
+                "@F_SecurityItemRights='" + form.Future.BazookaInfo.SecurityItemRights + "', " +
+                "@F_DeskNumber='" + form.Future.DeskInfo.DeskNumber + "', " +
+                "@F_Office='" + form.Future.DeskInfo.Office + "', " +
+                "@F_PhoneNumber='" + form.Future.PhoneInfo.PhoneNumber + "', " +
+                "@F_Other='" + form.Future.UltiproInfo.Other + "', " +
+                //need to change these...
+                "@EmailListsToBeAddedTo='" + form.EmailGroupsToBeAddedTo.ToString() + "', " +
+                "@EmailListsToBeRemovedFrom='" + form.EmailGroupsToBeRemovedFrom.ToString() + "', " +
+                "@FilesToBeAddedTo='" + form.FilesToBeAddedTo.ToString() + "', " +
+                "@FilesToBeRemovedFrom='" + form.FilesToBeRemovedFrom.ToString() + "'";
 
-            command.Parameters.AddWithValue("@EmployeeID", form.EmployeeId);
-            command.Parameters.AddWithValue("@C_JobTitle", form.Current.BazookaInfo.JobTitle);
-            command.Parameters.AddWithValue("@C_Department", form.Current.BazookaInfo.Department);
-            command.Parameters.AddWithValue("@C_Group", form.Current.BazookaInfo.Group);
-            command.Parameters.AddWithValue("@C_Manager", form.Current.BazookaInfo.Manager);
-            command.Parameters.AddWithValue("@C_JobTemplate", form.Current.BazookaInfo.JobTemplate);
-            command.Parameters.AddWithValue("@C_SecurityItemRights", form.Current.BazookaInfo.SecurityItemRights);
-            command.Parameters.AddWithValue("@C_DeskNumber", form.Current.DeskInfo.DeskNumber);
-            command.Parameters.AddWithValue("@C_Office", form.Current.DeskInfo.Office);
-            command.Parameters.AddWithValue("@C_PhoneNumber", form.Current.PhoneInfo.PhoneNumber);
-            command.Parameters.AddWithValue("@C_Other", form.Current.UltiproInfo.Other);
-            command.Parameters.AddWithValue("@F_JobTitle", form.Future.BazookaInfo.JobTitle);
-            command.Parameters.AddWithValue("@F_Department", form.Future.BazookaInfo.Department);
-            command.Parameters.AddWithValue("@F_Group", form.Future.BazookaInfo.Group);
-            command.Parameters.AddWithValue("@F_Manager", form.Future.BazookaInfo.Manager);
-            command.Parameters.AddWithValue("@F_JobTemplate", form.Future.BazookaInfo.JobTemplate);
-            command.Parameters.AddWithValue("@F_SecurityItemRights", form.Future.BazookaInfo.SecurityItemRights);
-            command.Parameters.AddWithValue("@F_DeskNumber", form.Future.DeskInfo.DeskNumber);
-            command.Parameters.AddWithValue("@F_Office", form.Future.DeskInfo.Office);
-            command.Parameters.AddWithValue("@F_PhoneNumber", form.Future.PhoneInfo.PhoneNumber);
-            command.Parameters.AddWithValue("@F_Other", form.Future.UltiproInfo.Other);
-            //for the rest I'm passing in lists of strings... which probably isn't good?
-            command.Parameters.AddWithValue("@EmailListsToBeAddedTo", form.EmailGroupsToBeAddedTo);
-            command.Parameters.AddWithValue("@EmailListsToBeRemovedFrom", form.EmailGroupsToBeAddedTo);
-            command.Parameters.AddWithValue("@FilesToBeAddedTo", form.FilesToBeAddedTo);
-            command.Parameters.AddWithValue("@FilesToBeRemovedFrom", form.FilesToBeRemovedFrom);
+
+            SqlCommand command = new SqlCommand(commandString);
             
 
             return command;

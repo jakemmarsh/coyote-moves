@@ -21,5 +21,16 @@ namespace CoyoteMoves.Models.RequestItems
         public List<string> FilesToBeAddedTo { get; set; }
         public List<string> FilesToBeRemovedFrom { get; set; }
 
+        public RequestForm(int EmployeeID)
+        {
+            this.EmployeeId = EmployeeID;
+            this.Current = new CoyoteMovesFormEmployeeInfo();
+            this.Future = new CoyoteMovesFormEmployeeInfo();
+            this.EmailGroupsToBeAddedTo = new List<string>();
+            this.EmailGroupsToBeRemovedFrom = new List<string>();
+            this.FilesToBeAddedTo = new List<string>();
+            this.FilesToBeRemovedFrom = new List<string>();
+        }
+
     }
 }
