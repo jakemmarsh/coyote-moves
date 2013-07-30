@@ -20,27 +20,11 @@ namespace CoyoteMoves.Data_Access
 
         /// <summary>
         /// Given the name of the future manager, check to make sure that that manager is at least a real employee
-        /// Might have to make sure they're also a manager too? Idk how we'd do that
+        /// Will probably run into problems when two people have the same name...
         /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public bool ValidateManager(string name)
         {
-            //wtf is manager id? is that the id of that person's manager? or is that the id of that person AS manager?
-
-            /*
-             * So, the user is entering in plain text of a name of a manager. Multiple people can have the same name,
-             * we should do something to make sure that the user can select which person they want. e.g. if there are two john doe's, then
-             * when they type in john doe, something will appear presenting a little bit more information about each john doe and force the user to choose
-             * one of them. Then after they choose, we'll have more than just a name and have the person ID so we'll know exactly who they're talking about
-             * */
-
-            /*
-             * So if we did that, then once the user types in a name, the front end will send us the name, we'll go into the DB and get all the
-             * employees with that name and a little bit of other information for the user (e.g. department, job title w/e) and for us (employee id) on
-             * each match. Then send that to the front end to present those choices to the user and deal with that. This means, when the front end
-             * sends the form back to us via the "submit", we'll know the manager will be legit. the front end will have to send us the id of the manager though
-             * */
+           
 
             string firstName = name.Split(' ').First();
             string lastName = name.Split(' ').Last();
@@ -49,7 +33,7 @@ namespace CoyoteMoves.Data_Access
         }
 
         /// <summary>
-        /// 
+        /// Returns a list of Employees
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
@@ -92,15 +76,18 @@ namespace CoyoteMoves.Data_Access
             SqlCommand command = new SqlCommand("Select DeskNumber from Intern_CoyoteMoves.dbo.Desk where DeskNumber='" + number + "'");
             command.Connection = connection;
             command.Connection.Open();
-            int result = command.ExecuteNonQuery();
-            command.Connection.Close();
-
-            //should we check that it's not zero? or that it only returns one row affected?
-            if (result != 1)
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
             {
-                return false;
+                if (reader["DeskNumber"].ToString() == number)
+                {
+                    command.Connection.Close();
+                    return true;
+                }
             }
-            return true;
+
+            command.Connection.Close();
+            return false;
         }
 
         public bool ValidateJobTemplate(string template)

@@ -51,7 +51,8 @@ namespace CoyoteMoves.Data_Access
         {
             SqlConnection connection = new SqlConnection(_connectionString);
 
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending='0', Approved='1', WHERE RequestID="+ RequestID);
+            //probably add some check to make sure both Service desk and HR approved
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending='0', Approved='1' WHERE RequestID="+ RequestID);
 
             command.Connection = connection;
 

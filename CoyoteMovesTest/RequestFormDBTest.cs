@@ -54,8 +54,20 @@ namespace CoyoteMovesTest
             RequestFormDB tester = new RequestFormDB();
             tester.StoreRequestFormInDatabaseAsPending(form);
 
-            //now go check the database
+            //now check the database for this addition
+            //...for now, just go look manually...
 
+
+        }
+
+        [TestMethod]
+        public void TestUpdateRequestToApprovedStatus()
+        {
+            RequestFormDB tester = new RequestFormDB();
+            tester.UpdateRequestToApprovedStatus(5);
+
+            //now check the database for the update
+            //...for now, just go look manually...
         }
     }
 }
