@@ -240,7 +240,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DeskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\IndividualRequestController.cs" />
     <Compile Include="Controllers\RequestformController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
