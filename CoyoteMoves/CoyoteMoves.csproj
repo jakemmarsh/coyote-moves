@@ -108,6 +108,9 @@
     <Reference Include="DotNetOpenAuth.OpenIdOAuth">
       <HintPath>..\packages\DotNetOpenAuth.OpenIdOAuth.4.3.1.13153\lib\net45-full\DotNetOpenAuth.OpenIdOAuth.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.5.4.2\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
@@ -236,13 +239,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DeskController.cs" />
-    <Compile Include="Controllers\RequestformController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndividualRequestController.cs" />
+    <Compile Include="Controllers\RequestformController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\IndividualRequestDB.cs" />
     <Compile Include="Data Access\InfoValidator.cs" />
+    <Compile Include="Emailer\EmailSender.cs" />
+    <Compile Include="Emailer\Models\EmailTemplate.cs" />
     <Compile Include="Data Access\RequestDataDB.cs" />
     <Compile Include="Data Access\RequestFormDB.cs" />
     <Compile Include="Models\EmployeeData\Employee.cs" />
@@ -265,7 +270,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app.config" />
     <None Include="Controllers\Translator\JSONExample.json" />
+    <Content Include="CoyoteMovesTemplate.pdf" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Public\css\bootstrap.css" />

@@ -16,20 +16,16 @@ namespace CoyoteMoves.Models.RequestItems
         public int EmployeeId { get; set; }
         public CoyoteMovesFormEmployeeInfo Current { get; set; }
         public CoyoteMovesFormEmployeeInfo Future { get; set; }
-        public List<string> EmailGroupsToBeAddedTo { get; set; }
-        public List<string> EmailGroupsToBeRemovedFrom { get; set; }
-        public List<string> FilesToBeAddedTo { get; set; }
-        public List<string> FilesToBeRemovedFrom { get; set; }
+        public EmailDistributionInfo EmailInfo { get; set; }
+        public EmployeeReviewFileInfo ReviewInfo { get; set; }
 
         public RequestForm(int EmployeeID)
         {
             this.EmployeeId = EmployeeID;
             this.Current = new CoyoteMovesFormEmployeeInfo();
             this.Future = new CoyoteMovesFormEmployeeInfo();
-            this.EmailGroupsToBeAddedTo = new List<string>();
-            this.EmailGroupsToBeRemovedFrom = new List<string>();
-            this.FilesToBeAddedTo = new List<string>();
-            this.FilesToBeRemovedFrom = new List<string>();
+            this.EmailDistributionInfo = new EmailDistributionInfo();
+            this.EmployeeReviewFileInfo = new EmployeeReviewFileInfo();
         }
 
     }
