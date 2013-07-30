@@ -53,6 +53,7 @@
     <Compile Include="JSONTranslatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlConnectionTest.cs" />
+    <Compile Include="EmailerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoyoteMoves\CoyoteMoves.csproj">
