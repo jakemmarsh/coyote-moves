@@ -15,8 +15,5 @@
     <releaseNotes />
     <copyright>Copyright (c) 1999-2013 by Bruno Lowagie and Paulo Soares. All Rights Reserved.</copyright>
     <language>en-US</language>
-    <references>
-      <reference file="itextsharp.dll" />
-    </references>
   </metadata>
 </package>
