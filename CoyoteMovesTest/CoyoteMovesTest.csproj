@@ -53,6 +53,8 @@
     <Compile Include="JSONTranslatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlConnectionTest.cs" />
+    <Compile Include="RequestFormDBTest.cs" />
+    <Compile Include="InfoValidatorTest.cs" />
     <Compile Include="EmailerTests.cs" />
   </ItemGroup>
   <ItemGroup>
