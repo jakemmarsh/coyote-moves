@@ -15,7 +15,7 @@ namespace CoyoteMoves.Data_Access
             _connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
         }
        
-        public object GetIdFromName(string name)
+        public int GetIdFromName(string name)
         {
             string[] names = name.Split(' ');
             SqlConnection connection = new SqlConnection(_connectionString);
