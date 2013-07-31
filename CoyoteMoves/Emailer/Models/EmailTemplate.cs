@@ -13,11 +13,11 @@ namespace CoyoteMoves.Emailer.Models
 {
     public class EmailTemplate
     {
-        string _subject;   //TODO: Add reference number to email
+        private string _subject;   //TODO: Add reference number to email
         Collection<string> _to;
-        string _from;
-        string _emailBody;
-        string _mappedLocation;
+        private string _from;
+        private string _emailBody;
+        private string _mappedLocation;
 
         public EmailTemplate(string subject, Collection<string> to,  string from, string emailBody, string pdfLocation)
         {
