@@ -19,8 +19,8 @@ namespace CoyoteMovesTest
         [TestInitialize]
         public void Setup()
         {
-            Collection<string> to = new Collection<string> { "kevin.jasieniecki@coyote.com" };
-            _emailer = new EmailSender("New Coyote Moves _request", to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
+            _to = new Collection<string> {};
+            _emailer = new EmailSender("New Coyote Moves _request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
             _req = new RequestForm();
 
 
@@ -78,8 +78,9 @@ namespace CoyoteMovesTest
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void emailFrom_requestObjectIsSent()
+        public void emailFromRequestObjectIsSent()
         {
+            _to.Add("kevin.jasieniecki@coyote.com");
             bool testSent = _emailer.sendMovesRequest(_req);
 
             Assert.IsTrue(testSent);
@@ -87,14 +88,22 @@ namespace CoyoteMovesTest
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void emailStoredTest()
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void emailFailsIfNoRecipients()
         {
-            bool testStore = _emailer.sendMovesRequestAndStore(_req);
-
-            Assert.IsTrue(testStore);
-
-
+            _to.Add(null);
+            bool testSent = _emailer.sendMovesRequest(_req);
         }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void emailFailsIfNoRequest()
+        {
+            bool testSent = _emailer.sendMovesRequest(null);
+        }
+
     }
+
 
 }

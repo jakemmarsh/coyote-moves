@@ -11,11 +11,14 @@ namespace CoyoteMovesTest
     [TestClass]
     public class SqlConnectionTest
     {
-        IndividualRequestDB _requester = new IndividualRequestDB();
+        private IndividualRequestDB _requester = new IndividualRequestDB();
+        private EmployeeDB _employee = new EmployeeDB();
+        private DeskDB _desk = new DeskDB();
+
 
         [TestCategory("Integration")]
         [TestMethod]
-        public void GetPredragNameById()
+        public void GetNameById()
         {
             string firstName = "Predrag";
             string lastName = "Djukic";
@@ -26,38 +29,6 @@ namespace CoyoteMovesTest
             Assert.AreEqual(firstName + " " + lastName, fullName);
         }
 
-        [TestCategory("Integration")]
-        [TestMethod]
-        public void GetEmployeeObjectById()
-        {
-
-            string firstName = "Kevin";
-            string lastName = "Stacy-Blake";
-            string jobTitle = "17";
-            string email = "kevin.stacyblake@coyote.com";
-            string department = "5";
-            string group = "6";
-            string managerName = "Bobby Bruno";  //get by Manager ID
-            //string template;
-            //string securityItemRights;
-
-            int kevinId = 299364;
-            Employee testEmployee = new Employee();
-
-            testEmployee = _requester.GetEmployeeById(kevinId);
-
-            Assert.AreEqual(kevinId, testEmployee.Id);
-            Assert.AreEqual(firstName, testEmployee.FirstName);
-            Assert.AreEqual(lastName, testEmployee.LastName);
-            Assert.AreEqual(email, testEmployee.Email);
-            Assert.AreEqual(jobTitle, testEmployee.JobTitle);
-            Assert.AreEqual(department, testEmployee.Department);
-            Assert.AreEqual(group, testEmployee.Group);
-            Assert.AreEqual(managerName, testEmployee.ManagerName);
-            //Assert.AreEqual(template, testEmployee.Template);
-            //Assert.AreEqual(securityItemRights, testEmployee.SecurityItemRights);
-               
-        }
 
         [TestCategory("Integration")]
         [TestMethod]
@@ -77,8 +48,9 @@ namespace CoyoteMovesTest
         [TestCategory("Unit"), TestMethod]
         public void GetIdFromName()
         {
-            EmployeeDB empDb = new EmployeeDB();
-            Assert.AreEqual(301758, empDb.GetIdFromName("Jason DiBabbo"));
+            int retrievedName = _employee.GetIdFromName("Jason Dibabbo");
+            Assert.AreEqual(301758, retrievedName);
         }
+
     }
 }

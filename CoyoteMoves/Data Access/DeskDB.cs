@@ -48,5 +48,11 @@ namespace CoyoteMoves.Data_Access
                 throw new Exception(ex.Message);
             }
         }
+
+        public string GetPersonByDesk(string name)
+        {
+            return null;
+        }
+
     }
 }
