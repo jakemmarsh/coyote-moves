@@ -42,8 +42,10 @@
 <h2 class="black-bg" style="margin-top:5px;">Forms</h2>
 <div class="tabs">
     <a href ng-click="$parent.currentEmployee = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentEmployee == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
-
+        
+    <input id='search' ng-model='selectedIntern' ng-change="setSelectedIntern()" bs-typeahead="people" data-min-length="0"/>
 </div>
+
 <form class="employee-form table" novalidate ng-repeat="employee in movedEmployees" ng-show="currentEmployee == $index">
     <div class="td form-half">
         <h3 class="title">Bazooka Changes</h3>
@@ -65,7 +67,7 @@
                     Job Title:
                 </div>
                 <div class="td">
-                    <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.bazooka.current.jobTitle" bs-typeahead="typeaheadFn" />
+                    <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.bazooka.current.jobTitle"/>
                 </div>
                 <div class="td">
                     <input type="text" id="job-title-future" placeholder="Future Title" ng-model="employee.bazooka.future.jobTitle" />
