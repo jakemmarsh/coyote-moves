@@ -153,6 +153,13 @@ h2.black-bg {
             text-decoration: none;
         }
 
+#employee-search {
+    width: 400px;
+    padding: 7px 9px;
+    bottom: 2px;
+    position: relative;
+}
+
 .map-container {
     float: left;
     width: 85%;
@@ -339,4 +346,20 @@ input[type=submit] {
 
 .text--bold {
     font-weight: bold;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.no-float {
+    float: none !important;
+}
+
+.inline-block {
+    display: inline-block;
 }
