@@ -43,7 +43,6 @@ body {
   display: block;
   padding: 3px 20px;
   clear: both;
-  font-weight: bold;
   line-height: 1.428571429;
   color: #333333;
   white-space: nowrap;
@@ -61,6 +60,7 @@ body {
 .dropdown-menu > .active > a:focus {
   color: #000;
   background: #30d600;
+  font-weight: bold;
 }
 
 textarea, input { 
@@ -339,6 +339,10 @@ input[type=submit] {
     margin-right: 10px;
 }
 
+.nudge--left {
+    margin-left: 10px;
+}
+
 .soft--sides {
     padding-left: 10px;
     padding-right: 10px;
@@ -362,4 +366,9 @@ input[type=submit] {
 
 .inline-block {
     display: inline-block;
+}
+
+#footer {
+  width: 100%;
+  border-top: 3px solid #000
 }

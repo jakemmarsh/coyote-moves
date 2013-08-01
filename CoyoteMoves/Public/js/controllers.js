@@ -1,35 +1,51 @@
 ﻿function IndexCtrl($scope, $routeParams, desks) {
     $scope.currentFloor = 3;
     $scope.currentEmployee = 0;
-    $scope.people = ["Jake", "Magic", "Brandon", "Ian"];
+    $scope.allMovesForms = [];
+    $scope.currentDeskOrientation = 0;
+    $scope.movedEmployees = [{
+        name: "Test Employee"
+    }];
+
 
     $scope.changeCurrentForm = function (index) {
         $scope.currentEmployee = index;
-        $scope.$apply();
     }
 
     $scope.searchForEmployee = function () {
         for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
             if ($scope.currentFloorEmployees[i].name.toLowerCase() === $scope.employeeToSearchFor.toLowerCase()) {
                 // zoom to employee's desk on map
-                $scope.currentDeskNumber = $scope.currentFloorEmployees[i].deskNumber;
+                $scope.currentDeskNumber = $scope.currentFloorEmployees[i].current.deskInfo.deskNumber;
                 $scope.currentDeskOccupant = $scope.currentFloorEmployees[i].name;
+
+                //set current employee
+                $scope.selectedDeskEmployee = $scope.currentFloorEmployees[i];
             }
         }
     }
 
-    $scope.movedEmployees = [{
-        name: "Jake"
-    },
-    {
-        name: "Magic"
-    },
-    {
-        name: "Brandon"
-    },
-    {
-        name: "Ian"
-    }];
+    $scope.createMoveForm = function () {
+        $scope.movedEmployees.push($scope.selectedDeskEmployee);
+        $scope.changeCurrentForm($scope.movedEmployees.length - 1);
+    }
+
+    $scope.sendAllForms = function () {
+        
+        for (var i = 0; i < $scope.movedEmployees.length; i++) {
+            $scope.allMovesForms.push($scope.movedEmployees[i]);
+        }
+        console.log($scope.allMovesForms);
+    }
+
+    $scope.cancelSingleMove = function (index) {
+        console.log(index);
+        $scope.movedEmployees.splice(index, 1);
+    }
+
+    $scope.cancelAllMoves = function () {
+        $scope.movedEmployees = [];
+    }
 
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
@@ -37,13 +53,41 @@
             $scope.currentFloorDesks = data;
             $scope.currentFloorEmployees = [];
             $scope.currentFloorEmployeeNames = [];
+
             for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
                 var name = $scope.currentFloorDesks[i].currentTenant.firstName + ' ' + $scope.currentFloorDesks[i].currentTenant.lastName,
-                    deskNumber = $scope.currentFloorDesks[i].deskNumber,
                     employee = {
                         name: name,
-                        deskNumber: deskNumber
+
+                        current: {
+
+                            bazookaInfo: {
+                                jobTitle: $scope.currentFloorDesks[i].currentTenant.jobTitle,
+                                department: $scope.currentFloorDesks[i].currentTenant.department,
+                                group: $scope.currentFloorDesks[i].currentTenant.group,
+                                managerId: $scope.currentFloorDesks[i].currentTenant.managerName,
+                                jobTemplate: $scope.currentFloorDesks[i].currentTenant.department + " " + $scope.currentFloorDesks[i].currentTenant.jobTitle,
+                            },
+
+                            ultiproInfo: {
+                                jobTitle: $scope.currentFloorDesks[i].currentTenant.jobTitle,
+                                department: $scope.currentFloorDesks[i].currentTenant.department,
+                                group: $scope.currentFloorDesks[i].currentTenant.group,
+                                supervisor: $scope.currentFloorDesks[i].currentTenant.managerName,
+                                other: ""
+                            },
+
+                            deskInfo: {
+                                deskNumber: $scope.currentFloorDesks[i].deskNumber
+                            },
+
+                            phoneInfo: {
+                                phoneNumber: $scope.currentFloorDesks[i].currentTenant.phoneNumber
+                            }
+
+                        }
                     };
+
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
             }
