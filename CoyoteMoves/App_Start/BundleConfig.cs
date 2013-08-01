@@ -10,15 +10,16 @@ namespace CoyoteMoves
         {
 
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
-                        "~/Public/js/lib/modernizr.js",
-                        "~/Public/js/lib/angular.js",
-                        "~/Public/js/lib/ui-bootstrap.js",
-                        "~/Public/js/lib/uiUtils.js",
-                        "~/Public/js/lib/uiMap.js",
                         "~/Public/js/lib/jquery-1.10.2.js",
-                        "~/Public/js/lib/bootstrap.js",
+                        "~/Public/js/lib/angular.js",
+                        "~/Public/js/lib/angular-slider.js",
                         "~/Public/js/lib/angular-strap.js",
-                        "~/Public/js/lib/angular-dragdrop.js"));
+                        "~/Public/js/lib/angular-dragdrop.js",
+                        "~/Public/js/lib/bootstrap-typeahead.js",
+                        "~/Public/js/lib/modernizr.js",
+                        "~/Public/js/lib/ui-bootstrap.js",
+                        "~/Public/js/lib/uiMap.js",
+                        "~/Public/js/lib/uiUtils.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                         "~/Public/js/controllers.js",
@@ -27,7 +28,8 @@ namespace CoyoteMoves
 
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/Public/css/style.css",
-                "~/Public/css/normalize.css"));
+                "~/Public/css/normalize.css",
+                "~/Public/css/angular-slider.css"));
         }
     }
 }

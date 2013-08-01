@@ -1,4 +1,4 @@
-﻿var myModule = angular.module('coyoteMoves', ['ui.utils', 'ui.map']).
+﻿var myModule = angular.module('coyoteMoves', ['ui.utils', 'ui.map', '$strap.directives', 'uiSlider']).
   config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
       $locationProvider.html5Mode(true);

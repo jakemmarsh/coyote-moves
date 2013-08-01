@@ -273,6 +273,7 @@
     <Content Include="CoyoteMovesTemplate.pdf" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Public\css\angular-slider.css" />
     <Content Include="Public\css\bootstrap.css" />
     <Content Include="Public\css\normalize.css" />
     <Content Include="Public\css\style.css" />
@@ -281,8 +282,10 @@
     <Content Include="Public\js\app.js" />
     <Content Include="Public\js\controllers.js" />
     <Content Include="Public\js\lib\angular-dragdrop.js" />
+    <Content Include="Public\js\lib\angular-slider.js" />
     <Content Include="Public\js\lib\angular-strap.js" />
     <Content Include="Public\js\lib\angular.js" />
+    <Content Include="Public\js\lib\bootstrap-typeahead.js" />
     <Content Include="Public\js\lib\bootstrap.js" />
     <Content Include="Public\js\lib\jquery-1.10.2.js" />
     <Content Include="Public\js\lib\modernizr.js" />
