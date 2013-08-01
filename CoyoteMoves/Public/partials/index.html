@@ -2,6 +2,10 @@
 <div class="clearfix">
     <div class="tabs">
         <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
+        <form ng-submit="searchForEmployee()" class="inline-block">
+            <input type="text" id="employee-search" ng-model="employeeToSearchFor" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="3" />
+            <input type="submit" value="Go" class="no-float" />
+        </form>
     </div>
     <div id="map-third" class="map-container" ng-show="currentFloor == 3">
         <div ui-map="thirdFloorMap" class="map"
@@ -30,7 +34,7 @@
                         Desk Number
                     </div>
                     <div class="td text--bold"">
-                        4535sdfsdf
+                        <span ng-bind="currentDeskNumber"></span>
                     </div>
                 </div>
                 <div class="tr">
@@ -38,7 +42,7 @@
                         Current Occupant
                     </div>
                     <div class="td">
-                        <input type="text" value="Magic Wan" />
+                        <input type="text" ng-model="currentDeskOccupant" />
                     </div>
                 </div>
                 <div class="tr">
@@ -46,7 +50,7 @@
                         Orientation
                     </div>
                     <div class="td">
-                        <slider floor="0" ceiling="360" step="10" precision="1" ng-model="desk.orientation"></slider>
+                        <slider floor="0" ceiling="360" step="10" precision="1" ng-model="currentDeskOrientation"></slider>
                     </div>
                 </div>
                 <input type="submit" value="Save Desk" class="clearfix" />

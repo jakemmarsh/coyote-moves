@@ -17,7 +17,7 @@ using CoyoteMoves.Models.EmployeeData;
 
 namespace CoyoteMoves.Controllers
 {
-    public class RequestformController : ApiController
+    public class RequestFormController : ApiController
     {
         /*
          * Frontend will send us json (or just the object?) with the future (and current?) coyote moves form information
@@ -40,18 +40,21 @@ namespace CoyoteMoves.Controllers
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
+        // GET api/RequestForm/GetAllGroups
         public List<string> GetAllGroups()
         {
             RequestDataDB dbaccess = new RequestDataDB();
             return dbaccess.GetAllGroups();
         }
 
+        // GET api/RequestForm/GetAllDepartments
         public List<string> GetAllDepartments()
         {
             RequestDataDB dbaccess = new RequestDataDB();
             return dbaccess.GetAllDepartments();
         }
 
+        // GET api/RequestForm/GetAllJobTitles
         public List<string> GetAllJobTitles()
         {
             RequestDataDB dbaccess = new RequestDataDB();
