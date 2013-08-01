@@ -15,15 +15,48 @@ namespace CoyoteMovesTest
 
         [TestCategory("Integration")]
         [TestMethod]
-        public void GetPredragById()
+        public void GetPredragNameById()
         {
             string firstName = "Predrag";
             string lastName = "Djukic";
-            int PredragId = 47;
+            int predragId = 47;
             
-            string fullName = _requester.GetFullNameById(PredragId);
+            string fullName = _requester.GetFullNameById(predragId);
  
             Assert.AreEqual(firstName + " " + lastName, fullName);
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void GetEmployeeObjectById()
+        {
+
+            string firstName = "Kevin";
+            string lastName = "Stacy-Blake";
+            string jobTitle = "17";
+            string email = "kevin.stacyblake@coyote.com";
+            string department = "5";
+            string group = "6";
+            string managerName = "Bobby Bruno";  //get by Manager ID
+            //string template;
+            //string securityItemRights;
+
+            int kevinId = 299364;
+            Employee testEmployee = new Employee();
+
+            testEmployee = _requester.GetEmployeeById(kevinId);
+
+            Assert.AreEqual(kevinId, testEmployee.Id);
+            Assert.AreEqual(firstName, testEmployee.FirstName);
+            Assert.AreEqual(lastName, testEmployee.LastName);
+            Assert.AreEqual(email, testEmployee.Email);
+            Assert.AreEqual(jobTitle, testEmployee.JobTitle);
+            Assert.AreEqual(department, testEmployee.Department);
+            Assert.AreEqual(group, testEmployee.Group);
+            Assert.AreEqual(managerName, testEmployee.ManagerName);
+            //Assert.AreEqual(template, testEmployee.Template);
+            //Assert.AreEqual(securityItemRights, testEmployee.SecurityItemRights);
+               
         }
 
         [TestCategory("Integration")]
@@ -39,6 +72,13 @@ namespace CoyoteMovesTest
             {
                 Assert.AreEqual(retrievedIds[i], expectedIds[i]);
             }
+        }
+
+        [TestCategory("Unit"), TestMethod]
+        public void GetIdFromName()
+        {
+            EmployeeDB empDb = new EmployeeDB();
+            Assert.AreEqual(301758, empDb.GetIdFromName("Jason DiBabbo"));
         }
     }
 }
