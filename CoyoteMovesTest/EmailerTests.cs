@@ -15,12 +15,14 @@ namespace CoyoteMovesTest
         private EmailSender _emailer;
         private RequestForm _req;
         private Collection<string> _to;
+        private Mock<EmailSender> _mockedEmailer;
 
         [TestInitialize]
         public void Setup()
         {
             _to = new Collection<string> {};
             _emailer = new EmailSender("New Coyote Moves _request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
+            _mockedEmailer = new Mock<EmailSender>("New Coyote Moves _request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
             _req = new RequestForm();
 
 
@@ -126,8 +128,6 @@ namespace CoyoteMovesTest
             bool testSent = _emailer.sendMovesRequest(_req, "GX");
             Assert.IsFalse(testSent);
         }
-
-      
 
     }
 

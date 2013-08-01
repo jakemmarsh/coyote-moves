@@ -1,4 +1,5 @@
-﻿using CoyoteMoves.Models.EmployeeData;
+﻿using CoyoteMoves.Models;
+using CoyoteMoves.Models.EmployeeData;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -77,12 +78,12 @@ namespace CoyoteMoves.Data_Access
             return nameCollection[0];
         }
 
-        public Employee GetEmployeeById(int Id)
-        {
-            //Collection<string> 
-            //Need to account for template and security settings - refactor employee object or find them
-            return null;
-        }
+        //public Employee GetEmployeeById(int Id)
+        //{
+        //    //Collection<string> 
+        //    //Need to account for template and security settings - refactor employee object or find them
+        //    return null;
+        //}
 
         public Collection<int> GetEmployeeIdsByGroupId(int groupId)
         {
@@ -103,6 +104,29 @@ namespace CoyoteMoves.Data_Access
 
             return returnToSender;
 
+        }     
+   
+        public List<Employee> GetAllEmployeesWithSameFullName(string name)
+        {
+            List<Employee> employeesWithName = new List<Employee>();
+            SqlConnection connection = new SqlConnection(_connectionString);
+
+            string commandString = "EXEC dbo.spEmployee_GetEmployeesWithName";
+            SqlCommand command = new SqlCommand(commandString);
+            command.Parameters.AddWithValue("@FirstName", name.Split(' ').First());
+            command.Parameters.AddWithValue("@LastName", name.Split(' ').Last());
+            command.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            SqlToModelFactory factory = new SqlToModelFactory(reader);
+      
+            while (reader.Read())
+            {
+                employeesWithName.Add(factory.CreateEmployee());
+            }
+
+            connection.Close();
+            return employeesWithName;
         }
     }
 }

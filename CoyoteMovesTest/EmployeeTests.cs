@@ -28,7 +28,7 @@ namespace CoyoteMovesTest
             Assert.AreEqual(firstName + " " + lastName, fullName);
         }
 
-
+        //refactor
         [TestCategory("Integration")]
         [TestMethod]
         public void GetPeopleByGroup()
@@ -49,6 +49,28 @@ namespace CoyoteMovesTest
         {
             int retrievedName = _employee.GetIdFromName("Jason Dibabbo");
             Assert.AreEqual(301758, retrievedName);
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void GetIdFromNameFailsNoExist()
+        {
+            int retrievedName = _employee.GetIdFromName("Ivanna Humpalot");
+            Assert.AreEqual(-1, retrievedName);
+
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void GetAllEmployeesWithSameFullName()
+        {
+            List<Employee> retrievedEmployees = new List<Employee>();
+            retrievedEmployees = _employee.GetAllEmployeesWithSameFullName("Kevin Smith");
+            foreach (Employee entry in retrievedEmployees)
+            {
+                Assert.AreEqual("Kevin", entry.FirstName);
+                Assert.AreEqual("Smith", entry.LastName);
+            }
         }
 
     }

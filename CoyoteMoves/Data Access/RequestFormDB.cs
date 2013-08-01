@@ -42,7 +42,7 @@ namespace CoyoteMoves.Data_Access
         /// Given the requestid, find the request and change the pending to false and approved to true
         /// Do we have to keep a date of when it was approved(i.e. when the last of HR or service desk approved)? when it was marked as approve in the database?
         /// </summary>
-        private void UpdateRequestToApprovedStatus(int RequestID, string ApprovalDept)
+        private bool UpdateRequestToApprovedStatus(int RequestID, string ApprovalDept)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
 
@@ -60,10 +60,8 @@ namespace CoyoteMoves.Data_Access
                 setTheRequestAsNotPending(RequestID);
             }
 
-            if (result != 1)
-            {
-                //error
-            }
+            return (result == 1);
+
         }
 
         private void setTheRequestAsNotPending(int RequestID)
@@ -97,6 +95,7 @@ namespace CoyoteMoves.Data_Access
         /// <returns></returns>
         private SqlCommand AddParametersForStoreRequestFormInDatabaseHelper(RequestForm form)
         {
+            //USE COMMAND.PARAMETERS.ADDWITHVALUE NIGGA
             string commandString = "EXEC dbo.spRequestData_StoreRequestAsPending " +
                 "@EmployeeID=" + form.EmployeeId + ", " +
                 "@C_JobTitle='" + form.Current.BazookaInfo.JobTitle + "', " +
@@ -131,14 +130,14 @@ namespace CoyoteMoves.Data_Access
             return command;
         }
 
-        public void UpdateRequestToServiceDeskApproved(int requestID)
+        public bool UpdateRequestToServiceDeskApproved(int requestID)
         {
-            UpdateRequestToApprovedStatus(requestID, "ServiceDesk");
+            return UpdateRequestToApprovedStatus(requestID, "ServiceDesk");
         }
 
-        public void UpdateRequestToHRApproved(int requestID)
+        public bool UpdateRequestToHRApproved(int requestID)
         {
-            UpdateRequestToApprovedStatus(requestID, "HR");
+            return UpdateRequestToApprovedStatus(requestID, "HR");
         }
     }
 }

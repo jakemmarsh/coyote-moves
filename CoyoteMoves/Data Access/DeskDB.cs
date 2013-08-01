@@ -89,26 +89,40 @@ namespace CoyoteMoves.Data_Access
             reader.Close();
         }
 
-        private void InsertInformationIntoDeskDB(string deskNumber, int topLeftX, int topLeftY, int orientation, int floorNumber, int employeeID)
+        public bool InsertInformationIntoDeskDB(string deskNumber, int topLeftX, int topLeftY, int orientation, int floorNumber, int employeeID)
         {
             SqlConnection connection = new SqlConnection(this._connectionString);
-            string commandString = "INSERT INTO Intern_CoyoteMoves.dbo.Desk (DeskNumber, TopLeftX, TopLeftY, Orientation, FloorNumber, EmployeeID)";
-            commandString += " Values (" + "'" + deskNumber + "'" + ", " + topLeftX + ", " + topLeftY + ", " + orientation + ", " + floorNumber + ", " + employeeID + ")";
-            SqlCommand command = new SqlCommand(commandString);
+            string commandString = "INSERT INTO Intern_CoyoteMoves.dbo.Desk (DeskNumber, TopLeftX, TopLeftY, Orientation, FloorNumber, EmployeeID) Values (@DeskNumber, @TopLeftX, @TopLeftY, @Orientation, @FloorNumber, @EmployeeID);";
+           
+            SqlCommand command = new SqlCommand(commandString); 
+            command.Parameters.AddWithValue("@DeskNumber", deskNumber);
+            command.Parameters.AddWithValue("@TopLeftX", topLeftX);
+            command.Parameters.AddWithValue("@TopLeftY", topLeftY);
+            command.Parameters.AddWithValue("@Orientation", orientation);
+            command.Parameters.AddWithValue("@FloorNumber", floorNumber);
+            command.Parameters.AddWithValue("@EmployeeID", employeeID);
             command.Connection = connection;
             command.Connection.Open();
             int result = command.ExecuteNonQuery();
             command.Connection.Close();
-            if (result != 1)
-            {
-                Console.WriteLine("error");
-            }
+
+            return (result == 1);
         }
 
-        public string GetPersonByDesk(string name)
+        public bool RemoveDeskFromDeskDB(string deskNumber)
         {
-            return null;
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            string commandString = "DELETE FROM [Intern_CoyoteMoves].[dbo].[Desk] WHERE DeskNumber= @DeskNumber";
+            SqlCommand command = new SqlCommand(commandString);
+            command.Parameters.AddWithValue("@DeskNumber", deskNumber);
+            command.Connection = connection;
+            command.Connection.Open();
+            int result = command.ExecuteNonQuery();
+            command.Connection.Close();
+
+            return (result == 1);
         }
+
 
     }
 }

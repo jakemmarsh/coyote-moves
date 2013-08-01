@@ -93,21 +93,5 @@ namespace CoyoteMoves.Emailer.Models
         {
             return sendMovesRequest(req, "SD");
         }
-
-        public bool sendMovesRequestAndStore(RequestForm req)
-        {
-            if (req == null)
-            {
-                throw new ArgumentNullException("req");
-            }
-            MailMessage _toSend = _template.movesFormRequest(req);
-            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient(_smtp);
-            smtp.Send(_toSend);
-            bool stored = _requester.StoreRequestFormInDatabaseAsPending(req);
-
-            return stored;
-        }
-
-        
     }
 }
