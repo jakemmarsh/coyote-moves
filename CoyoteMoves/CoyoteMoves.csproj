@@ -245,7 +245,6 @@
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\EmployeeDB.cs" />
     <Compile Include="Data Access\InfoValidator.cs" />
-    <Compile Include="Data Access\InitializeDeskDB.cs" />
     <Compile Include="Emailer\EmailSender.cs" />
     <Compile Include="Emailer\Models\EmailTemplate.cs" />
     <Compile Include="Data Access\RequestDataDB.cs" />

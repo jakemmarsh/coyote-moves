@@ -10,7 +10,7 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void TestAddNamesAndDeskNumbersFromFile()
         {
-            InitializeDeskDB test = new InitializeDeskDB();
+            DeskDB test = new DeskDB();
             //this function takes three minutes to run...
 
             //Do NOT run this function, unless you want to insert ~1000 people into the database
