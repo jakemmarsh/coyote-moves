@@ -22,21 +22,53 @@
         </div>
     </div>
     <div id="map-sidebar">
-        <h3>Displaced Employees</h3>
-        <ul id="displaced-employees">
-            <li jqyoui-droppable>
-                Jake
-            </li>
-            <li>
-                Magic
-            </li>
-            <li>
-                Brandon
-            </li>
-            <li>
-                Ian
-            </li>
-        </ul>
+        <div id="selected-desk-container">
+            <h3>Selected Desk</h3>
+            <form class="soft--sides">
+                <div class="tr">
+                    <div class="td">
+                        Desk Number
+                    </div>
+                    <div class="td text--bold"">
+                        4535sdfsdf
+                    </div>
+                </div>
+                <div class="tr">
+                    <div class="td">
+                        Current Occupant
+                    </div>
+                    <div class="td">
+                        <input type="text" value="Magic Wan" />
+                    </div>
+                </div>
+                <div class="tr">
+                    <div class="td">
+                        Orientation
+                    </div>
+                    <div class="td">
+                        <slider floor="0" ceiling="360" step="10" precision="1" ng-model="desk.orientation"></slider>
+                    </div>
+                </div>
+                <input type="submit" value="Save Desk" class="clearfix" />
+            </form>
+        </div>
+        <div id="displaced-employees-container">
+            <h3>Displaced Employees</h3>
+            <ul id="displaced-employees">
+                <li jqyoui-droppable>
+                    Jake
+                </li>
+                <li>
+                    Magic
+                </li>
+                <li>
+                    Brandon
+                </li>
+                <li>
+                    Ian
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <h2 class="black-bg" style="margin-top:5px;">Forms</h2>
