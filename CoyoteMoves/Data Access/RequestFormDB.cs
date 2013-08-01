@@ -47,17 +47,46 @@ namespace CoyoteMoves.Data_Access
             SqlConnection connection = new SqlConnection(_connectionString);
 
             //probably add some check to make sure both Service desk and HR approved
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending='0', " + ApprovalDept + "Approved='1' WHERE RequestID="+ RequestID);
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE RequestID="+ RequestID);
             command.Connection = connection;
             command.Connection.Open();
 
             int result = command.ExecuteNonQuery();
             command.Connection.Close();
 
+            bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(RequestID, ApprovalDept);
+            if (theOtherDepartmentHasApproved)
+            {
+                setTheRequestAsNotPending(RequestID);
+            }
+
             if (result != 1)
             {
                 //error
             }
+        }
+
+        private void setTheRequestAsNotPending(int RequestID)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE RequestID = " + RequestID);
+            cmd.Connection = connection;
+            cmd.Connection.Open();
+            cmd.ExecuteNonQuery();
+            cmd.Connection.Close();
+        }
+
+        private bool CheckOtherDepartmentApproval(int RequestID, string ApprovalDept)
+        {
+            string OtherDept = ApprovalDept.Equals("HR") ? "ServiceDesk" : "HR";
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + "Approved FROM dbo.RequestData WHERE RequestID=" + RequestID);
+            cmd.Connection = connection;
+            cmd.Connection.Open();
+
+            object temp = cmd.ExecuteScalar();
+            connection.Close();
+            return (bool)temp;
         }
 
         /// <summary>
