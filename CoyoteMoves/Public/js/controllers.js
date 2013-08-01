@@ -27,6 +27,10 @@
         name: "Ian"
     }];
 
+    $scope.desk = {
+        orientation: 180
+    };
+
     $scope.$watch('currentFloor', function () {
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
             $scope.currentFloorDesks = data;
