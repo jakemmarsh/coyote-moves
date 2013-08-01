@@ -5,7 +5,7 @@ using CoyoteMoves.Data_Access;
 namespace CoyoteMovesTest
 {
     [TestClass]
-    public class InitializeDeskDBTest
+    public class DeskTests
     {
         [TestMethod]
         public void TestAddNamesAndDeskNumbersFromFile()

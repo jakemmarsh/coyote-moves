@@ -244,7 +244,6 @@
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\EmployeeDB.cs" />
-    <Compile Include="Data Access\IndividualRequestDB.cs" />
     <Compile Include="Data Access\InfoValidator.cs" />
     <Compile Include="Data Access\InitializeDeskDB.cs" />
     <Compile Include="Emailer\EmailSender.cs" />

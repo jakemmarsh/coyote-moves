@@ -38,41 +38,41 @@ namespace CoyoteMovesTest
             _req.ReviewInfo = new EmployeeReviewFileInfo();
 
 
-            _req.Current.BazookaInfo.JobTitle = "Fisherman";
-            _req.Future.BazookaInfo.JobTitle = "Whaler";
-            _req.Current.BazookaInfo.Department = "Raynors Raiders";
-            _req.Future.BazookaInfo.Department = "THE SWARM";
-            _req.Current.BazookaInfo.Group = "The Backstreet Boys";
-            _req.Future.BazookaInfo.Group = "One Direction";
+            _req.Current.BazookaInfo.JobTitle = "test";
+            _req.Future.BazookaInfo.JobTitle = "test";
+            _req.Current.BazookaInfo.Department = "test";
+            _req.Future.BazookaInfo.Department = "test";
+            _req.Current.BazookaInfo.Group = "test";
+            _req.Future.BazookaInfo.Group = "test";
             _req.Current.BazookaInfo.ManagerID = 49;
             _req.Future.BazookaInfo.ManagerID = 50;
-            _req.Current.BazookaInfo.JobTemplate = "wtf";
-            _req.Future.BazookaInfo.JobTemplate = "srsly";
-            _req.Current.BazookaInfo.SecurityItemRights = "Snowden-level";
-            _req.Future.BazookaInfo.SecurityItemRights = "sudo apt-get dicks";
+            _req.Current.BazookaInfo.JobTemplate = "test";
+            _req.Future.BazookaInfo.JobTemplate = "testy";
+            _req.Current.BazookaInfo.SecurityItemRights = "test";
+            _req.Future.BazookaInfo.SecurityItemRights = "test";
 
-            _req.Current.UltiproInfo.JobTitle = "Fisherman Apprentice";
-            _req.Future.UltiproInfo.JobTitle = "Ahab";
-            _req.Current.UltiproInfo.Department = "Mergers and Acquisitions";
-            _req.Future.UltiproInfo.Department = "Murders and Assassinations";
-            _req.Current.UltiproInfo.Supervisor = "Draco Malfoy";
-            _req.Future.UltiproInfo.Supervisor = "Harry Potter"; 
-            _req.Current.UltiproInfo.Other = "Option for Otherkin employees";
-            _req.Future.UltiproInfo.Other = "Should this be nullabe?";
+            _req.Current.UltiproInfo.JobTitle = "test";
+            _req.Future.UltiproInfo.JobTitle = "test";
+            _req.Current.UltiproInfo.Department = "test";
+            _req.Future.UltiproInfo.Department = "test";
+            _req.Current.UltiproInfo.Supervisor = "test";
+            _req.Future.UltiproInfo.Supervisor = "test"; 
+            _req.Current.UltiproInfo.Other = "test";
+            _req.Future.UltiproInfo.Other = "test?";
            
-            _req.Current.DeskInfo.DeskNumber = "666";
-            _req.Future.DeskInfo.DeskNumber = "616";
-            _req.Current.DeskInfo.Office = "The 6th Circle";
-            _req.Future.DeskInfo.Office = "The 7th Gate";
+            _req.Current.DeskInfo.DeskNumber = "test";
+            _req.Future.DeskInfo.DeskNumber = "test";
+            _req.Current.DeskInfo.Office = "test";
+            _req.Future.DeskInfo.Office = "test";
 
             _req.Current.PhoneInfo.PhoneNumber = "8472718339";
             _req.Future.PhoneInfo.PhoneNumber = "99995953214";
 
-            _req.EmailInfo.GroupsToBeAddedTo = new List<string> { "wat", "the", "fak" };
-            _req.EmailInfo.GroupsToBeRemovedFrom = new List<string> { "are", "you", "doing" };
+            _req.EmailInfo.GroupsToBeAddedTo = new List<string> { "one", "two", "three" };
+            _req.EmailInfo.GroupsToBeRemovedFrom = new List<string> { "one", "two", "three" };
 
-            _req.ReviewInfo.FilesToBeAddedTo = new List<string> { "the", "files", "are" };
-            _req.ReviewInfo.FilesToBeRemovedFrom = new List<string> { "in", "the", "computer" };
+            _req.ReviewInfo.FilesToBeAddedTo = new List<string> { "one", "two", "three" };
+            _req.ReviewInfo.FilesToBeRemovedFrom = new List<string> { "one", "two", "three" };
 
         }
 
@@ -102,6 +102,32 @@ namespace CoyoteMovesTest
         {
             bool testSent = _emailer.sendMovesRequest(null);
         }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void HRemailFailsIfNoRequest()
+        {
+            bool testSent = _emailer.sendMovesRequestHR(null);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentNullException))]
+        public void SDemailFailsIfNoRequest()
+        {
+            bool testSent = _emailer.sendMovesRequestSD(null);
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void nonHRorSDEmailFails()
+        {
+            bool testSent = _emailer.sendMovesRequest(_req, "GX");
+            Assert.IsFalse(testSent);
+        }
+
+      
 
     }
 

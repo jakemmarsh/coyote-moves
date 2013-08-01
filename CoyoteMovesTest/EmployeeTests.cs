@@ -9,9 +9,8 @@ using CoyoteMoves.Models.EmployeeData;
 namespace CoyoteMovesTest
 {
     [TestClass]
-    public class SqlConnectionTest
+    public class EmployeeTests
     {
-        private IndividualRequestDB _requester = new IndividualRequestDB();
         private EmployeeDB _employee = new EmployeeDB();
         private DeskDB _desk = new DeskDB();
 
@@ -23,8 +22,8 @@ namespace CoyoteMovesTest
             string firstName = "Predrag";
             string lastName = "Djukic";
             int predragId = 47;
-            
-            string fullName = _requester.GetFullNameById(predragId);
+
+            string fullName = _employee.GetFullNameById(predragId);
  
             Assert.AreEqual(firstName + " " + lastName, fullName);
         }
@@ -37,7 +36,7 @@ namespace CoyoteMovesTest
             Collection<int> expectedIds = new Collection<int> { 69, 540, 615, 896, 1425, 4092, 4253, 4684, 5266, 7944, 10113, 10179, 11832, 13493, 18016, 18020 };
             int testGroup = 13;
 
-            Collection<int> retrievedIds = _requester.GetEmployeeIdsByGroupId(testGroup);
+            Collection<int> retrievedIds = _employee.GetEmployeeIdsByGroupId(testGroup);
 
             for (int i = 0; i < expectedIds.Count; i++)
             {
@@ -45,7 +44,7 @@ namespace CoyoteMovesTest
             }
         }
 
-        [TestCategory("Unit"), TestMethod]
+        [TestCategory("Integration"), TestMethod]
         public void GetIdFromName()
         {
             int retrievedName = _employee.GetIdFromName("Jason Dibabbo");

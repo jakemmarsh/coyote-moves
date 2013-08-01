@@ -35,6 +35,7 @@ namespace CoyoteMoves.Models
             return DeskList;
         }
 
+
         public Employee CreateEmployee()
         {
             string FirstName = reader["FirstName"].ToString();
@@ -82,7 +83,5 @@ namespace CoyoteMoves.Models
             Desk TempDesk = new Desk(loc, deskNumber, TempGuy);
             return TempDesk;
         }
-
-
     }
 }
