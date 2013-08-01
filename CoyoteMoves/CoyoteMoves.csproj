@@ -285,6 +285,7 @@
     <Content Include="Public\js\lib\angular-dragdrop.js" />
     <Content Include="Public\js\lib\angular-strap.js" />
     <Content Include="Public\js\lib\angular.js" />
+    <Content Include="Public\js\lib\bootstrap-typeahead.js" />
     <Content Include="Public\js\lib\bootstrap.js" />
     <Content Include="Public\js\lib\jquery-1.10.2.js" />
     <Content Include="Public\js\lib\modernizr.js" />

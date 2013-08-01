@@ -16,3 +16,22 @@
         }
     }
 });
+
+myModule.factory('autocomplete', function ($http, $q) {
+    return {
+
+        apiPath: 'coyotemoves/api/',
+
+        getJobTitles: function (floorId) {
+            var deferred = $q.defer();
+
+            $http.get(this.apiPath + 'Desk/GetDesksByFloor/' + floorId).success(function (data) {
+                deferred.resolve(data);
+            }).error(function () {
+                deferred.reject("An error occurred while fetching job titles for autocomplete.");
+            });
+
+            return deferred.promise;
+        }
+    }
+});
