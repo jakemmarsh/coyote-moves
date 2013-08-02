@@ -11,13 +11,25 @@ namespace CoyoteMovesTest
     [TestClass]
     public class InfoValidatorTest
     {
+        InfoValidator _validator;
+
+        [TestInitialize]
+        public void setup()
+        {
+           _validator = new InfoValidator();
+        }
+
         [TestMethod]
+        [TestCategory("Integration")]
         public void TestValidateDeskNumber()
         {
-            InfoValidator validator = new InfoValidator();
-
-            Assert.IsTrue(validator.ValidateDeskNumber("ABC666"));
-            Assert.IsFalse(validator.ValidateDeskNumber("IMNOTINTHEDATABASE"));
+            Assert.IsTrue(_validator.ValidateDeskNumber("ABC666"));
+        }
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void TestValidateDeskNumberFailsNull()
+        {
+            Assert.IsFalse(_validator.ValidateDeskNumber("IMNOTINTHEDATABASE"));
         }
     }
 }

@@ -27,44 +27,40 @@ namespace CoyoteMovesTest
         public void TestStoreRequestFormInDatabaseAsPending()
         {
             string test = "test";
-            RequestForm form = new RequestForm(301757);
-            form.EmployeeId = 301757;
+            _req = new RequestForm(301757);
 
-            form.Current.BazookaInfo.JobTitle = "Intern";
-            form.Current.BazookaInfo.JobTemplate = test;
-            form.Current.BazookaInfo.ManagerID = 301757;
-            form.Current.BazookaInfo.Group = "T1";
-            form.Current.BazookaInfo.SecurityItemRights = test;
-            form.Current.BazookaInfo.Department = "IT";
-            form.Future.BazookaInfo.JobTitle = "Intern";
-            form.Future.BazookaInfo.JobTemplate = test;
-            form.Future.BazookaInfo.ManagerID = 301757;
-            form.Future.BazookaInfo.Group = "T1";
-            form.Future.BazookaInfo.SecurityItemRights = test;
-            form.Future.BazookaInfo.Department = "IT";
+            _req.Current.BazookaInfo.JobTitle = "Intern";
+            _req.Current.BazookaInfo.JobTemplate = test;
+            _req.Current.BazookaInfo.ManagerID = 301757;
+            _req.Current.BazookaInfo.Group = "T1";
+            _req.Current.BazookaInfo.SecurityItemRights = test;
+            _req.Current.BazookaInfo.Department = "IT";
+            _req.Future.BazookaInfo.JobTitle = "Intern";
+            _req.Future.BazookaInfo.JobTemplate = test;
+            _req.Future.BazookaInfo.ManagerID = 301757;
+            _req.Future.BazookaInfo.Group = "T1";
+            _req.Future.BazookaInfo.SecurityItemRights = test;
+            _req.Future.BazookaInfo.Department = "IT";
 
-            form.Current.DeskInfo.DeskNumber = test;
-            form.Current.DeskInfo.Office = test;
-            form.Future.DeskInfo.DeskNumber = test;
-            form.Future.DeskInfo.Office = test;
+            _req.Current.DeskInfo.DeskNumber = test;
+            _req.Current.DeskInfo.Office = test;
+            _req.Future.DeskInfo.DeskNumber = test;
+            _req.Future.DeskInfo.Office = test;
 
-            form.Current.PhoneInfo.PhoneNumber = test;
-            form.Future.PhoneInfo.PhoneNumber = test;
+            _req.Current.PhoneInfo.PhoneNumber = test;
+            _req.Future.PhoneInfo.PhoneNumber = test;
 
-            form.Current.UltiproInfo.Department = test;
-            form.Current.UltiproInfo.JobTitle = test;
-            form.Current.UltiproInfo.Other = test;
-            form.Current.UltiproInfo.Supervisor = test;
-            form.Future.UltiproInfo.Department = test;
-            form.Future.UltiproInfo.JobTitle = test;
-            form.Future.UltiproInfo.Other = test;
-            form.Future.UltiproInfo.Supervisor = test;
+            _req.Current.UltiproInfo.Department = test;
+            _req.Current.UltiproInfo.JobTitle = test;
+            _req.Current.UltiproInfo.Other = test;
+            _req.Current.UltiproInfo.Supervisor = test;
+            _req.Future.UltiproInfo.Department = test;
+            _req.Future.UltiproInfo.JobTitle = test;
+            _req.Future.UltiproInfo.Other = test;
+            _req.Future.UltiproInfo.Supervisor = test;
 
-            RequestFormDB tester = new RequestFormDB();
-            tester.StoreRequestFormInDatabaseAsPending(form);
+            _requester.StoreRequestFormInDatabaseAsPending(_req);
 
-            //now check the database for this addition
-            //...for now, just go look manually...
 
 
         }

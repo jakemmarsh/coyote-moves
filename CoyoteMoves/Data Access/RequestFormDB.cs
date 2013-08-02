@@ -122,9 +122,11 @@ namespace CoyoteMoves.Data_Access
                 "@EmailListsToBeAddedTo='" + form.EmailInfo.GroupsToBeAddedTo.ToString() + "', " +
                 "@EmailListsToBeRemovedFrom='" + form.EmailInfo.GroupsToBeRemovedFrom.ToString() + "', " +
                 "@FilesToBeAddedTo='" + form.ReviewInfo.FilesToBeAddedTo.ToString() + "', " +
-                "@FilesToBeRemovedFrom='" + form.ReviewInfo.FilesToBeRemovedFrom.ToString() + "', " + 
-                "@CreateByID=" + 301758 + ", " + 
-                "@UpdateByID=" + 301758;
+                "@FilesToBeRemovedFrom='" + form.ReviewInfo.FilesToBeRemovedFrom.ToString() + "', " +
+                "@CreateByID=" + 301758 + ", " +
+                "@UpdateByID=" + 301758 + ", " +
+                "@UniqueID='" + form.uniqueId + "'";
+
 
             SqlCommand command = new SqlCommand(commandString);
             return command;
