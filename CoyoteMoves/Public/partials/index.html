@@ -43,7 +43,7 @@
                         Occupant
                     </div>
                     <div class="td">
-                        <input type="text" ng-model="currentDeskOccupant" />
+                        <input type="text" ng-model="currentDeskOccupant" bs-typeahead="movedEmployees.name" data-items="20" data-min-length="2"/>
                     </div>
                 </div>
                 <div class="tr">
@@ -60,17 +60,17 @@
         <div id="displaced-employees-container">
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
-                <li jqyoui-droppable>
-                    Jake
+                <li>
+                   Jake 
                 </li>
                 <li>
-                    Magic
+                   Likes
                 </li>
                 <li>
-                    Brandon
+                   To
                 </li>
                 <li>
-                    Ian
+                   Hardcode 
                 </li>
             </ul>
         </div>
@@ -103,10 +103,10 @@
                     Job Title:
                 </div>
                 <div class="td">
-                    <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.current.bazookaInfo.jobTitle"/>
+                    <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.current.bazookaInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                 </div>
                 <div class="td">
-                    <input type="text" id="job-title-future" placeholder="Future Title" ng-model="employee.future.bazookaInfo.jobTitle" />
+                    <input type="text" id="job-title-future" placeholder="Future Title" ng-model="employee.future.bazookaInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                 </div>
             </div>
 
@@ -115,10 +115,10 @@
                     Department:
                 </div>
                 <div class="td">
-                    <input type="text" id="department-current" placeholder="Current Department" ng-model="employee.current.bazookaInfo.department"/>
+                    <input type="text" id="department-current" placeholder="Current Department" ng-model="employee.current.bazookaInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                 </div>
                 <div class="td">
-                    <input type="text" id="department-future" placeholder="Future Department" ng-model="employee.future.bazookaInfo.department"/>
+                    <input type="text" id="department-future" placeholder="Future Department" ng-model="employee.future.bazookaInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                 </div>
             </div>
 
@@ -127,10 +127,10 @@
                     Group:
                 </div>
                 <div class="td">
-                    <input type="text" id="group-current" placeholder="Current Group" ng-model="employee.current.bazookaInfo.group"/>
+                    <input type="text" id="group-current" placeholder="Current Group" ng-model="employee.current.bazookaInfo.group" bs-typeahead="groups" data-items="20" data-min-length="0"/>
                 </div>
                 <div class="td">
-                    <input type="text" id="group-future" placeholder="Future Group" ng-model="employee.future.bazookaInfo.group"/>
+                    <input type="text" id="group-future" placeholder="Future Group" ng-model="employee.future.bazookaInfo.group" bs-typeahead="groups" data-items="20" data-min-length="0"/>
                 </div>
             </div>
 
@@ -249,10 +249,10 @@
                         Job Title:
                     </div>
                     <div class="td">
-                        <input type="text" id="ultipro-title-current" placeholder="Current Title" ng-model="employee.current.ultiproInfo.jobTitle" />
+                        <input type="text" id="ultipro-title-current" placeholder="Current Title" ng-model="employee.current.ultiproInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                     </div>
                     <div class="td">
-                        <input type="text" id="ultipro-title-future" placeholder="Future Title" ng-model="employee.future.ultiproInfo.jobTitle"/>
+                        <input type="text" id="ultipro-title-future" placeholder="Future Title" ng-model="employee.future.ultiproInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
 
@@ -261,10 +261,10 @@
                         Department:
                     </div>
                     <div class="td">
-                        <input type="text" id="Text4" placeholder="Current Department" ng-model="employee.current.ultiproInfo.department"/>
+                        <input type="text" id="Text4" placeholder="Current Department" ng-model="employee.current.ultiproInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                     </div>
                     <div class="td">
-                        <input type="text" id="Text5" placeholder="Future Department" ng-model="employee.future.ultiproInfo.department"/>
+                        <input type="text" id="Text5" placeholder="Future Department" ng-model="employee.future.ultiproInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
         
@@ -353,6 +353,7 @@
     </div>
 
 </form>
+
 <a href class="cancel-button nudge--left" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length == 0">Close All Tab(s)</a>
-<input type="submit" value="Submit Moves" class="clearfix" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length == 0" ng-click="sendAllForms()" />
-<input type="submit" value="Submit Move" class="clearfix" ng-show="movedEmployees.length == 1" ng-click="sendAllForms()"/>
+<input type="submit" value="Submit Moves" class="clearfix" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
+<input type="submit" value="Submit Move" class="clearfix" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1" ng-click="sendAllForms()"/>

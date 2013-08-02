@@ -1,4 +1,4 @@
-﻿function IndexCtrl($scope, $routeParams, desks) {
+﻿function IndexCtrl($scope, $routeParams, desks, requestForm) {
     $scope.currentFloor = 3;
     $scope.currentEmployee = 0;
     $scope.allMovesForms = [];
@@ -7,6 +7,19 @@
         name: "Test Employee"
     }];
 
+
+    requestForm.getAllJobTitles().then(function (data) {
+        $scope.jobTitles = data;
+    })
+
+    requestForm.getAllGroups().then(function (data) {
+        $scope.groups = data;
+    })
+
+    requestForm.getAllDepartments().then(function (data) {
+        
+        $scope.departments = data;
+    })
 
     $scope.changeCurrentForm = function (index) {
         $scope.currentEmployee = index;
@@ -18,6 +31,7 @@
                 // zoom to employee's desk on map
                 $scope.currentDeskNumber = $scope.currentFloorEmployees[i].current.deskInfo.deskNumber;
                 $scope.currentDeskOccupant = $scope.currentFloorEmployees[i].name;
+                $scope.currentDeskOrientation = $scope.currentFloorEmployees[i].deskOrientation;
 
                 //set current employee
                 $scope.selectedDeskEmployee = $scope.currentFloorEmployees[i];
@@ -58,7 +72,7 @@
                 var name = $scope.currentFloorDesks[i].currentTenant.firstName + ' ' + $scope.currentFloorDesks[i].currentTenant.lastName,
                     employee = {
                         name: name,
-
+                        deskOrientation: $scope.currentFloorDesks[i].location.orientation,
                         current: {
 
                             bazookaInfo: {
