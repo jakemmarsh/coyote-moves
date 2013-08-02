@@ -20,7 +20,9 @@ body {
 }
 
 #form-inner {
-    width: 500px;
+    width: 300px;
+    display: block;
+    margin: 150px auto 0 auto;
 }
 
 .dropdown-menu {
@@ -318,7 +320,7 @@ input[type=text], input[type=password] {
     border: 1px solid #c9cace;
 }
 
-    input[type=text]:focus {
+    input[type=text]:focus, input[type=password]:focus {
         border: 1px solid #30d600;
     }
 

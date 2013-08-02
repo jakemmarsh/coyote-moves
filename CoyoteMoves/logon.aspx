@@ -10,29 +10,27 @@
 </head>
 <html>
   <body>	
-    <form id="Login" method="post" runat="server" class="full-width full-height table vertical-middle text-center">
-        <div class="tr">
-            <div id="form-inner" class="td">
-                <h1>Coyote Moves</h1>
-                <div class="tr">
-                    <div class="td">
-                        <asp:Label ID="Label2" Runat=server >Username:</asp:Label>
-                    </div>
-                    <div class="td">
-                        <asp:TextBox ID=txtUsername Runat=server ></asp:TextBox>
-                    </div>
+    <form id="Login" method="post" runat="server" class="full-width full-height">
+        <div id="form-inner">
+            <h1>Coyote Moves</h1>
+            <div class="tr">
+                <div class="td">
+                    <asp:Label ID="Label2" Runat=server >Username:</asp:Label>
                 </div>
-                <div class="tr">
-                    <div class="td">
-                        <asp:Label ID="Label3" Runat=server >Password:</asp:Label>
-                    </div>
-                    <div class="td">
-                        <asp:TextBox ID="txtPassword" Runat=server TextMode=Password></asp:TextBox>
-                    </div>
+                <div class="td">
+                    <asp:TextBox ID=txtUsername Runat=server placeholder="Windows Username"></asp:TextBox>
                 </div>
-              <asp:Button ID="btnLogin" Runat=server Text="Login" OnClick="Login_Click"></asp:Button>
-              <asp:Label ID="errorLabel" Runat=server ForeColor=#ff3300></asp:Label>
             </div>
+            <div class="tr">
+                <div class="td">
+                    <asp:Label ID="Label3" Runat=server >Password:</asp:Label>
+                </div>
+                <div class="td">
+                    <asp:TextBox ID="txtPassword" Runat=server TextMode=Password placeholder="Windows Password"></asp:TextBox>
+                </div>
+            </div>
+            <asp:Button ID="btnLogin" Runat=server Text="Login" OnClick="Login_Click"></asp:Button>
+            <asp:Label ID="errorLabel" Runat=server ForeColor=#ff3300></asp:Label>
         </div>
     </form>	
   </body>
