@@ -70,7 +70,7 @@ myModule.factory('requestForm', function ($http, $q) {
         getAllJobTitles: function () {
             var deferred = $q.defer();
 
-            $http.get(this.apiPath + 'Requestform/GetAllJobTitles/').success(function (data) {
+            $http.get(this.apiPath + 'RequestForm/GetAllJobTitles/').success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
                 deferred.reject("An error occurred while fetching job titles for autocomplete.");
@@ -82,7 +82,7 @@ myModule.factory('requestForm', function ($http, $q) {
         getAllDepartments: function () {
             var deferred = $q.defer();
 
-            $http.get(this.apiPath + 'Requestform/GetAllDepartments/').success(function (data) {
+            $http.get(this.apiPath + 'RequestForm/GetAllDepartments/').success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
                 deferred.reject("An error occurred while fetching job titles for autocomplete.");
@@ -94,7 +94,7 @@ myModule.factory('requestForm', function ($http, $q) {
         getAllGroups: function () {
             var deferred = $q.defer();
 
-            $http.get(this.apiPath + 'Requestform/GetAllGroups/').success(function (data) {
+            $http.get(this.apiPath + 'RequestForm/GetAllGroups/').success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
                 deferred.reject("An error occurred while fetching job titles for autocomplete.");

@@ -248,9 +248,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\EmployeeDB.cs" />
-    <Compile Include="Data Access\IndividualRequestDB.cs" />
     <Compile Include="Data Access\InfoValidator.cs" />
-    <Compile Include="Data Access\InitializeDeskDB.cs" />
     <Compile Include="Emailer\EmailSender.cs" />
     <Compile Include="Emailer\Models\EmailTemplate.cs" />
     <Compile Include="Data Access\RequestDataDB.cs" />
@@ -275,7 +273,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.config" />
     <None Include="Controllers\Translator\JSONExample.json" />
     <Content Include="CoyoteMovesTemplate.pdf" />
     <Content Include="favicon.ico" />
