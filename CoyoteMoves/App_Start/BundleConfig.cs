@@ -14,7 +14,6 @@ namespace CoyoteMoves
                         "~/Public/js/lib/angular.js",
                         "~/Public/js/lib/angular-slider.js",
                         "~/Public/js/lib/angular-strap.js",
-                        "~/Public/js/lib/angular-dragdrop.js",
                         "~/Public/js/lib/bootstrap-typeahead.js",
                         "~/Public/js/lib/modernizr.js",
                         "~/Public/js/lib/ui-bootstrap.js",
