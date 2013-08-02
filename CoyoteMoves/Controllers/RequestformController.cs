@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CoyoteMoves.Models.RequestItems;
+using CoyoteMoves.Data_Access;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Web;
@@ -39,11 +40,33 @@ namespace CoyoteMoves.Controllers
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
+        // GET api/RequestForm/GetAllGroups
+        public List<string> GetAllGroups()
+        {
+            RequestDataDB dbaccess = new RequestDataDB();
+            return dbaccess.GetAllGroups();
+        }
+
+        // GET api/RequestForm/GetAllDepartments
+        public List<string> GetAllDepartments()
+        {
+            RequestDataDB dbaccess = new RequestDataDB();
+            return dbaccess.GetAllDepartments();
+        }
+
+        // GET api/RequestForm/GetAllJobTitles
+        public List<string> GetAllJobTitles()
+        {
+            RequestDataDB dbaccess = new RequestDataDB();
+            return dbaccess.GetAllJobTitles();
+        }
+
+
         /*
-         * INB4: This should probably go in another class, just writing it down so I don't forget
-         * Once the changes have been requested and have been approved at HR and service desk,
-         * we'll then have to update the database(s)
-         * */
+        * INB4: This should probably go in another class, just writing it down so I don't forget
+        * Once the changes have been requested and have been approved at HR and service desk,
+        * we'll then have to update the database(s)
+        * */
         public void UpdateDataSourcesWithApprovedChanges()
         {
             //idk what it should take in, or what it should return...

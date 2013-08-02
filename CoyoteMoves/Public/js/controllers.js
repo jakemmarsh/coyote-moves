@@ -1,17 +1,21 @@
 ﻿function IndexCtrl($scope, $routeParams, desks) {
     $scope.currentFloor = 3;
     $scope.currentEmployee = 0;
-    $scope.floorDesks = [];
     $scope.people = ["Jake", "Magic", "Brandon", "Ian"];
-    var initialize = function () {
-    };
-
-    initialize();
 
     $scope.changeCurrentForm = function (index) {
         $scope.currentEmployee = index;
         $scope.$apply();
-        console.log(index);
+    }
+
+    $scope.searchForEmployee = function () {
+        for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
+            if ($scope.currentFloorEmployees[i].name.toLowerCase() === $scope.employeeToSearchFor.toLowerCase()) {
+                // zoom to employee's desk on map
+                $scope.currentDeskNumber = $scope.currentFloorEmployees[i].deskNumber;
+                $scope.currentDeskOccupant = $scope.currentFloorEmployees[i].name;
+            }
+        }
     }
 
     $scope.movedEmployees = [{
@@ -27,13 +31,22 @@
         name: "Ian"
     }];
 
-    $scope.desk = {
-        orientation: 180
-    };
-
+    // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
             $scope.currentFloorDesks = data;
+            $scope.currentFloorEmployees = [];
+            $scope.currentFloorEmployeeNames = [];
+            for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
+                var name = $scope.currentFloorDesks[i].currentTenant.firstName + ' ' + $scope.currentFloorDesks[i].currentTenant.lastName,
+                    deskNumber = $scope.currentFloorDesks[i].deskNumber,
+                    employee = {
+                        name: name,
+                        deskNumber: deskNumber
+                    };
+                $scope.currentFloorEmployeeNames.push(name);
+                $scope.currentFloorEmployees.push(employee);
+            }
         },
         function (errorMessage) {
             console.log(errorMessage);
@@ -58,15 +71,8 @@
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    //$scope.addThirdFloorMarker = function ($event) {
-    //    $scope.thirdFloorMarkers.push(new google.maps.Marker({
-    //        map: $scope.thirdFloorMap,
-    //        position: $event.latLng
-    //    }));
-    //};
     $scope.setThirdFloorZoomMessage = function (zoom) {
         $scope.thirdFloorZoomMessage = 'You just zoomed to ' + zoom + '!';
-        console.log(zoom, 'zoomed')
     };
     $scope.openThirdFloorMarkerInfo = function (marker) {
         $scope.currentThirdFloorMarker = marker;
@@ -85,15 +91,8 @@
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    //$scope.addFourthFloorMarker = function ($event) {
-    //    $scope.fourthFloorMarkers.push(new google.maps.Marker({
-    //        map: $scope.fourthFloorMap,
-    //        position: $event.latLng
-    //    }));
-    //};
     $scope.setFourthFloorZoomMessage = function (zoom) {
         $scope.fourthFloorZoomMessage = 'You just zoomed to ' + zoom + '!';
-        console.log(zoom, 'zoomed')
     };
 
     $scope.openFourthFloorMarkerInfo = function (marker) {
@@ -113,15 +112,8 @@
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    //$scope.addFifthFloorMarker = function ($event) {
-    //    $scope.fifthFloorMarkers.push(new google.maps.Marker({
-    //        map: $scope.fifthFloorMap,
-    //        position: $event.latLng
-    //    }));
-    //};
     $scope.setFifthFloorZoomMessage = function (zoom) {
         $scope.fifthFloorZoomMessage = 'You just zoomed to ' + zoom + '!';
-        console.log(zoom, 'zoomed')
     };
     $scope.openFifthFloorMarkerInfo = function (marker) {
         $scope.currentFifthFloorMarker = marker;
