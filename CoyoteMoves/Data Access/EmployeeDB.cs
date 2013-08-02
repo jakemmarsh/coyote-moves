@@ -128,5 +128,26 @@ namespace CoyoteMoves.Data_Access
             connection.Close();
             return employeesWithName;
         }
+
+        public Dictionary<string, int> GetNumberOfEmployeesInEachGroup()
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand("SELECT Code FROM Intern_CoyoteMoves.dbo.GroupType");
+            command.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            
+            while (reader.Read())
+            {
+                if (result.ContainsKey((string)reader["Code"]) == false)
+                {
+                    result[((string) reader["Code"])] = 0;
+                }
+            }
+
+            //now that the dictionary is set up, iterate over the employees to 
+            return result;
+        }
     }
 }
