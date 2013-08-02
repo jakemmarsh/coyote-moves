@@ -59,19 +59,5 @@ namespace CoyoteMovesTest
             Assert.AreEqual(-1, retrievedName);
 
         }
-
-        [TestCategory("Integration")]
-        [TestMethod]
-        public void GetAllEmployeesWithSameFullName()
-        {
-            List<Employee> retrievedEmployees = new List<Employee>();
-            retrievedEmployees = _employee.GetAllEmployeesWithSameFullName("Kevin Smith");
-            foreach (Employee entry in retrievedEmployees)
-            {
-                Assert.AreEqual("Kevin", entry.FirstName);
-                Assert.AreEqual("Smith", entry.LastName);
-            }
-        }
-
     }
 }
