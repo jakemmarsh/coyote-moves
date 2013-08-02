@@ -19,6 +19,12 @@ body {
     color: #000;
 }
 
+#form-inner {
+    width: 300px;
+    display: block;
+    margin: 150px auto 0 auto;
+}
+
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -55,6 +61,7 @@ body {
 .dropdown-menu > li > a:focus {
   color: #000;
   background: #30d600;
+  font-weight: bold;
 }
 
 .dropdown-menu > .active > a,
@@ -62,7 +69,6 @@ body {
 .dropdown-menu > .active > a:focus {
   color: #000;
   background: #30d600;
-  font-weight: bold;
 }
 
 textarea, input { 
@@ -156,10 +162,16 @@ h2.black-bg {
         }
 
 #employee-search {
-    width: 400px;
+    width: 600px;
     padding: 7px 9px;
     bottom: 2px;
     position: relative;
+}
+
+#employee-search-submit {
+    padding: 7px 10px !important;
+    position: relative !important;
+    bottom: 2px;
 }
 
 .map-container {
@@ -263,7 +275,7 @@ footer {
         background: none !important;
     }
 
-    .tr:nth-last-child(2n+1) {
+    .employee-form .tr:nth-last-child(2n+1) {
         background:#f0f0f0;
     }
 
@@ -303,12 +315,12 @@ h3.title {
     padding: 10px;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     padding: 3px 5px;
     border: 1px solid #c9cace;
 }
 
-    input[type=text]:focus {
+    input[type=text]:focus, input[type=password]:focus {
         border: 1px solid #30d600;
     }
 
@@ -320,7 +332,6 @@ input[type=submit] {
     margin-top: 10px;
     font-size: 16px;
     text-transform: uppercase;
-    float: right;
 }
 
     input[type=submit]:disabled {
@@ -336,18 +347,47 @@ input[type=submit] {
         color: #30d600;
     }
 
-.nudge--sides {
-    margin-left: 10px;
-    margin-right: 10px;
+.cancel-button {
+    background: #f2dede;
+    color: #b94a48;
+    padding: 5px 10px;
+    border: none;
+    margin-top: 10px;
+    font-size: 16px;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+    .cancel-button:hover, .cancel-button:active {
+        color: #000;
+    }
+
+footer {
+    width: 100%;
+    border-top: 3px solid #000;
+    height: 40px;
 }
 
 .nudge--left {
     margin-left: 10px;
 }
 
+.nudge--right {
+    margin-right: 10px;
+}
+
+.nudge--sides {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .soft--sides {
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.soft-half--right {
+    padding-right: 5px;
 }
 
 .text--bold {
@@ -362,14 +402,6 @@ input[type=submit] {
     float: right;
 }
 
-.full-width {
-    width: 100%;
-}
-
-.text-right {
-    text-align: right;
-}
-
 .no-float {
     float: none !important;
 }
@@ -378,7 +410,14 @@ input[type=submit] {
     display: inline-block;
 }
 
-footer {
-  width: 100%;
-  border-top: 3px solid #000;
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.vertical-middle {
+    vertical-align: middle;
 }

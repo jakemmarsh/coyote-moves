@@ -123,6 +123,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.SqlXml" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -243,6 +245,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RequestFormController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\EmployeeDB.cs" />
     <Compile Include="Data Access\InfoValidator.cs" />
@@ -250,6 +253,7 @@
     <Compile Include="Emailer\Models\EmailTemplate.cs" />
     <Compile Include="Data Access\RequestDataDB.cs" />
     <Compile Include="Data Access\RequestFormDB.cs" />
+    <Compile Include="LdapAuthentication.cs" />
     <Compile Include="Models\EmployeeData\Employee.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\BazookaInfo.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\CoyoteMovesFormEmployeeInfo.cs" />
@@ -273,6 +277,7 @@
     <Content Include="CoyoteMovesTemplate.pdf" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="logon.aspx" />
     <Content Include="Public\css\angular-slider.css" />
     <Content Include="Public\css\bootstrap.css" />
     <Content Include="Public\css\normalize.css" />
@@ -281,7 +286,6 @@
     <Content Include="Public\img\coyote-text.png" />
     <Content Include="Public\js\app.js" />
     <Content Include="Public\js\controllers.js" />
-    <Content Include="Public\js\lib\angular-dragdrop.js" />
     <Content Include="Public\js\lib\angular-slider.js" />
     <Content Include="Public\js\lib\angular-strap.js" />
     <Content Include="Public\js\lib\angular.js" />
