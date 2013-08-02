@@ -61,7 +61,9 @@ namespace CoyoteMovesTest
 
             _requester.StoreRequestFormInDatabaseAsPending(_req);
 
+            bool testValidate = _validator.ValidateRequestForm(_req);
 
+            Assert.IsTrue(testValidate);
 
         }
 
@@ -69,8 +71,8 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateServiceDeskApprovedStatus()
         {
-            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(1);
-            bool testValidation = _validator.ValidateServiceDeskApproval(1);
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(_req.UniqueId);
+            bool testValidation = _validator.ValidateServiceDeskApproval(_req.UniqueId);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }
@@ -79,8 +81,8 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateHumanResourcesApprovedStatus()
         {
-            bool requestValidation = _requester.UpdateRequestToHRApproved(1);
-            bool testValidation = _validator.ValidateHumanResourcesApproval(1);
+            bool requestValidation = _requester.UpdateRequestToHRApproved(_req.UniqueId);
+            bool testValidation = _validator.ValidateHumanResourcesApproval(_req.UniqueId);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }
@@ -89,7 +91,8 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateHRApprovedFailedNoRequestFound()
         {
-            bool requestValidation = _requester.UpdateRequestToHRApproved(0);
+            Guid different = new Guid();
+            bool requestValidation = _requester.UpdateRequestToHRApproved(different);
             Assert.IsFalse(requestValidation);
         }
 
@@ -97,7 +100,8 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateSDApprovedFailedNoRequestFound()
         {
-            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(0);
+            Guid different = new Guid();
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(different);
             Assert.IsFalse(requestValidation);
         }
 

@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.SqlClient;
 using CoyoteMoves.Models.EmployeeData;
 using CoyoteMoves.Models;
+using CoyoteMoves.Models.RequestItems;
 
 namespace CoyoteMoves.Data_Access
 {
@@ -62,7 +63,7 @@ namespace CoyoteMoves.Data_Access
             return true;
         }
 
-        public bool ValidateServiceDeskApproval(int requestId)
+        public bool ValidateServiceDeskApproval(Guid requestId)
         {
             bool toReturn = false;
             SqlConnection connection = new SqlConnection(_connectionString);
@@ -80,7 +81,7 @@ namespace CoyoteMoves.Data_Access
             return toReturn;
         }
 
-        public bool ValidateHumanResourcesApproval(int requestId)
+        public bool ValidateHumanResourcesApproval(Guid requestId)
         {
             bool toReturn = false;
             SqlConnection connection = new SqlConnection(_connectionString);
@@ -99,6 +100,25 @@ namespace CoyoteMoves.Data_Access
 
         }
 
-        //public bool ValidateRequestForm(int 
+        public bool ValidateRequestForm(RequestForm req)
+        {
+            bool toReturn = true;
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand("Select UniqueRequestID from Intern_CoyoteMoves.dbo.RequestData where UniqueRequestID = @uniqueRequestId");
+            command.Parameters.AddWithValue("@uniqueRequestID", req.UniqueId);
+            command.Connection = connection;
+            command.Connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                toReturn = (reader["EmployeeID"] == req.EmployeeId.ToString());
+                toReturn = 
+                toReturn = (bool)reader["HRApproved"];
+            }
+
+            command.Connection.Close();
+            return toReturn;
+
+        }
     }
 }

@@ -42,43 +42,43 @@ namespace CoyoteMoves.Data_Access
         /// Given the requestid, find the request and change the pending to false and approved to true
         /// Do we have to keep a date of when it was approved(i.e. when the last of HR or service desk approved)? when it was marked as approve in the database?
         /// </summary>
-        private bool UpdateRequestToApprovedStatus(int RequestID, string ApprovalDept)
+        private bool UpdateRequestToApprovedStatus(Guid UniqueRequestID, string ApprovalDept)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
 
             //probably add some check to make sure both Service desk and HR approved
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE RequestID="+ RequestID);
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE UniqueRequestID="+ UniqueRequestID);
             command.Connection = connection;
             command.Connection.Open();
 
             int result = command.ExecuteNonQuery();
             command.Connection.Close();
 
-            bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(RequestID, ApprovalDept);
+            bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(UniqueRequestID, ApprovalDept);
             if (theOtherDepartmentHasApproved)
             {
-                setTheRequestAsNotPending(RequestID);
+                setTheRequestAsNotPending(UniqueRequestID);
             }
 
             return (result == 1);
 
         }
 
-        private void setTheRequestAsNotPending(int RequestID)
+        private void setTheRequestAsNotPending(Guid UniqueRequestID)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE RequestID = " + RequestID);
+            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE UniqueRequestID = " + UniqueRequestID);
             cmd.Connection = connection;
             cmd.Connection.Open();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
         }
 
-        private bool CheckOtherDepartmentApproval(int RequestID, string ApprovalDept)
+        private bool CheckOtherDepartmentApproval(Guid UniqueRequestID, string ApprovalDept)
         {
             string OtherDept = ApprovalDept.Equals("HR") ? "ServiceDesk" : "HR";
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + "Approved FROM dbo.RequestData WHERE RequestID=" + RequestID);
+            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + "Approved FROM dbo.RequestData WHERE UniqueRequestID=" + UniqueRequestID);
             cmd.Connection = connection;
             cmd.Connection.Open();
 
@@ -125,21 +125,21 @@ namespace CoyoteMoves.Data_Access
                 "@FilesToBeRemovedFrom='" + form.ReviewInfo.FilesToBeRemovedFrom.ToString() + "', " +
                 "@CreateByID=" + 301758 + ", " +
                 "@UpdateByID=" + 301758 + ", " +
-                "@UniqueID='" + form.uniqueId + "'";
+                "@UniqueID='" + form.UniqueId + "'";
 
 
             SqlCommand command = new SqlCommand(commandString);
             return command;
         }
 
-        public bool UpdateRequestToServiceDeskApproved(int requestID)
+        public bool UpdateRequestToServiceDeskApproved(Guid UniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(requestID, "ServiceDesk");
+            return UpdateRequestToApprovedStatus(UniqueRequestID, "ServiceDesk");
         }
 
-        public bool UpdateRequestToHRApproved(int requestID)
+        public bool UpdateRequestToHRApproved(Guid UniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(requestID, "HR");
+            return UpdateRequestToApprovedStatus(UniqueRequestID, "HR");
         }
     }
 }
