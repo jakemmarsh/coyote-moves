@@ -19,6 +19,10 @@ body {
     color: #000;
 }
 
+#form-inner {
+    width: 500px;
+}
+
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -154,10 +158,16 @@ h2.black-bg {
         }
 
 #employee-search {
-    width: 400px;
+    width: 600px;
     padding: 7px 9px;
     bottom: 2px;
     position: relative;
+}
+
+#employee-search-submit {
+    padding: 7px 10px !important;
+    position: relative !important;
+    bottom: 2px;
 }
 
 .map-container {
@@ -261,7 +271,7 @@ footer {
         background: none !important;
     }
 
-    .tr:nth-last-child(2n+1) {
+    .employee-form .tr:nth-last-child(2n+1) {
         background:#f0f0f0;
     }
 
@@ -301,7 +311,7 @@ h3.title {
     padding: 10px;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     padding: 3px 5px;
     border: 1px solid #c9cace;
 }
@@ -318,7 +328,6 @@ input[type=submit] {
     margin-top: 10px;
     font-size: 16px;
     text-transform: uppercase;
-    float: right;
 }
 
     input[type=submit]:disabled {
@@ -362,4 +371,16 @@ input[type=submit] {
 
 .inline-block {
     display: inline-block;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.vertical-middle {
+    vertical-align: middle;
 }

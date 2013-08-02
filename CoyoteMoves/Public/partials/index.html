@@ -3,8 +3,8 @@
     <div class="tabs">
         <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
         <form ng-submit="searchForEmployee()" class="inline-block">
-            <input type="text" id="employee-search" ng-model="employeeToSearchFor" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="3" />
-            <input type="submit" value="Go" class="no-float" />
+            <input type="text" id="employee-search" ng-model="employeeToSearchFor" placeholder="Search for an employee on this floor..." bs-typeahead="currentFloorEmployeeNames" data-min-length="3" />
+            <input type="submit" id="employee-search-submit" value="Go" class="no-float" />
         </form>
     </div>
     <div id="map-third" class="map-container" ng-show="currentFloor == 3">
@@ -42,7 +42,7 @@
                         Current Occupant
                     </div>
                     <div class="td">
-                        <input type="text" ng-model="currentDeskOccupant" />
+                        <input type="text" ng-model="currentDeskOccupant" ng-disabled="isAdmin" />
                     </div>
                 </div>
                 <div class="tr">
@@ -53,13 +53,13 @@
                         <slider floor="0" ceiling="360" step="10" precision="1" ng-model="currentDeskOrientation"></slider>
                     </div>
                 </div>
-                <input type="submit" value="Save Desk" class="clearfix" />
+                <input type="submit" value="Save Desk" class="clearfix" ng-disabled="!isAdmin" />
             </form>
         </div>
         <div id="displaced-employees-container">
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
-                <li jqyoui-droppable>
+                <li>
                     Jake
                 </li>
                 <li>

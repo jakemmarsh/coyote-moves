@@ -1,7 +1,26 @@
-﻿function IndexCtrl($scope, $routeParams, desks) {
+﻿function IndexCtrl($scope, $routeParams, desks, user) {
     $scope.currentFloor = 3;
     $scope.currentEmployee = 0;
     $scope.people = ["Jake", "Magic", "Brandon", "Ian"];
+    $scope.isAdmin = false;
+
+    var initialize = function () {
+        user.getUserRoles().then(function (data) {
+            $scope.userRoles = data;
+            // check all roles that the logged in user has
+            for (var i = 0; i < $scope.userRoles.length; i++) {
+                // if user is an admin, set variable to true (TODO)
+                if ($scope.userRoles[i].toLowerCase() == 'users') {
+                    $scope.isAdmin = true;
+                }
+            }
+        },
+        function (errorMessage) {
+            console.log(errorMessage);
+        });
+    };
+
+    initialize();
 
     $scope.changeCurrentForm = function (index) {
         $scope.currentEmployee = index;
