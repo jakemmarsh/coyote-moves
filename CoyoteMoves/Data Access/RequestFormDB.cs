@@ -95,7 +95,7 @@ namespace CoyoteMoves.Data_Access
         /// <returns></returns>
         private SqlCommand AddParametersForStoreRequestFormInDatabaseHelper(RequestForm form)
         {
-            //USE COMMAND.PARAMETERS.ADDWITHVALUE NIGGA
+            //USE COMMAND.PARAMETERS.ADDWITHVALUE YO
             string commandString = "EXEC dbo.spRequestData_StoreRequestAsPending " +
                 "@EmployeeID=" + form.EmployeeId + ", " +
                 "@C_JobTitle='" + form.Current.BazookaInfo.JobTitle + "', " +
