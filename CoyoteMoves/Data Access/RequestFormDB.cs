@@ -48,7 +48,7 @@ namespace CoyoteMoves.Data_Access
             SqlConnection connection = new SqlConnection(_connectionString);
 
             //probably add some check to make sure both Service desk and HR approved
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE UniqueRequestID="+ UniqueRequestID);
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE UniqueRequestID='"+ UniqueRequestID+"'");
             command.Connection = connection;
             command.Connection.Open();
 
@@ -96,42 +96,8 @@ namespace CoyoteMoves.Data_Access
         /// <returns></returns>
         private SqlCommand AddParametersForStoreRequestFormInDatabaseHelper(RequestForm form)
         {
-            //USE COMMAND.PARAMETERS.ADDWITHVALUE YO
-            string commandString = "EXEC dbo.spRequestData_StoreRequestAsPending " +
-                "@EmployeeID=" + form.EmployeeId + ", " +
-                "@C_JobTitle='" + form.Current.BazookaInfo.JobTitle + "', " +
-                "@C_Department='" + form.Current.BazookaInfo.Department + "', " +
-                "@C_Group='" + form.Current.BazookaInfo.Group + "', " +
-                "@C_ManagerID='" + form.Current.BazookaInfo.ManagerID + "', " +
-                "@C_JobTemplate='" + form.Current.BazookaInfo.JobTemplate + "', " +
-                "@C_SecurityItemRights='" + form.Current.BazookaInfo.SecurityItemRights + "', " +
-                "@C_DeskNumber='" + form.Current.DeskInfo.DeskNumber + "', " +
-                "@C_Office='" + form.Current.DeskInfo.Office + "', " +
-                "@C_PhoneNumber='" + form.Current.PhoneInfo.PhoneNumber + "', " +
-                "@C_Other='" + form.Current.UltiproInfo.Other + "', " +
-                "@F_JobTitle='" + form.Future.BazookaInfo.JobTitle + "', " +
-                "@F_Department='" + form.Future.BazookaInfo.Department + "', " +
-                "@F_Group='" + form.Future.BazookaInfo.Group + "', " +
-                "@F_ManagerID='" + form.Future.BazookaInfo.ManagerID + "', " +
-                "@F_JobTemplate='" + form.Future.BazookaInfo.JobTemplate + "', " +
-                "@F_SecurityItemRights='" + form.Future.BazookaInfo.SecurityItemRights + "', " +
-                "@F_DeskNumber='" + form.Future.DeskInfo.DeskNumber + "', " +
-                "@F_Office='" + form.Future.DeskInfo.Office + "', " +
-                "@F_PhoneNumber='" + form.Future.PhoneInfo.PhoneNumber + "', " +
-                "@F_Other='" + form.Future.UltiproInfo.Other + "', " +
-                //need to change these...
-                "@EmailListsToBeAddedTo='" + form.EmailInfo.GroupsToBeAddedTo.ToString() + "', " +
-                "@EmailListsToBeRemovedFrom='" + form.EmailInfo.GroupsToBeRemovedFrom.ToString() + "', " +
-                "@FilesToBeAddedTo='" + form.ReviewInfo.FilesToBeAddedTo.ToString() + "', " +
-                "@FilesToBeRemovedFrom='" + form.ReviewInfo.FilesToBeRemovedFrom.ToString() + "', " +
-                "@CreateByID=" + 301758 + ", " +
-                "@UpdateByID=" + 301758 + ", " +
-                "@UniqueID='" + form.UniqueId + "'";
 
-
-=======
             string commandString = "[Intern_CoyoteMoves].[dbo].[spRequestData_StoreRequestAsPending]";
->>>>>>> master
             SqlCommand command = new SqlCommand(commandString);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -178,20 +144,21 @@ namespace CoyoteMoves.Data_Access
             command.Parameters["@F_PhoneNumber"].Value = form.Future.PhoneInfo.PhoneNumber;
             command.Parameters.Add(new SqlParameter("@F_Other", SqlDbType.VarChar));
             command.Parameters["@F_Other"].Value = form.Future.UltiproInfo.Other;
-            command.Parameters.Add(new SqlParameter("@EmailListsToBeAddedTo", SqlDbType.VarChar));
-            command.Parameters["@EmailListsToBeAddedTo"].Value = form.EmailInfo.GroupsToBeAddedTo.ToString();
+            command.Parameters.AddWithValue("@EmailListsToBeAddedTo", form.EmailInfo.GroupsToBeAddedTo);
+            //command.Parameters.Add(new SqlParameter("@EmailListsToBeAddedTo", SqlDbType.VarChar));
+            //command.Parameters["@EmailListsToBeAddedTo"].Value = form.EmailInfo.GroupsToBeAddedTo;
             command.Parameters.Add(new SqlParameter("@EmailListsToBeRemovedFrom", SqlDbType.VarChar));
-            command.Parameters["@EmailListsToBeRemovedFrom"].Value = form.EmailInfo.GroupsToBeRemovedFrom.ToString();
+            command.Parameters["@EmailListsToBeRemovedFrom"].Value = form.EmailInfo.GroupsToBeRemovedFrom;
             command.Parameters.Add(new SqlParameter("@FilesToBeAddedTo", SqlDbType.VarChar));
-            command.Parameters["@FilesToBeAddedTo"].Value = form.ReviewInfo.FilesToBeAddedTo.ToString();
+            command.Parameters["@FilesToBeAddedTo"].Value = form.ReviewInfo.FilesToBeAddedTo;
             command.Parameters.Add(new SqlParameter("@FilesToBeRemovedFrom", SqlDbType.VarChar));
-            command.Parameters["@FilesToBeRemovedFrom"].Value = form.ReviewInfo.FilesToBeRemovedFrom.ToString();
+            command.Parameters["@FilesToBeRemovedFrom"].Value = form.ReviewInfo.FilesToBeRemovedFrom;
             command.Parameters.Add(new SqlParameter("@CreateByID", SqlDbType.VarChar));
             command.Parameters["@CreateByID"].Value = 301758;
             command.Parameters.Add(new SqlParameter("@UpdateByID", SqlDbType.VarChar));
             command.Parameters["@UpdateByID"].Value = 301758;
             command.Parameters.Add(new SqlParameter("@UniqueID", SqlDbType.VarChar));
-            command.Parameters["@UniqueID"].Value = form.uniqueId.ToString();
+            command.Parameters["@UniqueID"].Value = form.UniqueId.ToString();
 
             return command;
         }

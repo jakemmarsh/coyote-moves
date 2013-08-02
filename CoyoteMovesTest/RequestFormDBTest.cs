@@ -20,6 +20,7 @@ namespace CoyoteMovesTest
         {
             _requester = new RequestFormDB();
             _validator = new InfoValidator();
+            _req = new RequestForm(301757);
         }
 
         [TestCategory("Integration")]
@@ -27,7 +28,6 @@ namespace CoyoteMovesTest
         public void TestStoreRequestFormInDatabaseAsPending()
         {
             string test = "test";
-            _req = new RequestForm(301757);
 
             _req.Current.BazookaInfo.JobTitle = "Intern";
             _req.Current.BazookaInfo.JobTemplate = test;
