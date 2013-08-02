@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using CoyoteMoves.Models.RequestItems;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace CoyoteMoves.Data_Access
 {
@@ -128,7 +129,70 @@ namespace CoyoteMoves.Data_Access
                 "@UniqueID='" + form.UniqueId + "'";
 
 
+=======
+            string commandString = "[Intern_CoyoteMoves].[dbo].[spRequestData_StoreRequestAsPending]";
+>>>>>>> master
             SqlCommand command = new SqlCommand(commandString);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+
+            //for each parameter, add the parameter to the command and then set the parameter value
+            command.Parameters.Add(new SqlParameter("@EmployeeID", SqlDbType.Int));
+            command.Parameters["@EmployeeID"].Value = form.EmployeeId;
+            command.Parameters.Add(new SqlParameter("@C_JobTitle", SqlDbType.VarChar));
+            command.Parameters["@C_JobTitle"].Value = form.Current.BazookaInfo.JobTitle;
+            command.Parameters.Add(new SqlParameter("@C_Department", SqlDbType.VarChar));
+            command.Parameters["@C_Department"].Value = form.Current.BazookaInfo.Department;
+            command.Parameters.Add(new SqlParameter("@C_Group", SqlDbType.VarChar));
+            command.Parameters["@C_Group"].Value = form.Current.BazookaInfo.Group;
+            command.Parameters.Add(new SqlParameter("@C_ManagerID", SqlDbType.Int));
+            command.Parameters["@C_ManagerID"].Value = form.Current.BazookaInfo.ManagerID;
+            command.Parameters.Add(new SqlParameter("@C_JobTemplate", SqlDbType.VarChar));
+            command.Parameters["@C_JobTemplate"].Value = form.Current.BazookaInfo.JobTemplate;
+            command.Parameters.Add(new SqlParameter("@C_SecurityItemRights", SqlDbType.VarChar));
+            command.Parameters["@C_SecurityItemRights"].Value = form.Current.BazookaInfo.SecurityItemRights;
+            command.Parameters.Add(new SqlParameter("@C_DeskNumber", SqlDbType.VarChar));
+            command.Parameters["@C_DeskNumber"].Value = form.Current.DeskInfo.DeskNumber;
+            command.Parameters.Add(new SqlParameter("@C_Office", SqlDbType.VarChar));
+            command.Parameters["@C_Office"].Value = form.Current.DeskInfo.Office;
+            command.Parameters.Add(new SqlParameter("@C_PhoneNumber", SqlDbType.VarChar));
+            command.Parameters["@C_PhoneNumber"].Value = form.Current.PhoneInfo.PhoneNumber;
+            command.Parameters.Add(new SqlParameter("@C_Other", SqlDbType.VarChar));
+            command.Parameters["@C_Other"].Value = form.Current.UltiproInfo.Other;
+            command.Parameters.Add(new SqlParameter("@F_JobTitle", SqlDbType.VarChar));
+            command.Parameters["@F_JobTitle"].Value = form.Future.BazookaInfo.JobTitle;
+            command.Parameters.Add(new SqlParameter("@F_Department", SqlDbType.VarChar));
+            command.Parameters["@F_Department"].Value = form.Future.BazookaInfo.Department;
+            command.Parameters.Add(new SqlParameter("@F_Group", SqlDbType.VarChar));
+            command.Parameters["@F_Group"].Value = form.Future.BazookaInfo.Group;
+            command.Parameters.Add(new SqlParameter("@F_ManagerID", SqlDbType.Int));
+            command.Parameters["@F_ManagerID"].Value = form.Future.BazookaInfo.ManagerID;
+            command.Parameters.Add(new SqlParameter("@F_JobTemplate", SqlDbType.VarChar));
+            command.Parameters["@F_JobTemplate"].Value = form.Future.BazookaInfo.JobTemplate;
+            command.Parameters.Add(new SqlParameter("@F_SecurityItemRights", SqlDbType.VarChar));
+            command.Parameters["@F_SecurityItemRights"].Value = form.Future.BazookaInfo.SecurityItemRights;
+            command.Parameters.Add(new SqlParameter("@F_DeskNumber", SqlDbType.VarChar));
+            command.Parameters["@F_DeskNumber"].Value = form.Future.DeskInfo.DeskNumber;
+            command.Parameters.Add(new SqlParameter("@F_Office", SqlDbType.VarChar));
+            command.Parameters["@F_Office"].Value = form.Future.DeskInfo.Office;
+            command.Parameters.Add(new SqlParameter("@F_PhoneNumber", SqlDbType.VarChar));
+            command.Parameters["@F_PhoneNumber"].Value = form.Future.PhoneInfo.PhoneNumber;
+            command.Parameters.Add(new SqlParameter("@F_Other", SqlDbType.VarChar));
+            command.Parameters["@F_Other"].Value = form.Future.UltiproInfo.Other;
+            command.Parameters.Add(new SqlParameter("@EmailListsToBeAddedTo", SqlDbType.VarChar));
+            command.Parameters["@EmailListsToBeAddedTo"].Value = form.EmailInfo.GroupsToBeAddedTo.ToString();
+            command.Parameters.Add(new SqlParameter("@EmailListsToBeRemovedFrom", SqlDbType.VarChar));
+            command.Parameters["@EmailListsToBeRemovedFrom"].Value = form.EmailInfo.GroupsToBeRemovedFrom.ToString();
+            command.Parameters.Add(new SqlParameter("@FilesToBeAddedTo", SqlDbType.VarChar));
+            command.Parameters["@FilesToBeAddedTo"].Value = form.ReviewInfo.FilesToBeAddedTo.ToString();
+            command.Parameters.Add(new SqlParameter("@FilesToBeRemovedFrom", SqlDbType.VarChar));
+            command.Parameters["@FilesToBeRemovedFrom"].Value = form.ReviewInfo.FilesToBeRemovedFrom.ToString();
+            command.Parameters.Add(new SqlParameter("@CreateByID", SqlDbType.VarChar));
+            command.Parameters["@CreateByID"].Value = 301758;
+            command.Parameters.Add(new SqlParameter("@UpdateByID", SqlDbType.VarChar));
+            command.Parameters["@UpdateByID"].Value = 301758;
+            command.Parameters.Add(new SqlParameter("@UniqueID", SqlDbType.VarChar));
+            command.Parameters["@UniqueID"].Value = form.uniqueId.ToString();
+
             return command;
         }
 
