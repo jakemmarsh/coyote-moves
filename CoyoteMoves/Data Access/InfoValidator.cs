@@ -33,45 +33,12 @@ namespace CoyoteMoves.Data_Access
         }
 
         /// <summary>
-        /// Returns a list of Employees with the same first and last name
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public List<Employee> GetAllEmployeesWithSameFullName(string name)
-        {
-            List<Employee> employeesWithName = new List<Employee>();
-            SqlConnection connection = new SqlConnection(_connectionString);
-
-            //command should be a stored proc
-            string commandString = "EXEC dbo.spEmployee_GetEmployeesWithName";
-            SqlCommand command = new SqlCommand(commandString);
-            command.Parameters.AddWithValue("@FirstName", name.Split(' ').First());
-            command.Parameters.AddWithValue("@LastName", name.Split(' ').Last());
-            command.Connection = connection;
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            SqlToModelFactory factory = new SqlToModelFactory(reader);
-
-            //execute the stored proc
-            //turn the results into a list of employees
-            while (reader.Read())
-            {
-                employeesWithName.Add(factory.CreateEmployee());
-            }
-
-            connection.Close();
-            return employeesWithName;
-        }
-
-
-        /// <summary>
         /// Just checks that the desk number is an actual desk number in the database
         /// </summary>
         /// <param name="number"></param>
         /// <returns></returns>
         public bool ValidateDeskNumber(string number)
         {
-            //set up a connection and look in dbo.Desk for something where DeskNumber = number
             SqlConnection connection = new SqlConnection(_connectionString);
             SqlCommand command = new SqlCommand("Select DeskNumber from Intern_CoyoteMoves.dbo.Desk where DeskNumber='" + number + "'");
             command.Connection = connection;
@@ -92,8 +59,46 @@ namespace CoyoteMoves.Data_Access
 
         public bool ValidateJobTemplate(string template)
         {
-            //wtf is jobtemplate
             return true;
         }
+
+        public bool ValidateServiceDeskApproval(int requestId)
+        {
+            bool toReturn = false;
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand("Select ServiceDeskApproved from Intern_CoyoteMoves.dbo.RequestData where RequestID = @requestID");
+            command.Parameters.AddWithValue("@requestID", requestId);
+            command.Connection = connection;
+            command.Connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                toReturn = (bool)reader["ServiceDeskApproved"];
+            }
+
+            command.Connection.Close();
+            return toReturn;
+        }
+
+        public bool ValidateHumanResourcesApproval(int requestId)
+        {
+            bool toReturn = false;
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand("Select HRApproved from Intern_CoyoteMoves.dbo.RequestData where RequestID = @requestID");
+            command.Parameters.AddWithValue("@requestID", requestId);
+            command.Connection = connection;
+            command.Connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                toReturn = (bool)reader["HRApproved"];
+            }
+
+            command.Connection.Close();
+            return toReturn;
+
+        }
+
+        //public bool ValidateRequestForm(int 
     }
 }

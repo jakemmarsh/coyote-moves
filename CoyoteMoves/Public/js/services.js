@@ -57,18 +57,44 @@ myModule.factory('desks', function ($http, $q) {
 
             return deferred.promise;
         }
+
+
     }
 });
 
-myModule.factory('autocomplete', function ($http, $q) {
+myModule.factory('requestForm', function ($http, $q) {
     return {
 
         apiPath: 'coyotemoves/api/',
 
-        getJobTitles: function (floorId) {
+        getAllJobTitles: function () {
             var deferred = $q.defer();
 
-            $http.get(this.apiPath + 'Desk/GetDesksByFloor/' + floorId).success(function (data) {
+            $http.get(this.apiPath + 'Requestform/GetAllJobTitles/').success(function (data) {
+                deferred.resolve(data);
+            }).error(function () {
+                deferred.reject("An error occurred while fetching job titles for autocomplete.");
+            });
+
+            return deferred.promise;
+        },
+
+        getAllDepartments: function () {
+            var deferred = $q.defer();
+
+            $http.get(this.apiPath + 'Requestform/GetAllDepartments/').success(function (data) {
+                deferred.resolve(data);
+            }).error(function () {
+                deferred.reject("An error occurred while fetching job titles for autocomplete.");
+            });
+
+            return deferred.promise;
+        },
+
+        getAllGroups: function () {
+            var deferred = $q.defer();
+
+            $http.get(this.apiPath + 'Requestform/GetAllGroups/').success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
                 deferred.reject("An error occurred while fetching job titles for autocomplete.");
