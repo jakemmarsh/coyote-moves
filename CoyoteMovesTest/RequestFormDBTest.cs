@@ -11,11 +11,22 @@ namespace CoyoteMovesTest
     [TestClass]
     public class RequestFormDBTest
     {
+        private RequestForm _req;
+        private RequestFormDB _requester;
+        private InfoValidator _validator;
+        
+        [TestInitialize]
+        public void setup()
+        {
+            _requester = new RequestFormDB();
+            _validator = new InfoValidator();
+        }
+
+        [TestCategory("Integration")]
         [TestMethod]
         public void TestStoreRequestFormInDatabaseAsPending()
         {
             string test = "test";
-            //make the object
             RequestForm form = new RequestForm(301757);
             form.EmployeeId = 301757;
 
@@ -49,8 +60,6 @@ namespace CoyoteMovesTest
             form.Future.UltiproInfo.Other = test;
             form.Future.UltiproInfo.Supervisor = test;
 
-
-            //call the function
             RequestFormDB tester = new RequestFormDB();
             tester.StoreRequestFormInDatabaseAsPending(form);
 
@@ -60,15 +69,42 @@ namespace CoyoteMovesTest
 
         }
 
+        [TestCategory("Integration")]
         [TestMethod]
-        public void TestUpdateRequestToApprovedStatus()
+        public void UpdateServiceDeskApprovedStatus()
         {
-            RequestFormDB tester = new RequestFormDB();
-            //tester.UpdateRequestToHRApproved(1);
-            tester.UpdateRequestToServiceDeskApproved(1);
-
-            //now check the database for the update
-            //...for now, just go look manually...
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(1);
+            bool testValidation = _validator.ValidateServiceDeskApproval(1);
+            Assert.IsTrue(testValidation);
+            Assert.IsTrue(requestValidation);
         }
+        
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void UpdateHumanResourcesApprovedStatus()
+        {
+            bool requestValidation = _requester.UpdateRequestToHRApproved(1);
+            bool testValidation = _validator.ValidateHumanResourcesApproval(1);
+            Assert.IsTrue(testValidation);
+            Assert.IsTrue(requestValidation);
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void UpdateHRApprovedFailedNoRequestFound()
+        {
+            bool requestValidation = _requester.UpdateRequestToHRApproved(0);
+            Assert.IsFalse(requestValidation);
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void UpdateSDApprovedFailedNoRequestFound()
+        {
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(0);
+            Assert.IsFalse(requestValidation);
+        }
+
+
     }
 }

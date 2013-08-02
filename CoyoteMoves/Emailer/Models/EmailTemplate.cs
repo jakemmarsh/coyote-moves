@@ -14,7 +14,7 @@ namespace CoyoteMoves.Emailer.Models
     public class EmailTemplate
     {
         private string _subject;   //TODO: Add reference number to email
-        Collection<string> _to;
+        private Collection<string> _to;
         private string _from;
         private string _emailBody;
         private string _mappedLocation;
@@ -26,6 +26,11 @@ namespace CoyoteMoves.Emailer.Models
             _from = from;
             _emailBody = emailBody;
             _mappedLocation = Path.GetFullPath(pdfLocation);
+        }
+
+        public void addRecipient(string to)
+        {
+            _to.Add(to);
         }
 
         public MailMessage movesFormRequest (RequestForm req)

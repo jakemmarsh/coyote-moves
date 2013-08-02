@@ -18,6 +18,7 @@ namespace CoyoteMoves.Models.RequestItems
         public CoyoteMovesFormEmployeeInfo Future { get; set; }
         public EmailDistributionInfo EmailInfo { get; set; }
         public EmployeeReviewFileInfo ReviewInfo { get; set; }
+        public int CreatedByID { get; set; }
 
         public RequestForm()
         {

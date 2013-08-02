@@ -122,6 +122,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SqlXml" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -240,13 +241,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DeskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RequestformController.cs" />
+    <Compile Include="Controllers\RequestFormController.cs" />
     <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\EmployeeDB.cs" />
-    <Compile Include="Data Access\IndividualRequestDB.cs" />
     <Compile Include="Data Access\InfoValidator.cs" />
-    <Compile Include="Data Access\InitializeDeskDB.cs" />
     <Compile Include="Emailer\EmailSender.cs" />
     <Compile Include="Emailer\Models\EmailTemplate.cs" />
     <Compile Include="Data Access\RequestDataDB.cs" />
@@ -270,7 +269,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.config" />
     <None Include="Controllers\Translator\JSONExample.json" />
     <Content Include="CoyoteMovesTemplate.pdf" />
     <Content Include="favicon.ico" />
