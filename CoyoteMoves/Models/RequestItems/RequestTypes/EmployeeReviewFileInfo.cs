@@ -7,13 +7,13 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
 {
     public class EmployeeReviewFileInfo
     {
-        public List<string> FilesToBeAddedTo { get; set; }
-        public List<string> FilesToBeRemovedFrom { get; set; }
+        public string FilesToBeAddedTo { get; set; }
+        public string FilesToBeRemovedFrom { get; set; }
 
         public EmployeeReviewFileInfo()
         {
-            this.FilesToBeAddedTo = new List<string>();
-            this.FilesToBeRemovedFrom = new List<string>();
+            FilesToBeAddedTo = "this";
+            FilesToBeRemovedFrom = "sucks";
         }
     }
 }

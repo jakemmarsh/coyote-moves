@@ -17,19 +17,11 @@ namespace CoyoteMoves.Data_Access
             _connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
         }
 
-        /// <summary>
-        /// Log the request in the database. Only mark it as pending until it is approved
-        /// </summary>
         public bool StoreRequestFormInDatabaseAsPending(RequestForm form)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-
-            //get the sql command with all the parameters
             SqlCommand command = AddParametersForStoreRequestFormInDatabaseHelper(form);
-
             command.Connection = connection;
-
-            //probably wrap a try/catch around this...
             command.Connection.Open();
             int result = command.ExecuteNonQuery();
             command.Connection.Close();
@@ -38,69 +30,64 @@ namespace CoyoteMoves.Data_Access
             
         }
 
-        /// <summary>
-        /// Once the request has been approved by HR and service desk, then we need to mark that in the database
-        /// Given the requestid, find the request and change the pending to false and approved to true
-        /// Do we have to keep a date of when it was approved(i.e. when the last of HR or service desk approved)? when it was marked as approve in the database?
-        /// </summary>
-        private bool UpdateRequestToApprovedStatus(int RequestID, string ApprovalDept)
+        private bool UpdateRequestToApprovedStatus(Guid UniqueRequestID, string ApprovalDept)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-
-            //probably add some check to make sure both Service desk and HR approved
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE RequestID="+ RequestID);
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept +"=1 WHERE UniqueRequestID=@UniqueRequestID");
+            command.Parameters.Add("@UniqueRequestID", SqlDbType.UniqueIdentifier).Value = UniqueRequestID;
             command.Connection = connection;
             command.Connection.Open();
 
-            int result = command.ExecuteNonQuery();
+            int result = command.ExecuteNonQuery();//why is it trying to access the guid string? 
             command.Connection.Close();
 
-            bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(RequestID, ApprovalDept);
+            bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(UniqueRequestID, ApprovalDept);
             if (theOtherDepartmentHasApproved)
             {
-                setTheRequestAsNotPending(RequestID);
+                setTheRequestAsNotPending(UniqueRequestID);
             }
 
             return (result == 1);
 
         }
-
-        private void setTheRequestAsNotPending(int RequestID)
+        private void setTheRequestAsNotPending(Guid uniqueRequestID)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE RequestID = " + RequestID);
+            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE UniqueRequestID = @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
             cmd.Connection = connection;
             cmd.Connection.Open();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
         }
 
-        private bool CheckOtherDepartmentApproval(int RequestID, string ApprovalDept)
+        private bool CheckOtherDepartmentApproval(Guid uniqueRequestID, string ApprovalDept)
         {
-            string OtherDept = ApprovalDept.Equals("HR") ? "ServiceDesk" : "HR";
+            bool approved = false;
+            string OtherDept = ApprovalDept.Equals("HRApproved") ? "ServiceDeskApproved" : "HRApproved";
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + "Approved FROM dbo.RequestData WHERE RequestID=" + RequestID);
+            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + " FROM dbo.RequestData WHERE UniqueRequestID= @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
+
             cmd.Connection = connection;
             cmd.Connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                approved = (bool)(reader[OtherDept]); 
+            }
 
-            object temp = cmd.ExecuteScalar();
             connection.Close();
-            return (bool)temp;
+            return approved;
         }
 
-        /// <summary>
-        /// Since we have to add hella parameters to the stored proc, might as well create it's own function to do so
-        /// </summary>
-        /// <param name="commandString"></param>
-        /// <param name="form"></param>
-        /// <returns></returns>
         private SqlCommand AddParametersForStoreRequestFormInDatabaseHelper(RequestForm form)
         {
+
             string commandString = "[Intern_CoyoteMoves].[dbo].[spRequestData_StoreRequestAsPending]";
             SqlCommand command = new SqlCommand(commandString);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            //for each parameter, add the parameter to the command and then set the parameter value
             command.Parameters.Add(new SqlParameter("@EmployeeID", SqlDbType.Int));
             command.Parameters["@EmployeeID"].Value = form.EmployeeId;
             command.Parameters.Add(new SqlParameter("@C_JobTitle", SqlDbType.VarChar));
@@ -143,32 +130,79 @@ namespace CoyoteMoves.Data_Access
             command.Parameters["@F_PhoneNumber"].Value = form.Future.PhoneInfo.PhoneNumber;
             command.Parameters.Add(new SqlParameter("@F_Other", SqlDbType.VarChar));
             command.Parameters["@F_Other"].Value = form.Future.UltiproInfo.Other;
-            command.Parameters.Add(new SqlParameter("@EmailListsToBeAddedTo", SqlDbType.VarChar));
-            command.Parameters["@EmailListsToBeAddedTo"].Value = form.EmailInfo.GroupsToBeAddedTo.ToString();
+            command.Parameters.AddWithValue("@EmailListsToBeAddedTo", form.EmailInfo.GroupsToBeAddedTo);
             command.Parameters.Add(new SqlParameter("@EmailListsToBeRemovedFrom", SqlDbType.VarChar));
-            command.Parameters["@EmailListsToBeRemovedFrom"].Value = form.EmailInfo.GroupsToBeRemovedFrom.ToString();
+            command.Parameters["@EmailListsToBeRemovedFrom"].Value = form.EmailInfo.GroupsToBeRemovedFrom;
             command.Parameters.Add(new SqlParameter("@FilesToBeAddedTo", SqlDbType.VarChar));
-            command.Parameters["@FilesToBeAddedTo"].Value = form.ReviewInfo.FilesToBeAddedTo.ToString();
+            command.Parameters["@FilesToBeAddedTo"].Value = form.ReviewInfo.FilesToBeAddedTo;
             command.Parameters.Add(new SqlParameter("@FilesToBeRemovedFrom", SqlDbType.VarChar));
-            command.Parameters["@FilesToBeRemovedFrom"].Value = form.ReviewInfo.FilesToBeRemovedFrom.ToString();
+            command.Parameters["@FilesToBeRemovedFrom"].Value = form.ReviewInfo.FilesToBeRemovedFrom;
             command.Parameters.Add(new SqlParameter("@CreateByID", SqlDbType.VarChar));
             command.Parameters["@CreateByID"].Value = 301758;
             command.Parameters.Add(new SqlParameter("@UpdateByID", SqlDbType.VarChar));
             command.Parameters["@UpdateByID"].Value = 301758;
             command.Parameters.Add(new SqlParameter("@UniqueID", SqlDbType.VarChar));
-            command.Parameters["@UniqueID"].Value = form.uniqueId.ToString();
+            command.Parameters["@UniqueID"].Value = form.UniqueId.ToString();
 
             return command;
         }
 
-        public bool UpdateRequestToServiceDeskApproved(int requestID)
+        public bool UpdateRequestToServiceDeskApproved(Guid UniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(requestID, "ServiceDesk");
+            return UpdateRequestToApprovedStatus(UniqueRequestID, "ServiceDeskApproved");
         }
 
-        public bool UpdateRequestToHRApproved(int requestID)
+        public bool UpdateRequestToHRApproved(Guid UniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(requestID, "HR");
+            return UpdateRequestToApprovedStatus(UniqueRequestID, "HRApproved");
+        }
+
+        public bool RemoveRequestByUniqueId(Guid UniqueRequestID)
+        {
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            string commandString = "DELETE FROM [Intern_CoyoteMoves].[dbo].[RequestData] WHERE UniqueRequestID = @UniqueRequestId";
+            SqlCommand command = new SqlCommand(commandString);
+            command.Parameters.AddWithValue("@UniqueRequestId", UniqueRequestID);
+            command.Connection = connection;
+            command.Connection.Open();
+            int result = command.ExecuteNonQuery();
+            command.Connection.Close();
+
+            return (result == 1);
+        }
+
+        public bool HRApproved(Guid uniqueRequestID)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("SELECT HRApproved FROM RequestData WHERE UniqueRequestID = @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
+            cmd.Connection = connection;
+            connection.Open();
+            var approval = cmd.ExecuteScalar();
+
+            connection.Close();
+            if ((approval == null) || (approval == DBNull.Value))
+            {
+                return false;
+            }
+            return (bool)approval;
+        }
+
+        public bool SDApproved(Guid uniqueRequestID)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("SELECT ServiceDeskApproved FROM RequestData WHERE UniqueRequestID = @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
+            cmd.Connection = connection;
+            connection.Open();
+            var approval = cmd.ExecuteScalar();
+
+            connection.Close();
+            if ((approval == null) || (approval == DBNull.Value))
+            {
+                return false;
+            }
+            return (bool)approval;
         }
     }
 }

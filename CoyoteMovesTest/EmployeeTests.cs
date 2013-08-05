@@ -62,19 +62,6 @@ namespace CoyoteMovesTest
 
         [TestCategory("Integration")]
         [TestMethod]
-        public void GetAllEmployeesWithSameFullName()
-        {
-            List<Employee> retrievedEmployees = new List<Employee>();
-            retrievedEmployees = _employee.GetAllEmployeesWithSameFullName("Kevin Smith");
-            foreach (Employee entry in retrievedEmployees)
-            {
-                Assert.AreEqual("Kevin", entry.FirstName);
-                Assert.AreEqual("Smith", entry.LastName);
-            }
-        }
-
-        [TestCategory("Integration")]
-        [TestMethod]
         public void GetNumberOfEmployeesInEachGroup()
         {
             Dictionary<string, int> dict = _employee.GetNumberOfEmployeesInEachGroup();
@@ -86,6 +73,5 @@ namespace CoyoteMovesTest
             }
             Console.WriteLine("Total : " + total);
         }
-
     }
 }

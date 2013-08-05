@@ -54,6 +54,7 @@ namespace CoyoteMoves.Models
                 string Group = reader["Group"].ToString();
                 int ID = (int)reader["PersonID"];
                 string ManagerName = reader["ManagerFirstName"].ToString() + " " + reader["ManagerLastName"].ToString();
+                string Template = reader["Template"].ToString();
                 //security items rights
                 Employee TempGuy = new Employee()
                 {
@@ -65,7 +66,8 @@ namespace CoyoteMoves.Models
                     Group = Group,
                     Id = ID,
                     ManagerName = ManagerName,
-                    PhoneNumber = Phone
+                    PhoneNumber = Phone,
+                    Template = Template
                 };
 
                 return TempGuy;

@@ -70,11 +70,11 @@ namespace CoyoteMovesTest
             _req.Current.PhoneInfo.PhoneNumber = "8472718339";
             _req.Future.PhoneInfo.PhoneNumber = "99995953214";
 
-            _req.EmailInfo.GroupsToBeAddedTo = new List<string> { "one", "two", "three" };
-            _req.EmailInfo.GroupsToBeRemovedFrom = new List<string> { "one", "two", "three" };
+            _req.EmailInfo.GroupsToBeAddedTo =   "one, two, three" ;
+            _req.EmailInfo.GroupsToBeRemovedFrom = "one, two, three"; 
 
-            _req.ReviewInfo.FilesToBeAddedTo = new List<string> { "one", "two", "three" };
-            _req.ReviewInfo.FilesToBeRemovedFrom = new List<string> { "one", "two", "three" };
+            _req.ReviewInfo.FilesToBeAddedTo =  "one, two, three" ;
+            _req.ReviewInfo.FilesToBeRemovedFrom =  "one, two, three" ;
 
         }
 

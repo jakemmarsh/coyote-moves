@@ -20,14 +20,20 @@ namespace CoyoteMovesTest
         {
             _requester = new RequestFormDB();
             _validator = new InfoValidator();
+            _req = new RequestForm(301757);
+            TestStoreRequestFormInDatabaseAsPending();
+            
         }
 
-        [TestCategory("Integration")]
-        [TestMethod]
+        [TestCleanup]
+        public void cleanup()
+        {
+            _requester.RemoveRequestByUniqueId(_req.UniqueId);
+        }
+
         public void TestStoreRequestFormInDatabaseAsPending()
         {
             string test = "test";
-            _req = new RequestForm(301757);
 
             _req.Current.BazookaInfo.JobTitle = "Intern";
             _req.Current.BazookaInfo.JobTemplate = test;
@@ -60,17 +66,14 @@ namespace CoyoteMovesTest
             _req.Future.UltiproInfo.Supervisor = test;
 
             _requester.StoreRequestFormInDatabaseAsPending(_req);
-
-
-
         }
 
         [TestCategory("Integration")]
         [TestMethod]
         public void UpdateServiceDeskApprovedStatus()
         {
-            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(1);
-            bool testValidation = _validator.ValidateServiceDeskApproval(1);
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(_req.UniqueId);
+            bool testValidation = _validator.ValidateServiceDeskApproval(_req.UniqueId);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }
@@ -79,8 +82,8 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateHumanResourcesApprovedStatus()
         {
-            bool requestValidation = _requester.UpdateRequestToHRApproved(1);
-            bool testValidation = _validator.ValidateHumanResourcesApproval(1);
+            bool requestValidation = _requester.UpdateRequestToHRApproved(_req.UniqueId);
+            bool testValidation = _validator.ValidateHumanResourcesApproval(_req.UniqueId);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }
@@ -89,7 +92,8 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateHRApprovedFailedNoRequestFound()
         {
-            bool requestValidation = _requester.UpdateRequestToHRApproved(0);
+            Guid different = new Guid();
+            bool requestValidation = _requester.UpdateRequestToHRApproved(different);
             Assert.IsFalse(requestValidation);
         }
 
@@ -97,10 +101,18 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateSDApprovedFailedNoRequestFound()
         {
-            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(0);
+            Guid different = new Guid();
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(different);
             Assert.IsFalse(requestValidation);
         }
 
-
+        [TestCategory("Integration"), TestMethod]
+        public void TestSettingRequestToHRApproved()
+        {
+            Assert.IsTrue(_requester.UpdateRequestToHRApproved(_req.UniqueId));
+            Assert.IsTrue(_requester.HRApproved(_req.UniqueId));
+            Assert.IsFalse(_requester.SDApproved(_req.UniqueId));
+            Assert.IsTrue(_requester.UpdateRequestToServiceDeskApproved(_req.UniqueId));
+        }
     }
 }
