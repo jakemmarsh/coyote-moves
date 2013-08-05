@@ -124,7 +124,7 @@ header {
 h2.black-bg {
     width: 100%;
     display: block;
-    padding: 5px;
+    padding: 10px;
     color: #30d600;
     background: #000;
     margin: 5px 0;
@@ -198,6 +198,7 @@ h2.black-bg {
 }
 
     #map-sidebar h3 {
+        padding: 10px;
         margin: 0;
         text-align: center;
         background: #000;
