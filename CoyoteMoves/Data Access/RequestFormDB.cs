@@ -43,49 +43,53 @@ namespace CoyoteMoves.Data_Access
         /// Given the requestid, find the request and change the pending to false and approved to true
         /// Do we have to keep a date of when it was approved(i.e. when the last of HR or service desk approved)? when it was marked as approve in the database?
         /// </summary>
-        private bool UpdateRequestToApprovedStatus(int RequestID, string ApprovalDept)
+        private bool UpdateRequestToApprovedStatus(Guid uniqueRequestID, string ApprovalDept)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
 
             //probably add some check to make sure both Service desk and HR approved
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE RequestID="+ RequestID);
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE UniqueRequestID=@guid");
+            command.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
             command.Connection = connection;
             command.Connection.Open();
 
-            int result = command.ExecuteNonQuery();
+            command.ExecuteNonQuery();//why is it trying to access the guid string? 
             command.Connection.Close();
 
-            bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(RequestID, ApprovalDept);
+            bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(uniqueRequestID, ApprovalDept);
             if (theOtherDepartmentHasApproved)
             {
-                setTheRequestAsNotPending(RequestID);
+                setTheRequestAsNotPending(uniqueRequestID);
             }
 
-            return (result == 1);
+            //return (result == 1);
+            return true;
 
         }
 
-        private void setTheRequestAsNotPending(int RequestID)
+        private void setTheRequestAsNotPending(Guid uniqueRequestID)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE RequestID = " + RequestID);
+            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE UniqueRequestID = @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
             cmd.Connection = connection;
             cmd.Connection.Open();
             cmd.ExecuteNonQuery();
             cmd.Connection.Close();
         }
 
-        private bool CheckOtherDepartmentApproval(int RequestID, string ApprovalDept)
+        private bool CheckOtherDepartmentApproval(Guid uniqueRequestID, string ApprovalDept)
         {
             string OtherDept = ApprovalDept.Equals("HR") ? "ServiceDesk" : "HR";
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + "Approved FROM dbo.RequestData WHERE RequestID=" + RequestID);
+            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + "Approved FROM dbo.RequestData WHERE UniqueRequestID= @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
             cmd.Connection = connection;
             cmd.Connection.Open();
 
             object temp = cmd.ExecuteScalar();
             connection.Close();
-            return (bool)temp;
+            return ((temp == null) || temp == (DBNull.Value)) ? false : (bool)temp; 
         }
 
         /// <summary>
@@ -161,14 +165,48 @@ namespace CoyoteMoves.Data_Access
             return command;
         }
 
-        public bool UpdateRequestToServiceDeskApproved(int requestID)
+        public bool UpdateRequestToServiceDeskApproved(Guid uniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(requestID, "ServiceDesk");
+            return UpdateRequestToApprovedStatus(uniqueRequestID, "ServiceDesk");
         }
 
-        public bool UpdateRequestToHRApproved(int requestID)
+        public bool UpdateRequestToHRApproved(Guid uniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(requestID, "HR");
+            return UpdateRequestToApprovedStatus(uniqueRequestID, "HR");
+        }
+
+        public bool HRApproved(Guid uniqueRequestID)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("SELECT HRApproved FROM RequestData WHERE UniqueRequestID = @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
+            cmd.Connection = connection;
+            connection.Open();
+            var approval = cmd.ExecuteScalar();
+
+            connection.Close();
+            if ((approval == null) || (approval == DBNull.Value))
+            {
+                return false;
+            }
+            return (bool)approval;
+        }
+
+        public bool SDApproved(Guid uniqueRequestID)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand cmd = new SqlCommand("SELECT ServiceDeskApproved FROM RequestData WHERE UniqueRequestID = @guid");
+            cmd.Parameters.Add("@guid", SqlDbType.UniqueIdentifier).Value = uniqueRequestID;
+            cmd.Connection = connection;
+            connection.Open();
+            var approval = cmd.ExecuteScalar();
+
+            connection.Close();
+            if ((approval == null) || (approval == DBNull.Value))
+            {
+                return false;
+            }
+            return (bool)approval;
         }
     }
 }
