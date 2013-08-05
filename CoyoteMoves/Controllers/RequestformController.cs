@@ -14,6 +14,9 @@ using System.Web.Script.Serialization;
 using System.IO;
 using CoyoteMoves.Models.SeatingData;
 using CoyoteMoves.Models.EmployeeData;
+using CoyoteMoves.Emailer.Models;
+using CoyoteMoves.Emailer;
+using System.Collections.ObjectModel;
 
 namespace CoyoteMoves.Controllers
 {
@@ -26,18 +29,36 @@ namespace CoyoteMoves.Controllers
         // POST api/RequestForm/ReceiveFormChangeRequest
         public HttpResponseMessage SendChangeRequest(JObject json)
         {
+            RequestForm obj = null;
             using(var sr = new StringReader(json.ToString()))
             using(var jr = new JsonTextReader(sr))
             {
                 var js = new JsonSerializer();
-                RequestForm obj = js.Deserialize<RequestForm>(jr);
+                obj = (RequestForm)js.Deserialize<RequestForm>(jr);
             }
             //turn the json into data objects
+
+            //EmailSender emailer = new EmailSender();
+            //emailer.sendMovesRequestHR(obj);
+            //emailer.sendMovesRequestSD(obj);
+
+            Collection<string> to = new Collection<string>();
+            to.Add("jason.dibabbo@coyote.com");
+            EmailSender emailer = new EmailSender("Testes", to, "coyotemoves@coyote.com", "Testing.", "../../../coyotemoves/coyotemovestemplate.pdf");
             //send the email (with the old and changed info) to service desk and HR to approve of the changes
 
+            RequestFormDB formDB = new RequestFormDB();
+            formDB.StoreRequestFormInDatabaseAsPending(obj);
             //add it to the queue of "unapproved", log the attempt to change?
 
             return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
+        //GET api/RequestForm/GetIDFromName
+        public int GetIDFromName(string name)
+        {
+            EmployeeDB edb = new EmployeeDB();
+            return edb.GetIdFromName(name);
         }
 
         // GET api/RequestForm/GetAllGroups
