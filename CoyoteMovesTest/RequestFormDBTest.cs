@@ -60,47 +60,15 @@ namespace CoyoteMovesTest
             _req.Future.UltiproInfo.Supervisor = test;
 
             _requester.StoreRequestFormInDatabaseAsPending(_req);
-
-
-
         }
 
-        [TestCategory("Integration")]
-        [TestMethod]
-        public void UpdateServiceDeskApprovedStatus()
+        [TestCategory("Integration"), TestMethod]
+        public void TestSettingRequestToHRApproved()
         {
-            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(1);
-            bool testValidation = _validator.ValidateServiceDeskApproval(1);
-            Assert.IsTrue(testValidation);
-            Assert.IsTrue(requestValidation);
+            Assert.IsTrue(_requester.UpdateRequestToHRApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
+            Assert.IsTrue(_requester.HRApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
+            Assert.IsFalse(_requester.SDApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
+            Assert.IsTrue(_requester.UpdateRequestToServiceDeskApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
         }
-        
-        [TestCategory("Integration")]
-        [TestMethod]
-        public void UpdateHumanResourcesApprovedStatus()
-        {
-            bool requestValidation = _requester.UpdateRequestToHRApproved(1);
-            bool testValidation = _validator.ValidateHumanResourcesApproval(1);
-            Assert.IsTrue(testValidation);
-            Assert.IsTrue(requestValidation);
-        }
-
-        [TestCategory("Integration")]
-        [TestMethod]
-        public void UpdateHRApprovedFailedNoRequestFound()
-        {
-            bool requestValidation = _requester.UpdateRequestToHRApproved(0);
-            Assert.IsFalse(requestValidation);
-        }
-
-        [TestCategory("Integration")]
-        [TestMethod]
-        public void UpdateSDApprovedFailedNoRequestFound()
-        {
-            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(0);
-            Assert.IsFalse(requestValidation);
-        }
-
-
     }
 }
