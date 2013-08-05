@@ -73,5 +73,19 @@ namespace CoyoteMovesTest
             }
         }
 
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void GetNumberOfEmployeesInEachGroup()
+        {
+            Dictionary<string, int> dict = _employee.GetNumberOfEmployeesInEachGroup();
+            int total = 0;
+            foreach (KeyValuePair<string, int> pair in dict)
+            {
+                Console.WriteLine(pair.Key + " : " + pair.Value);
+                total += pair.Value;
+            }
+            Console.WriteLine("Total : " + total);
+        }
+
     }
 }

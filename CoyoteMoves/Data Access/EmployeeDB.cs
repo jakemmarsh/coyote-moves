@@ -133,20 +133,36 @@ namespace CoyoteMoves.Data_Access
         {
             Dictionary<string, int> result = new Dictionary<string, int>();
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand("SELECT Code FROM Intern_CoyoteMoves.dbo.GroupType");
+            SqlCommand command = new SqlCommand("SELECT IE.EmployeeID, G.Code FROM Intern_CoyoteMoves.dbo.InternalEmployee as IE LEFT JOIN Intern_CoyoteMoves.dbo.GroupType as G on G.GroupTypeID=IE.[Group]");
             command.Connection = connection;
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
             
             while (reader.Read())
             {
-                if (result.ContainsKey((string)reader["Code"]) == false)
+                if (reader["Code"] != System.DBNull.Value)
                 {
-                    result[((string) reader["Code"])] = 0;
+                    if (result.ContainsKey((string)reader["Code"]) == false)
+                    {
+                        result[((string)reader["Code"])] = 1;
+                    }
+                    else
+                    {
+                        result[((string)reader["Code"])]++;
+                    }
+                }
+                else
+                {
+                    if (result.ContainsKey("NULL"))
+                    {
+                        result["NULL"]++;
+                    }
+                    else
+                    {
+                        result["NULL"] = 1;
+                    }
                 }
             }
-
-            //now that the dictionary is set up, iterate over the employees to 
             return result;
         }
     }
