@@ -58,6 +58,7 @@ namespace CoyoteMoves.Data_Access
 
             StreamReader reader = new StreamReader(Path.GetFullPath(filePath));
             string line = "";
+            int fifthFloorDeskIndex = 1;
             while ((line = reader.ReadLine()) != null)
             {
                 if (line.Contains("Name") == false)
@@ -70,7 +71,7 @@ namespace CoyoteMoves.Data_Access
                     int id = emp.GetIdFromName(newname);
 
                     //something is weird for this person INSIDE the database (ask Mitch about it), so the function above won't work, so just set it to their id
-                    if (newname == "Jordan Brychell")
+                    if (newname.Contains("jordan brychell"))
                     {
                         id = 10184;
                     }
@@ -78,11 +79,23 @@ namespace CoyoteMoves.Data_Access
                     string deskNumber = arr[1];
 
                     int floorNumber = Convert.ToInt32(arr[1][0].ToString());
-                   
-                    Console.WriteLine(newname + "\n" + "\tid: " + id + "\n\tdesk: " + deskNumber + "\n\tfloor: " + floorNumber);
+                    if (floorNumber == 5)
+                    {
+                        deskNumber += "-" + fifthFloorDeskIndex;
+                        fifthFloorDeskIndex++;
+                    }
+
+                    if (id != -1)
+                    {
+                        //finally, actually insert that info into the desk database
+                        //InsertInformationIntoDeskDB(deskNumber, 0, 0, 0, floorNumber, id);
+                    }
+                    else
+                    {
+                        Console.WriteLine(newname + "\n" + "\tid: " + id + "\n\tdesk: " + deskNumber + "\n\tfloor: " + floorNumber);
+                    }
                     
-                    //finally, actually insert that info into the desk database
-                    InsertInformationIntoDeskDB(deskNumber, 0, 0, 0, floorNumber, id);
+                    
                 }
             }
 
