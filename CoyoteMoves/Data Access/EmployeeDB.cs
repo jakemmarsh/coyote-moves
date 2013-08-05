@@ -105,28 +105,6 @@ namespace CoyoteMoves.Data_Access
             return returnToSender;
 
         }     
-   
-        public List<Employee> GetAllEmployeesWithSameFullName(string name)
-        {
-            List<Employee> employeesWithName = new List<Employee>();
-            SqlConnection connection = new SqlConnection(_connectionString);
 
-            string commandString = "SELECT * FROM Intern_CoyoteMoves.dbo.Person WHERE [FirstName] = @firstName AND [LastName] = @lastName";
-            SqlCommand command = new SqlCommand(commandString);
-            command.Parameters.AddWithValue("@firstName", name.Split(' ').First());
-            command.Parameters.AddWithValue("@lastName", name.Split(' ').Last());
-            command.Connection = connection;
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            SqlToModelFactory factory = new SqlToModelFactory(reader);
-      
-            while (reader.Read())
-            {
-                employeesWithName.Add(factory.CreateEmployee());
-            }
-
-            connection.Close();
-            return employeesWithName;
-        }
     }
 }

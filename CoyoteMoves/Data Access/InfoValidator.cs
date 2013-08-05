@@ -67,7 +67,7 @@ namespace CoyoteMoves.Data_Access
         {
             bool toReturn = false;
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand("Select ServiceDeskApproved from Intern_CoyoteMoves.dbo.RequestData where RequestID = @requestID");
+            SqlCommand command = new SqlCommand("Select ServiceDeskApproved from Intern_CoyoteMoves.dbo.RequestData where UniqueRequestID = @requestID");
             command.Parameters.AddWithValue("@requestID", requestId);
             command.Connection = connection;
             command.Connection.Open();
@@ -85,7 +85,7 @@ namespace CoyoteMoves.Data_Access
         {
             bool toReturn = false;
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand("Select HRApproved from Intern_CoyoteMoves.dbo.RequestData where RequestID = @requestID");
+            SqlCommand command = new SqlCommand("Select HRApproved from Intern_CoyoteMoves.dbo.RequestData where UniqueRequestID = @requestID");
             command.Parameters.AddWithValue("@requestID", requestId);
             command.Connection = connection;
             command.Connection.Open();

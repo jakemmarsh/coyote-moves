@@ -66,11 +66,6 @@ namespace CoyoteMovesTest
             _req.Future.UltiproInfo.Supervisor = test;
 
             _requester.StoreRequestFormInDatabaseAsPending(_req);
-
-            bool testValidate = _validator.ValidateRequestForm(_req);
-
-            Assert.IsTrue(testValidate);
-
         }
 
         [TestCategory("Integration")]
@@ -87,16 +82,14 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateHumanResourcesApprovedStatus()
         {
-            Guid test = new Guid("2E59FF30-D8C6-4B72-B716-B22100E2A25C");
-            bool requestValidation = _requester.UpdateRequestToHRApproved(test);
-            bool testValidation = _validator.ValidateHumanResourcesApproval(test);
+            bool requestValidation = _requester.UpdateRequestToHRApproved(_req.UniqueId);
+            bool testValidation = _validator.ValidateHumanResourcesApproval(_req.UniqueId);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }
 
         [TestCategory("Integration")]
         [TestMethod]
-        [ExpectedException(typeof(System.NullReferenceException))]
         public void UpdateHRApprovedFailedNoRequestFound()
         {
             Guid different = new Guid();
@@ -106,7 +99,6 @@ namespace CoyoteMovesTest
 
         [TestCategory("Integration")]
         [TestMethod]
-        [ExpectedException(typeof(System.NullReferenceException))]
         public void UpdateSDApprovedFailedNoRequestFound()
         {
             Guid different = new Guid();
@@ -114,6 +106,13 @@ namespace CoyoteMovesTest
             Assert.IsFalse(requestValidation);
         }
 
-
+        [TestCategory("Integration"), TestMethod]
+        public void TestSettingRequestToHRApproved()
+        {
+            Assert.IsTrue(_requester.UpdateRequestToHRApproved(_req.UniqueId));
+            Assert.IsTrue(_requester.HRApproved(_req.UniqueId));
+            Assert.IsFalse(_requester.SDApproved(_req.UniqueId));
+            Assert.IsTrue(_requester.UpdateRequestToServiceDeskApproved(_req.UniqueId));
+        }
     }
 }
