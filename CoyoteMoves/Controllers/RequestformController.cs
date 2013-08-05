@@ -26,8 +26,8 @@ namespace CoyoteMoves.Controllers
          * Frontend will send us json (or just the object?) with the future (and current?) coyote moves form information
          * This controller is for receiving it and turning it into data objects to work with easier
          * */
-        // POST api/Form/ReceiveFormChangeRequest
-        public HttpResponseMessage ReceiveFormChangeRequest(JObject json)
+        // POST api/RequestForm/ReceiveFormChangeRequest
+        public HttpResponseMessage SendChangeRequest(JObject json)
         {
             RequestForm obj = null;
             using(var sr = new StringReader(json.ToString()))

@@ -17,7 +17,7 @@ namespace CoyoteMoves
                         "~/Public/js/lib/bootstrap-typeahead.js",
                         "~/Public/js/lib/modernizr.js",
                         "~/Public/js/lib/ui-bootstrap.js",
-                        "~/Public/js/lib/uiMap.js",
+                        "~/Public/js/mapLogic.js",
                         "~/Public/js/lib/uiUtils.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(

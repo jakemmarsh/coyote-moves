@@ -4,29 +4,19 @@
         <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
         <form ng-submit="searchForEmployee()" class="inline-block">
             <input type="text" id="employee-search" ng-model="employeeToSearchFor" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
-            <input type="submit" value="Go" class="no-float" />
         </form>
     </div>
-    <div id="map-third" class="map-container" ng-show="currentFloor == 3">
-        <div ui-map="thirdFloorMap" class="map"
-          ui-event="{'map-click': 'addThirdFloorMarker($event)', 'map-zoom_changed': 'setThirdFloorZoomMessage(thirdFloorMap.getZoom())' }"
-          ui-options="thirdFloorMapOptions">
-        </div>
+    <div id="map-third" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 3">
+        <div id="map-canvas-3" class="full-width full-height"></div>
     </div>
-    <div id="map-fourth" class="map-container" ng-show="currentFloor == 4">
-        <div id="Div1" ui-map="fourthFloorMap" class="map"
-          ui-event="{'map-click': 'addFourthFloorMarker($event)', 'map-zoom_changed': 'setFourthFloorZoomMessage(fourthFloorMap.getZoom())' }"
-          ui-options="fourthFloorMapOptions">
-        </div>
+    <div id="map-fourth" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 4">
+        <div id="map-canvas-4" class="full-width full-height"></div>
     </div>
-    <div id="map-fifth" class="map-container" ng-show="currentFloor == 5">
-        <div ui-map="fifthFloorMap" class="map"
-          ui-event="{'map-click': 'addFifthFloorMarker($event)', 'map-zoom_changed': 'setFifthFloorZoomMessage(fifthFloorMap.getZoom())' }"
-          ui-options="fifthFloorMapOptions">
-        </div>
+    <div id="map-fifth" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 5">
+        <div id="map-canvas-5" class="full-width full-height"></div>
     </div>
-    <div id="map-sidebar">
-        <div id="selected-desk-container">
+    <div id="map-sidebar" ng-class="{true:'', false:'no-width'}[showSidebar]">
+        <div id="selected-desk-container" ng-show="selectedDeskEmployee">
             <h3>Selected Desk</h3>
             <form class="soft--sides" ng-submit="createMoveForm()">
                 <div class="tr">
@@ -35,7 +25,7 @@
                     </div>
 
                     <div class="td">
-                        <input type="text" ng-bind="currentDeskNumber" value="{{currentDeskNumber}}" disabled/>
+                        <span class="text--bold" ng-bind="currentDeskNumber"/>
                     </div>
                 </div>
                 <div class="tr">
@@ -43,7 +33,15 @@
                         Occupant
                     </div>
                     <div class="td">
-                        <input type="text" ng-model="currentDeskOccupant" bs-typeahead="movedEmployees.name" data-items="20" data-min-length="2"/>
+                        <span class="text--bold" ng-bind="currentDeskOccupant"/>
+                    </div>
+                </div>
+                <div class="tr">
+                    <div class="td soft-half--right">
+                        Future Occupant
+                    </div>
+                    <div class="td">
+                        <input type="text" ng-model="futureDeskOccupant" bs-typeahead="currentFloorEmployeeNames" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
                 <div class="tr">
@@ -51,26 +49,18 @@
                         Orientation
                     </div>
                     <div class="td">
-                        <slider floor="0" ceiling="360" step="10" precision="1" ng-model="currentDeskOrientation"></slider>
+                        <slider floor="0" ceiling="360" step="45" precision="0" ng-model="currentDeskOrientation"></slider>
                     </div>
                 </div>
+                <span ng-bind="createMoveFormError" class="error-message block"></span>
                 <input type="submit" value="Start Move" class="clearfix"/>
             </form>
         </div>
-        <div id="displaced-employees-container" ng-hide="!isAdmin">
+        <div id="displaced-employees-container" ng-hide="!isAdmin || displacedEmployees.length == 0">
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
-                <li>
-                   Jake 
-                </li>
-                <li>
-                   Likes
-                </li>
-                <li>
-                   To
-                </li>
-                <li>
-                   Hardcode 
+                <li ng-repeat="employee in displacedEmployees">
+                    {{ employee.name }}
                 </li>
             </ul>
         </div>
@@ -79,9 +69,9 @@
 <div ng-hide="!isAdmin">
     <h2 class="black-bg" style="margin-top:5px;" ng-hide="movedEmployees.length == 0">Forms</h2>
     <div class="tabs">
-        <a href ng-click="$parent.currentEmployee = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentEmployee == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
+        <a href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
     </div>
-    <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentEmployee == $index">
+    <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentFormTab == $index">
         <a href class="cancel-button nudge--left" ng-click="cancelSingleMove($index)" ng-hide="!movedEmployees">Close Tab</a>
         <div class="table">
         <div class="td form-half">
@@ -355,7 +345,8 @@
 
     </form>
 
-    <a href class="cancel-button nudge--right" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length == 0">Close All Tab(s)</a>
+    <a href class="cancel-button nudge--right" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
+    <a href class="cancel-button nudge--right" ng-click="cancelAllMoves()" ng-show="movedEmployees.length == 1">Close Tab</a>
     <input type="submit" value="Submit Moves" class="clearfix" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
-    <input type="submit" value="Submit Move" class="clearfix" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1" ng-click="sendAllForms()"/>
+    <input type="submit" value="Submit Move" class="clearfix" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
 </div>

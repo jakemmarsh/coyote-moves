@@ -13,7 +13,7 @@ namespace CoyoteMoves.Models.RequestItems
         /// just has a bunch of request types (based off of pdf we got from Mario)
         /// </summary>
 
-        public Guid uniqueId { get; set; }
+        public Guid UniqueId { get; set; }
         public int EmployeeId { get; set; }
         public CoyoteMovesFormEmployeeInfo Current { get; set; }
         public CoyoteMovesFormEmployeeInfo Future { get; set; }
@@ -23,7 +23,7 @@ namespace CoyoteMoves.Models.RequestItems
 
         public RequestForm()
         {
-            uniqueId = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
         public RequestForm(int EmployeeID)
@@ -33,7 +33,7 @@ namespace CoyoteMoves.Models.RequestItems
             this.Future = new CoyoteMovesFormEmployeeInfo();
             this.EmailInfo = new EmailDistributionInfo();
             this.ReviewInfo = new EmployeeReviewFileInfo();
-            uniqueId = Guid.NewGuid();
+            UniqueId = Guid.NewGuid();
         }
 
     }

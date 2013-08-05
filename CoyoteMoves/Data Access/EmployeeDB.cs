@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Data.Sql;
 
 namespace CoyoteMoves.Data_Access
 {
@@ -40,17 +41,46 @@ namespace CoyoteMoves.Data_Access
 
             try
             {
+
                 command.Parameters.AddWithValue("@Fname", names[0]);
                 command.Parameters.AddWithValue("@Lname", lastname);
                 command.Connection = connection;
                 connection.Open();
-                var temp = command.ExecuteScalar();
-                connection.Close();
-                if ((temp == null) || (temp == DBNull.Value))
+                SqlDataReader reader = command.ExecuteReader();
+
+                //people can have the same name, so when this command is run, it should return (possibly) a bunch of people
+                //with the same name, so get all those people
+                List<int> ids = new List<int>();
+                while (reader.Read())
                 {
-                    return -1;
+                    ids.Add((int)reader["PersonID"]);
                 }
-                return (int)temp;
+                connection.Close();
+
+                //next iterate over all those people to see which employees are actually active employees
+                foreach (int currentID in ids)
+                {
+                    SqlCommand secondCommand = new SqlCommand("select EmployeeID from dbo.InternalEmployee where EmployeeID=" + currentID);
+                    secondCommand.Connection = new SqlConnection(_connectionString);
+                    secondCommand.Connection.Open();
+                    var result = secondCommand.ExecuteScalar();
+                    secondCommand.Connection.Close();
+
+                    if (result == null || result == DBNull.Value)
+                    {
+                        //do nothing and keep looking for a valid employee
+                    }
+                    else
+                    {
+                        //yeah... it just returns the id of the first valid employee
+                        //that's pretty much the best you can do with just the first/last name though
+                        //it's possible this function returns the id of someone other than the person you were looking for
+                        return currentID;
+                    }
+                }
+                //if we got here, then we didnt' find it in the internal employee, so just return -1
+                return -1;
+
             }
 
             catch (NullReferenceException ex)
@@ -104,6 +134,43 @@ namespace CoyoteMoves.Data_Access
 
             return returnToSender;
 
-        }     
+        }    
+
+        public Dictionary<string, int> GetNumberOfEmployeesInEachGroup()
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand("SELECT IE.EmployeeID, G.Code FROM Intern_CoyoteMoves.dbo.InternalEmployee as IE LEFT JOIN Intern_CoyoteMoves.dbo.GroupType as G on G.GroupTypeID=IE.[Group]");
+            command.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            
+            while (reader.Read())
+            {
+                if (reader["Code"] != System.DBNull.Value)
+                {
+                    if (result.ContainsKey((string)reader["Code"]) == false)
+                    {
+                        result[((string)reader["Code"])] = 1;
+                    }
+                    else
+                    {
+                        result[((string)reader["Code"])]++;
+                    }
+                }
+                else
+                {
+                    if (result.ContainsKey("NULL"))
+                    {
+                        result["NULL"]++;
+                    }
+                    else
+                    {
+                        result["NULL"] = 1;
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
