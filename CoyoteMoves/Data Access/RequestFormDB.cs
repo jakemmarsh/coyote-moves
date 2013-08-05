@@ -48,7 +48,9 @@ namespace CoyoteMoves.Data_Access
             SqlConnection connection = new SqlConnection(_connectionString);
 
             //probably add some check to make sure both Service desk and HR approved
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "Approved='1' WHERE UniqueRequestID='"+ UniqueRequestID+"'");
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET @approvalDept='1' WHERE UniqueRequestID=@UniqueRequestID");
+            command.Parameters.AddWithValue("@approvalDept", ApprovalDept);
+            command.Parameters.AddWithValue("@UniqueRequestID", UniqueRequestID);
             command.Connection = connection;
             command.Connection.Open();
 
@@ -68,7 +70,8 @@ namespace CoyoteMoves.Data_Access
         private void setTheRequestAsNotPending(Guid UniqueRequestID)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE UniqueRequestID = " + UniqueRequestID);
+            SqlCommand cmd = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET Pending = 0 WHERE UniqueRequestID = @UniqueRequestID");
+            cmd.Parameters.AddWithValue("@UniqueRequestID", UniqueRequestID);
             cmd.Connection = connection;
             cmd.Connection.Open();
             cmd.ExecuteNonQuery();
@@ -77,23 +80,24 @@ namespace CoyoteMoves.Data_Access
 
         private bool CheckOtherDepartmentApproval(Guid UniqueRequestID, string ApprovalDept)
         {
-            string OtherDept = ApprovalDept.Equals("HR") ? "ServiceDesk" : "HR";
+            bool approved = false;
+            string OtherDept = ApprovalDept.Equals("HRApproved") ? "ServiceDeskApproved" : "HRApproved";
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand cmd = new SqlCommand("SELECT " + OtherDept + "Approved FROM dbo.RequestData WHERE UniqueRequestID=" + UniqueRequestID);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Intern_CoyoteMoves.dbo.RequestData WHERE UniqueRequestID= @requestID");
+//            cmd.Parameters.AddWithValue("@approvalDept", OtherDept);
+            cmd.Parameters.AddWithValue("@requestID", UniqueRequestID);
             cmd.Connection = connection;
             cmd.Connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                approved = (bool)(reader[ApprovalDept]); 
+            }
 
-            object temp = cmd.ExecuteScalar();
             connection.Close();
-            return (bool)temp;
+            return approved;
         }
 
-        /// <summary>
-        /// Since we have to add hella parameters to the stored proc, might as well create it's own function to do so
-        /// </summary>
-        /// <param name="commandString"></param>
-        /// <param name="form"></param>
-        /// <returns></returns>
         private SqlCommand AddParametersForStoreRequestFormInDatabaseHelper(RequestForm form)
         {
 
@@ -101,7 +105,6 @@ namespace CoyoteMoves.Data_Access
             SqlCommand command = new SqlCommand(commandString);
             command.CommandType = System.Data.CommandType.StoredProcedure;
 
-            //for each parameter, add the parameter to the command and then set the parameter value
             command.Parameters.Add(new SqlParameter("@EmployeeID", SqlDbType.Int));
             command.Parameters["@EmployeeID"].Value = form.EmployeeId;
             command.Parameters.Add(new SqlParameter("@C_JobTitle", SqlDbType.VarChar));
@@ -145,8 +148,6 @@ namespace CoyoteMoves.Data_Access
             command.Parameters.Add(new SqlParameter("@F_Other", SqlDbType.VarChar));
             command.Parameters["@F_Other"].Value = form.Future.UltiproInfo.Other;
             command.Parameters.AddWithValue("@EmailListsToBeAddedTo", form.EmailInfo.GroupsToBeAddedTo);
-            //command.Parameters.Add(new SqlParameter("@EmailListsToBeAddedTo", SqlDbType.VarChar));
-            //command.Parameters["@EmailListsToBeAddedTo"].Value = form.EmailInfo.GroupsToBeAddedTo;
             command.Parameters.Add(new SqlParameter("@EmailListsToBeRemovedFrom", SqlDbType.VarChar));
             command.Parameters["@EmailListsToBeRemovedFrom"].Value = form.EmailInfo.GroupsToBeRemovedFrom;
             command.Parameters.Add(new SqlParameter("@FilesToBeAddedTo", SqlDbType.VarChar));
@@ -165,12 +166,26 @@ namespace CoyoteMoves.Data_Access
 
         public bool UpdateRequestToServiceDeskApproved(Guid UniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(UniqueRequestID, "ServiceDesk");
+            return UpdateRequestToApprovedStatus(UniqueRequestID, "ServiceDeskApproved");
         }
 
         public bool UpdateRequestToHRApproved(Guid UniqueRequestID)
         {
-            return UpdateRequestToApprovedStatus(UniqueRequestID, "HR");
+            return UpdateRequestToApprovedStatus(UniqueRequestID, "HRApproved");
+        }
+
+        public bool RemoveRequestByUniqueId(Guid UniqueRequestID)
+        {
+            SqlConnection connection = new SqlConnection(this._connectionString);
+            string commandString = "DELETE FROM [Intern_CoyoteMoves].[dbo].[RequestData] WHERE UniqueRequestID = @UniqueRequestId";
+            SqlCommand command = new SqlCommand(commandString);
+            command.Parameters.AddWithValue("@UniqueRequestId", UniqueRequestID);
+            command.Connection = connection;
+            command.Connection.Open();
+            int result = command.ExecuteNonQuery();
+            command.Connection.Close();
+
+            return (result == 1);
         }
     }
 }

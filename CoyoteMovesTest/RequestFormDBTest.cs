@@ -21,10 +21,16 @@ namespace CoyoteMovesTest
             _requester = new RequestFormDB();
             _validator = new InfoValidator();
             _req = new RequestForm(301757);
+            TestStoreRequestFormInDatabaseAsPending();
+            
         }
 
-        [TestCategory("Integration")]
-        [TestMethod]
+        [TestCleanup]
+        public void cleanup()
+        {
+            _requester.RemoveRequestByUniqueId(_req.UniqueId);
+        }
+
         public void TestStoreRequestFormInDatabaseAsPending()
         {
             string test = "test";
@@ -81,14 +87,16 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void UpdateHumanResourcesApprovedStatus()
         {
-            bool requestValidation = _requester.UpdateRequestToHRApproved(_req.UniqueId);
-            bool testValidation = _validator.ValidateHumanResourcesApproval(_req.UniqueId);
+            Guid test = new Guid("2E59FF30-D8C6-4B72-B716-B22100E2A25C");
+            bool requestValidation = _requester.UpdateRequestToHRApproved(test);
+            bool testValidation = _validator.ValidateHumanResourcesApproval(test);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }
 
         [TestCategory("Integration")]
         [TestMethod]
+        [ExpectedException(typeof(System.NullReferenceException))]
         public void UpdateHRApprovedFailedNoRequestFound()
         {
             Guid different = new Guid();
@@ -98,6 +106,7 @@ namespace CoyoteMovesTest
 
         [TestCategory("Integration")]
         [TestMethod]
+        [ExpectedException(typeof(System.NullReferenceException))]
         public void UpdateSDApprovedFailedNoRequestFound()
         {
             Guid different = new Guid();
