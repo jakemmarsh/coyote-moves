@@ -411,6 +411,7 @@ footer {
 
 .no-width {
     width: 0% !important;
+    display: none;
 }
 
 .full-height {
