@@ -1,10 +1,11 @@
-﻿<h2 class="black-bg">Floor Plan</h2>
-<div class="clearfix">
+﻿<div class="clearfix">
+<div class="row">
     <div class="tabs">
         <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
-        <form ng-submit="searchForEmployee()" class="inline-block">
-            <input type="text" id="employee-search" ng-model="employeeToSearchFor" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
-        </form>
+    </div>
+    <form ng-submit="searchForEmployee()" class="inline-block float-right nudge--right" style="width: 75%;">
+        <input type="text" id="employee-search" ng-model="employeeToSearchFor" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
+    </form> 
     </div>
     <div id="map-third" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 3">
         <div id="map-canvas-3" class="full-width full-height"></div>
@@ -68,13 +69,15 @@
 </div>
 <div ng-hide="!isAdmin">
     <h2 class="black-bg" style="margin-top:5px;" ng-hide="movedEmployees.length == 0">Forms</h2>
-    <div class="tabs">
-        <a href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
+    <div class="row clearfix">
+        <div class="tabs">
+            <a href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
+        </div>
     </div>
     <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentFormTab == $index">
-        <a href class="cancel-button nudge--left" ng-click="cancelSingleMove($index)" ng-hide="!movedEmployees">Close Tab</a>
-        <div class="table">
-        <div class="td form-half">
+        <a href class="cancel-button nudge--bottom" ng-click="cancelSingleMove($index)" ng-hide="!movedEmployees">Close Tab</a>
+        <div class="table nudge--top">
+        <div class="td form-half soft--right">
             <h3 class="title">Bazooka Changes</h3>
             <div class="table">
                 <div class="tr label">
@@ -344,9 +347,9 @@
         </div>
 
     </form>
-
-    <a href class="cancel-button nudge--right" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
-    <a href class="cancel-button nudge--right" ng-click="cancelAllMoves()" ng-show="movedEmployees.length == 1">Close Tab</a>
-    <input type="submit" value="Submit Moves" class="clearfix" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
-    <input type="submit" value="Submit Move" class="clearfix" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
+    <div class="row soft--left">
+        <a href class="cancel-button nudge--right" class="nudge--left" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
+        <input type="submit" value="Submit Moves" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
+        <input type="submit" value="Submit Move" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
+    </div>
 </div>
