@@ -21,7 +21,7 @@ namespace CoyoteMovesTest
         public void Setup()
         {
             _to = new Collection<string> {};
-            _emailer = new EmailSender("New Coyote Moves _request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
+            _emailer = new EmailSender("New Coyote Moves Request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
             _mockedEmailer = new Mock<EmailSender>("New Coyote Moves _request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
             _req = new RequestForm();
 

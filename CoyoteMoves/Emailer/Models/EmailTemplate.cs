@@ -62,12 +62,12 @@ namespace CoyoteMoves.Emailer.Models
             {
                 message.To.Add(entry);
             }
-            message.Subject = _subject;
+            message.Subject = _subject+" "+req.UniqueId;
             message.From = new System.Net.Mail.MailAddress(_from);
             message.Body = _emailBody;
             memory.Position = 0;
 
-            message.Attachments.Add(new Attachment(memory, "MovesForm.pdf")); //TODO Add reference number to pdf name
+            message.Attachments.Add(new Attachment(memory, "MovesForm"+req.UniqueId+".pdf")); //TODO Add reference number to pdf name
             reader.Close();
 
             return message;
