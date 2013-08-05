@@ -23,8 +23,9 @@ namespace CoyoteMovesTest
         [TestCategory("Integration")]
         public void TestValidateDeskNumber()
         {
-            Assert.IsTrue(_validator.ValidateDeskNumber("ABC666"));
+            Assert.IsTrue(_validator.ValidateDeskNumber("5-1"));
         }
+
         [TestMethod]
         [TestCategory("Integration")]
         public void TestValidateDeskNumberFailsNull()

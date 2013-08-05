@@ -20,14 +20,20 @@ namespace CoyoteMovesTest
         {
             _requester = new RequestFormDB();
             _validator = new InfoValidator();
+            _req = new RequestForm(301757);
+            TestStoreRequestFormInDatabaseAsPending();
+            
         }
 
-        [TestCategory("Integration")]
-        [TestMethod]
+        [TestCleanup]
+        public void cleanup()
+        {
+            _requester.RemoveRequestByUniqueId(_req.UniqueId);
+        }
+
         public void TestStoreRequestFormInDatabaseAsPending()
         {
             string test = "test";
-            _req = new RequestForm(301757);
 
             _req.Current.BazookaInfo.JobTitle = "Intern";
             _req.Current.BazookaInfo.JobTemplate = test;
@@ -62,13 +68,51 @@ namespace CoyoteMovesTest
             _requester.StoreRequestFormInDatabaseAsPending(_req);
         }
 
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void UpdateServiceDeskApprovedStatus()
+        {
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(_req.UniqueId);
+            bool testValidation = _validator.ValidateServiceDeskApproval(_req.UniqueId);
+            Assert.IsTrue(testValidation);
+            Assert.IsTrue(requestValidation);
+        }
+        
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void UpdateHumanResourcesApprovedStatus()
+        {
+            bool requestValidation = _requester.UpdateRequestToHRApproved(_req.UniqueId);
+            bool testValidation = _validator.ValidateHumanResourcesApproval(_req.UniqueId);
+            Assert.IsTrue(testValidation);
+            Assert.IsTrue(requestValidation);
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void UpdateHRApprovedFailedNoRequestFound()
+        {
+            Guid different = new Guid();
+            bool requestValidation = _requester.UpdateRequestToHRApproved(different);
+            Assert.IsFalse(requestValidation);
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void UpdateSDApprovedFailedNoRequestFound()
+        {
+            Guid different = new Guid();
+            bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(different);
+            Assert.IsFalse(requestValidation);
+        }
+
         [TestCategory("Integration"), TestMethod]
         public void TestSettingRequestToHRApproved()
         {
-            Assert.IsTrue(_requester.UpdateRequestToHRApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
-            Assert.IsTrue(_requester.HRApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
-            Assert.IsFalse(_requester.SDApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
-            Assert.IsTrue(_requester.UpdateRequestToServiceDeskApproved(new Guid("F2F56AB3-1F2B-45BA-842C-88918FF6551A")));
+            Assert.IsTrue(_requester.UpdateRequestToHRApproved(_req.UniqueId));
+            Assert.IsTrue(_requester.HRApproved(_req.UniqueId));
+            Assert.IsFalse(_requester.SDApproved(_req.UniqueId));
+            Assert.IsTrue(_requester.UpdateRequestToServiceDeskApproved(_req.UniqueId));
         }
     }
 }
