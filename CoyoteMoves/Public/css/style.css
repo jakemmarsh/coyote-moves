@@ -206,11 +206,11 @@ h2.black-bg {
     }
 
 #selected-desk-container {
-    height: 250px;
+    height: 300px;
 }
 
 #displaced-employees-container {
-    height: 350px;
+    height: 300px;
 }
 
     #selected-desk-container .tr {
@@ -225,17 +225,12 @@ h2.black-bg {
 
     #displaced-employees > li {
         padding: 10px;
-        cursor: pointer;
         text-align: center;
         background: #f0f0f0;
         margin: 5px 0;
         font-weight: bold;
         color: #000;
     }
-
-        #displaced-employees > li:hover {
-            background: #c9cace;
-        }
 
         #displaced-employees > li:first-child {
             margin: 0;
@@ -411,7 +406,11 @@ footer {
 }
 
 .full-width {
-    width: 100%;
+    width: 100% !important;
+}
+
+.no-width {
+    width: 0% !important;
 }
 
 .full-height {
@@ -420,4 +419,13 @@ footer {
 
 .vertical-middle {
     vertical-align: middle;
+}
+
+.error-message {
+    color: #ff0000;
+}
+
+.block {
+    display: block;
+    clear: both;
 }
