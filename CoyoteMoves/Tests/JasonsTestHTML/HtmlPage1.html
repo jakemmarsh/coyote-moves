@@ -7,12 +7,58 @@
         var data = "hello";
         $.ajax(
                 {
-                    url: "http://localhost/CoyoteMoves/api/Requestform/ReceiveFormChangeRequest/",
+                    url: "http://localhost/CoyoteMoves/api/RequestForm/ReceiveFormChangeRequest/",
                     //url: "http://localhost/CoyoteMoves/api/Desk/GetDesksByFloor/5",
                     type: "POST",
                     //type: "GET",
                     dataType: 'json',
-                    data: { "deskNumber": "ABC666", "location": { "floor": 5, "topLeft": { "xCoordinate": 0.0, "yCoordinate": 1.0 }, "orientation": 0.0 }, "currentTenant": { "firstName": "Jason", "lastName": "DiBabbo", "email": "jason.dibabbo@coyote.com", "jobTitle": "Intern", "department": "IT", "group": "Unknown", "id": 301758, "managerName": "Joe Kolodz", "template": null } },
+                    data:
+                        { "name":"Brandon DSouza",
+                        "deskOrientation":0,
+                        "current":{
+                            "bazookaInfo":
+                                { "jobTitle":"Intern",
+                                "department":"IT",
+                                "group":"Unknown",
+                                "managerId":"Joe Kolodz",
+                                "jobTemplate":"IT Intern"},
+                            "ultiproInfo":
+                                {"jobTitle":"Intern",
+                                "department":"IT",
+                                "group":"Unknown",
+                                "supervisor":"Joe Kolodz",
+                                "other":""},
+                            "deskInfo":
+                                {"deskNumber":"5-13",
+                                "office":"34658df"},
+                            "phoneInfo":
+                                {"phoneNumber":"|1|8472357349|7349|"}
+                        },
+                        "$$hashKey":"007",
+                        "future":
+                            {"bazookaInfo":
+                                {"jobTitle":"President",
+                                "department":"Human Resources",
+                                "group":"T7",
+                                "managerId":68,
+                                "jobTemplate":"3476sdf",
+                                "securityItemRights":"324dfgrt"},
+                            "deskInfo":
+                                {"deskNumber":"sdf345345",
+                                "office":"df3445645"},
+                            "ultiproInfo":
+                                {"jobTitle":"sdf",
+                                "department":"5dfsdf",
+                                "supervisor":"zxc5ysdf",
+                                "other":"sdf23342"},
+                            "phoneInfo":
+                                {"phoneNumber":"4234234234234"}},
+                        "emailInfo":
+                            {"groupsToBeAddedTo":"fdsf34545vf",
+                            "groupsToBeRemovedFrom":"345fgf"},
+                        "employeeReviewFileInfo":
+                            {"filesToBeAddedTo":"sdfsdfgf",
+                             "filesToBeRemovedFrom":"34345"}} ,
                     success: function () {
                         console.log("hey ah");
                     },
