@@ -34,6 +34,15 @@
 
     initialize();
 
+    var fetchEmployee = function (employeeName) {
+        console.log($scope.currentFloorEmployees);
+        for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
+            if (employeeName.toLowerCase() == $scope.currentFloorEmployees[i].name.toLowerCase()) {
+                return $scope.currentFloorEmployees[i];
+            }
+        }
+    };
+
     requestForm.getAllJobTitles().then(function (data) {
         $scope.jobTitles = data;
     },
@@ -92,11 +101,11 @@
         }
         // if currentDeskOccupant doesn't exist in displacedEmployees or movedEmployees, add them to displacedEmployees
         if (!currentInMoved && !currentInDisplaced) {
-            $scope.displacedEmployees.push($scope.currentDeskOccupant);
+            $scope.displacedEmployees.push(fetchEmployee($scope.currentDeskOccupant));
         }
 
         if (!futureInMoved && !currentInMoved && !currentInDisplaced) {
-            $scope.movedEmployees.push($scope.futureDeskOccupant);
+            $scope.movedEmployees.push(fetchEmployee($scope.futureDeskOccupant));
         }
 
         // change current form tab to newest move
@@ -151,7 +160,6 @@
                 $scope.currentDeskNumber = $scope.currentFloorEmployees[i].current.deskInfo.deskNumber;
                 $scope.currentDeskOccupant = $scope.currentFloorEmployees[i].name;
                 $scope.currentDeskOrientation = $scope.currentFloorEmployees[i].deskOrientation;
-
                 //set current employee
                 $scope.selectedDeskEmployee = $scope.currentFloorEmployees[i];
             }
@@ -176,7 +184,6 @@
 
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
-        console.log($scope.maps[$scope.currentFloor]);
         window.setTimeout(function(){                                           
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
         },100);
