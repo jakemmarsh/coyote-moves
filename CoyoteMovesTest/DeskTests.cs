@@ -27,6 +27,7 @@ namespace CoyoteMovesTest
             _testDesk = new DeskDB();
             _validator = new InfoValidator();
         }
+
         //[TestMethod]
         //[TestCategory("Integration")]
         //public void TestAddNamesAndDeskNumbersFromFile()
