@@ -40,8 +40,11 @@ slider span.pointer {
   border-radius: 1em/1em;
 }
 
-    slider span.pointer:hover, slider span.pointer.active {
+    slider span.pointer:hover {
         background-color: #30d600;
+    }
+    slider span.pointer.active {
+      background-color: #27AD00;
     }
 
 slider span.bubble {

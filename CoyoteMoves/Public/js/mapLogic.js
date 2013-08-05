@@ -71,6 +71,7 @@ var mapModule = (function () {
     function transformCoord(xCoord, yCoord, rad) {
         return [xCoord * Math.cos(rad) - yCoord * Math.sin(rad), xCoord * Math.sin(rad) + yCoord * Math.cos(rad)];
     }
+
     function makeDesk(xcoord, ycoord, deg, map, maptype) {
 
         var paths = null;
@@ -183,6 +184,11 @@ var mapModule = (function () {
             gallPetersMap.panTo(desk.getPosition());
         }
 
+        var center = new google.maps.Point(47, 40);
+        if (floor != 3) {
+            center = new google.maps.Point(0, 9);
+        }
+
         var mapOptions = {
             zoom: 3,
             panControl: true,
@@ -191,7 +197,7 @@ var mapModule = (function () {
             scaleControl: false,
             streetViewControl: false,
             overviewMapControl: false,
-            center: gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(47, 40)),
+            center: gallPetersMapType.projection.fromPointToLatLng(center),
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'gallPetersMap']
             }
