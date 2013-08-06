@@ -36,6 +36,11 @@
   </body>
 </html>
 <script runat=server>
+protected void Page_Load(object sender, EventArgs e)
+{
+    txtUsername.Focus();
+}
+    
 void Login_Click(Object sender, EventArgs e)
 {
   String adPath = "LDAP://prdgxdc01.coyotelogistics.local"; //Fully-qualified Domain Name
