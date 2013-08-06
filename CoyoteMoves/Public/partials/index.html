@@ -37,7 +37,7 @@
                         <span class="text--bold" ng-bind="currentDeskOccupant"/>
                     </div>
                 </div>
-                <div class="tr">
+                <div class="tr" ng-hide="!isAdmin">
                     <div class="td soft-half--right">
                         Future Occupant
                     </div>
@@ -45,7 +45,7 @@
                         <input type="text" ng-model="futureDeskOccupant" bs-typeahead="currentFloorEmployeeNames" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
-                <div class="tr">
+                <div class="tr" ng-hide="!isAdmin">
                     <div class="td soft-half--right">
                         Orientation
                     </div>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <span ng-bind="createMoveFormError" class="error-message block"></span>
-                <input type="submit" value="Start Move" class="clearfix"/>
+                <input type="submit" value="Start Move" class="clearfix" ng-hide="!isAdmin" />
             </form>
         </div>
         <div id="displaced-employees-container" ng-hide="!isAdmin || displacedEmployees.length == 0">
