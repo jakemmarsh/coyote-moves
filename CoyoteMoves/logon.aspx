@@ -12,7 +12,7 @@
   <body>
       <div class="block">
         <div class="block__inner">
-            <h1 class="super"><img src="Public/img/coyote-inv.png" /> MOVES</h1>
+            <h1 class="super">COYOTE MOVES</h1>
             <div id="systemAlert" class="island">
                 <asp:Label ID="errorLabel" Runat=server ForeColor=#ff3300></asp:Label>
             </div>
@@ -35,9 +35,8 @@
                  </div>
             </div>
           </div>
-      <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 955px; width: 1920px; z-index: -999999; position: fixed;"><img src="/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-06.jpg" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 1920px; height: 1280px; max-width: none; z-index: -999999; left: 0px; top: -162.5px;"></div>  	
     <script src="Public/js/lib/jquery-1.10.2.js"></script>
-      <script src="Public/js/lib/modernizr.js"></script>
+    <script src="Public/js/lib/modernizr.js"></script>
     <script src="Public/js/lib/jquery.backstretch.min.js"></script>
     <script>
         function initBackgrounds() {
@@ -65,6 +64,7 @@
                     }
                 }
             randomizeArray(images);
+            console.log($.backstretch);
             $.backstretch(images, {
                 // Speed options of Backstretch
                 fade: 1500,
@@ -72,25 +72,8 @@
             });
         };
 
-        function initLogin() {
-            $('.block__inner__object').removeClass('hidden');
-        };
-
         $(function () {
-            if (Modernizr.json && Modernizr.hashchange && Modernizr.generatedcontent) {
-                $('html').addClass('supported');
-                initBackgrounds();
-
-            } else {
-                $('html').addClass('unsupported');
-                $('.block__inner__object').addClass('hidden');
-                $('#systemAlert').removeClass('hidden');
-                $('#override-trigger a').on('click', function () {
-                    initLogin();
-                    $('#override-trigger').addClass('hidden');
-                });
-            }
-
+            initBackgrounds();
         });
 
     </script>
