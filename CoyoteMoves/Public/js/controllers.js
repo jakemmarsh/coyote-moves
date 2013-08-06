@@ -1,6 +1,5 @@
 ﻿function IndexCtrl($scope, $routeParams, desks, user, requestForm) {
 
-    
     $scope.maps = {
         3: mapModule.initializeMap(3),
         4: mapModule.initializeMap(4),
@@ -135,6 +134,7 @@
         $scope.currentFormTab = $scope.movedEmployees.length - 1;
     }
 
+    // aggregate all move forms and send to back end
     $scope.sendAllForms = function () {
         $scope.allMovesForms = [];
 
@@ -179,39 +179,43 @@
     $scope.searchForEmployee = function () {
         var employeeId = fetchEmployeeByName($scope.employeeToSearchFor.toLowerCase()).id;
         for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
-            if ($scope.maps[$scope.currentFloor].desks[i].id == employeeId) {
-                if ($scope.focusedDesk) {
-                    $scope.focusedDesk.modColor('#41FF23');
-                }
-                $scope.focusedDesk = $scope.maps[$scope.currentFloor].desks[i];
-                $scope.focusedDesk.modColor('blue');
+            if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
+                // zoom and pan to desk
+                $scope.maps[$scope.currentFloor].panTo($scope.maps[$scope.currentFloor].desks[i].getPosition());
                 $scope.maps[$scope.currentFloor].setZoom(7);
-                $scope.maps[$scope.currentFloor].panTo($scope.focusedDesk.getPosition());
-                break;
-            }
-        }
-        for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
-            if ($scope.currentFloorEmployees[i].name.toLowerCase() === $scope.employeeToSearchFor.toLowerCase()) {
-                $scope.showSidebar = true;
 
-                // zoom to employee's desk on map
-                $scope.currentDeskNumber = $scope.currentFloorEmployees[i].current.deskInfo.deskNumber;
-                $scope.currentDeskOccupant = $scope.currentFloorEmployees[i].name;
-                $scope.currentDeskOrientation = $scope.currentFloorEmployees[i].deskOrientation;
-                //set current employee
-                $scope.selectedDeskEmployee = $scope.currentFloorEmployees[i];
+                // highlight desk and show it in sidebar
+                $scope.selectDesk($scope.maps[$scope.currentFloor].desks[i]);
+                break;
             }
         }
     }
 
-    $scope.selectDesk = function () {
+    $scope.selectDesk = function (desk) {
+        // remove highlight color if previous desk selected
+        if ($scope.focusedDesk) {
+            $scope.focusedDesk.modColor('5C4033');
+        }
+        // select and highlight new desk
+        $scope.focusedDesk = desk;
+        $scope.focusedDesk.modColor('#41FF23');
+
+        // get employee from desk
+        var employee = fetchEmployeeById(desk.id);
+        $scope.showSidebar = true;
+        // set data for sidebar
+        $scope.currentDeskNumber = employee.current.deskInfo.deskNumber;
+        $scope.currentDeskOccupant = employee.name;
+        $scope.currentDeskOrientation = employee.location.orientation;
+        //set current employee
+        $scope.selectedDeskEmployee = employee;
     }
 
     $scope.$watch('employeeToSearchFor', function () {
         if ($scope.currentFloorEmployees) {
             for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
                 if ($scope.currentFloorEmployees[i].name.toLowerCase() === $scope.employeeToSearchFor.toLowerCase()) {
-                    // search for employee if a match is found before user submits form
+                    // search for employee, in case a match is found before user submits form
                     $scope.searchForEmployee();
                     break;
                 }
@@ -221,9 +225,12 @@
 
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
+        // resize map on tab switch to show whole thing
         window.setTimeout(function(){                                           
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
-        },100);
+        }, 100);
+
+        // populate desks for current floor
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
             $scope.currentFloorDesks = data;
             $scope.currentFloorEmployees = [];
@@ -259,25 +266,21 @@
                                 phoneNumber: currentPerson.phoneNumber
                             }
                         }
-                    };
+                    },
+                    newDesk;
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
-                $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate+i, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id);
+                // create desk and place it on map
+                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate + i, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id);
+                // add click listener to desk to highlight it and show it in sidebar
+                google.maps.event.addListener(newDesk, 'click', function (evt) {
+                    $scope.selectDesk(newDesk);
+                    console.log(newDesk);
+                });
             }
         },
         function (errorMessage) {
             console.log(errorMessage);
         });
-        window.setTimeout(function () {
-            if ($scope.currentFloor === 3) {
-                // resize map
-            }
-            else if ($scope.currentFloor === 4) {
-                // resize map
-            }
-            else if ($scope.currentFloor === 5) {
-                // resize map
-            }
-        }, 100);
     })
 };
