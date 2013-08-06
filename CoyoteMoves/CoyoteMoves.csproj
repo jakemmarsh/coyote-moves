@@ -244,7 +244,6 @@
     <Compile Include="Controllers\DeskController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RequestFormController.cs" />
-    <Compile Include="Controllers\Translator\JSONTranslator.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\EmployeeDB.cs" />
@@ -273,7 +272,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Controllers\Translator\JSONExample.json" />
     <Content Include="CoyoteMovesTemplate.pdf" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
