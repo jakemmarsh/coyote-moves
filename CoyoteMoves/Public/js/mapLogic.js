@@ -91,20 +91,20 @@ var mapModule = (function () {
             strokeColor: '#000000',
             strokeOpacity: 0.8,
             strokeWeight: 1,
-            fillColor: '#41FF23',
+            fillColor: '#5C4033',
             draggable: true,
             fillOpacity: 1,
             id: employeeId,
         });
 
 
-        google.maps.event.addListener(desk, 'dblclick', function (evt) {
-            giveFocus(desk);
-        });
+        //google.maps.event.addListener(desk, 'dblclick', function (evt) {
+        //    giveFocus(desk);
+        //});
 
-        google.maps.event.addListener(desk, 'click', function (evt) {
-            console.log(desk);
-        });
+        //google.maps.event.addListener(desk, 'click', function (evt) {
+        //    console.log(desk);
+        //});
 
         //google.maps.event.addListener(desk, "dragstart", function (evt) {
         //    console.log("dragstart" + evt.latLng);
@@ -121,21 +121,15 @@ var mapModule = (function () {
         desk.modColor = function (color) {
             desk.setOptions({ fillColor: color });
         }
+        desk.modBorder = function (color) {
+            desk.setOptions({ fillColor: color });
+        }
+
         desk.setMap(map);
 
         return desk;
 
     };
-
-
-    var focusDesk = null;
-
-    function giveFocus(desk) {
-        if (focusDesk != null)
-            focusDesk.modColor('#41FF23');
-        desk.modColor('#FF0000');
-        focusDesk = desk;
-    }
 
     var initializeMap = function(floor) {
 
@@ -208,9 +202,9 @@ var mapModule = (function () {
         gallPetersMap.desks = [];
 
         gallPetersMap.addDesk = function (xpos, ypos, angle, employeeId) {
-            // :)
-            // KEEP GOING FROM HERE.
-            gallPetersMap.desks.push(makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId));
+            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId);
+            gallPetersMap.desks.push(desk);
+            return desk;
         };
 
 
