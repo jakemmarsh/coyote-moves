@@ -321,7 +321,7 @@ input[type=submit] {
             color: #000;
         }
 
-    input[type=submit]:hover, input[type=submit]:active {
+    input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
         color: #30d600;
     }
 

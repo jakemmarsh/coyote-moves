@@ -1,17 +1,15 @@
 ﻿
 
 var mapModule = (function () {
-    var DESK_CONSTANT_Y = 1.2291675;
-
-    var DESK_CONSTANT_X = DESK_CONSTANT_Y / 2;
-
-    // Note: this value is exact as the map projects a full 360 degrees of longitude
-    var GALL_PETERS_RANGE_X = 800;
-
-    // Note: this value is inexact as the map is cut off at ~ +/- 83 degrees.
-    // However, the polar regions produce very little increase in Y range, so
-    // we will use the tile size.
-    var GALL_PETERS_RANGE_Y = 510;
+    var center,
+        DESK_CONSTANT_Y = 1.2291675,
+        DESK_CONSTANT_X = DESK_CONSTANT_Y / 2,
+        // Note: this value is exact as the map projects a full 360 degrees of longitude
+        GALL_PETERS_RANGE_X = 800,
+        // Note: this value is inexact as the map is cut off at ~ +/- 83 degrees.
+        // However, the polar regions produce very little increase in Y range, so
+        // we will use the tile size.
+        GALL_PETERS_RANGE_Y = 510;
 
     function degreesToRadians(deg) {
         return deg * (Math.PI / 180);
@@ -184,10 +182,16 @@ var mapModule = (function () {
             gallPetersMap.panTo(desk.getPosition());
         }
 
-        var center = new google.maps.Point(47, 40);
-        if (floor != 3) {
-            center = new google.maps.Point(0, 9);
+        if (floor === 3) {
+            center = new google.maps.Point(47, 40);
         }
+        else if (floor === 4) {
+            center = new google.maps.Point(11.5, 12.65);
+        }
+        else if (floor === 5) {
+            center = new google.maps.Point(15.13, 30);
+        }
+
 
         var mapOptions = {
             zoom: 3,
@@ -200,7 +204,8 @@ var mapModule = (function () {
             center: gallPetersMapType.projection.fromPointToLatLng(center),
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'gallPetersMap']
-            }
+            },
+            disableDoubleClickZoom: true
 
         };
         gallPetersMap = new google.maps.Map(document.getElementById("map-canvas-" + floor),
