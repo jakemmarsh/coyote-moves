@@ -13,13 +13,11 @@ namespace CoyoteMovesTest
     {
         private RequestForm _req;
         private RequestFormDB _requester;
-        private InfoValidator _validator;
         
         [TestInitialize]
         public void setup()
         {
             _requester = new RequestFormDB();
-            _validator = new InfoValidator();
             _req = new RequestForm(301757);
             TestStoreRequestFormInDatabaseAsPending();
             
@@ -73,7 +71,7 @@ namespace CoyoteMovesTest
         public void UpdateServiceDeskApprovedStatus()
         {
             bool requestValidation = _requester.UpdateRequestToServiceDeskApproved(_req.UniqueId);
-            bool testValidation = _validator.ValidateServiceDeskApproval(_req.UniqueId);
+            bool testValidation =_requester.SDApproved(_req.UniqueId);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }
@@ -83,7 +81,7 @@ namespace CoyoteMovesTest
         public void UpdateHumanResourcesApprovedStatus()
         {
             bool requestValidation = _requester.UpdateRequestToHRApproved(_req.UniqueId);
-            bool testValidation = _validator.ValidateHumanResourcesApproval(_req.UniqueId);
+            bool testValidation = _requester.HRApproved(_req.UniqueId);
             Assert.IsTrue(testValidation);
             Assert.IsTrue(requestValidation);
         }

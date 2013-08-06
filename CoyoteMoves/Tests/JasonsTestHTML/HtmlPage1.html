@@ -7,7 +7,7 @@
         var data = "hello";
         $.ajax(
                 {
-                    url: "http://localhost/CoyoteMoves/api/RequestForm/ReceiveFormChangeRequest/",
+                    url: "http://localhost/CoyoteMoves/api/RequestForm/SendChangeRequest/",
                     //url: "http://localhost/CoyoteMoves/api/Desk/GetDesksByFloor/5",
                     type: "POST",
                     //type: "GET",
@@ -40,7 +40,7 @@
                                 {"jobTitle":"President",
                                 "department":"Human Resources",
                                 "group":"T7",
-                                "managerId":68,
+                                "managerId":"Joe Kolodz",
                                 "jobTemplate":"3476sdf",
                                 "securityItemRights":"324dfgrt"},
                             "deskInfo":
@@ -49,14 +49,14 @@
                             "ultiproInfo":
                                 {"jobTitle":"sdf",
                                 "department":"5dfsdf",
-                                "supervisor":"zxc5ysdf",
+                                "supervisor": "Joe Kolodz",
                                 "other":"sdf23342"},
                             "phoneInfo":
                                 {"phoneNumber":"4234234234234"}},
                         "emailInfo":
                             {"groupsToBeAddedTo":"fdsf34545vf",
                             "groupsToBeRemovedFrom":"345fgf"},
-                        "employeeReviewFileInfo":
+                        "ReviewInfo":
                             {"filesToBeAddedTo":"sdfsdfgf",
                              "filesToBeRemovedFrom":"34345"}} ,
                     success: function () {

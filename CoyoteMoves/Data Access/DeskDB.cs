@@ -51,10 +51,9 @@ namespace CoyoteMoves.Data_Access
         }
          public void AddNamesAndDeskNumbersFromFile(string filePath)
         {
-            //this program takes like three mintues to run
-            //the file that should be given to this function should be a csv text file
-            //assumes that each line is like: 'firstname.lastname,desknumber,'
-            //this was done so we could just download the google doc as a csv file and put that info into our database
+            //this should take a csv file
+            //assumes each line is :'firstname.lastname,desknumber,'
+            //use to populate desk table
 
             StreamReader reader = new StreamReader(Path.GetFullPath(filePath));
             string line = "";
@@ -70,7 +69,7 @@ namespace CoyoteMoves.Data_Access
                     EmployeeDB emp = new EmployeeDB();
                     int id = emp.GetIdFromName(newname);
 
-                    //something is weird for this person INSIDE the database (ask Mitch about it), so the function above won't work, so just set it to their id
+                    //something is weird for this person INSIDE the database, so the function above won't work, so just set it to their id
                     if (newname.Contains("jordan brychell"))
                     {
                         id = 10184;

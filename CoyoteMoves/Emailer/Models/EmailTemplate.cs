@@ -25,7 +25,7 @@ namespace CoyoteMoves.Emailer.Models
             _to = to;
             _from = from;
             _emailBody = emailBody;
-            _mappedLocation = Path.GetFullPath(pdfLocation);
+            _mappedLocation = pdfLocation;
         }
 
         public void addRecipient(string to)

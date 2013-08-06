@@ -84,7 +84,8 @@ namespace CoyoteMoves.Emailer.Models
 
             return (smtp != null && _toSend != null);
         }
-             public bool sendMovesRequestHR(RequestForm req)
+     
+        public bool sendMovesRequestHR(RequestForm req)
         {
             return sendMovesRequest(req, "HR");
         }
