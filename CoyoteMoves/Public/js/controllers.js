@@ -194,7 +194,7 @@
     $scope.selectDesk = function (desk) {
         // remove highlight color if previous desk selected
         if ($scope.focusedDesk) {
-            $scope.focusedDesk.modColor('5C4033');
+            $scope.focusedDesk.modColor('#5C4033');
         }
         // select and highlight new desk
         $scope.focusedDesk = desk;
@@ -223,8 +223,15 @@
         }
     });
 
+    // watch for change in current desk orientation to update in database
+    $scope.$watch('currentDeskOrientation', function () {
+        // TODO: make call to backend to update desk
+    });
+
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
+        // erase any previously searched for employees
+        $scope.employeeToSearchFor = "";
         // resize map on tab switch to show whole thing
         window.setTimeout(function(){                                           
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
@@ -268,14 +275,22 @@
                         }
                     },
                     newDesk;
+
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
                 // create desk and place it on map
                 newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate + i, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id);
                 // add click listener to desk to highlight it and show it in sidebar
-                google.maps.event.addListener(newDesk, 'click', function (evt) {
+                google.maps.event.addListener(newDesk, 'click', function () {
+                    debugger;
                     $scope.selectDesk(newDesk);
-                    console.log(newDesk);
+                    $scope.$apply();
+                });
+
+                // add dragend listener to update desk position in database
+                google.maps.event.addListener(newDesk, "dragend", function (evt) {
+                    // TODO: make call to backend to update desk
+                    console.log("dragend" + evt.latLng);
                 });
             }
         },
