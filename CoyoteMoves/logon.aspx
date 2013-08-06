@@ -14,7 +14,7 @@
         <div class="block__inner">
             <h1 class="super">COYOTE MOVES</h1>
             <div id="systemAlert" class="island">
-                <asp:Label ID="errorLabel" Runat=server ForeColor=#ff3300></asp:Label>
+                <asp:Label ID="errorLabel" Runat=server></asp:Label>
             </div>
                 <div class="block__inner__object">
                     <form id="Login" method="post" runat="server">                    
