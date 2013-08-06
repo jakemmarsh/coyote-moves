@@ -5,6 +5,7 @@ using CoyoteMoves.Models.RequestItems.RequestTypes;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Moq;
+using System.IO;
 
 
 namespace CoyoteMovesTest
@@ -21,9 +22,8 @@ namespace CoyoteMovesTest
         public void Setup()
         {
             _to = new Collection<string> {};
-            _emailer = new EmailSender("New Coyote Moves _request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
-            _mockedEmailer = new Mock<EmailSender>("New Coyote Moves _request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
-            _req = new RequestForm();
+            _emailer = new EmailSender("New Coyote Moves Request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
+            _req = new RequestForm(989);
 
 
             _req.Current = new CoyoteMovesFormEmployeeInfo();
