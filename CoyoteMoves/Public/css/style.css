@@ -142,6 +142,10 @@ h2.black-bg {
     float: left;
 }
 
+    .tabs.forms {
+        width: 100% !important;
+    }
+
     .tabs > .tab {
         display: inline-block;
         padding: 8px 10px;
@@ -322,7 +326,7 @@ input[type=submit] {
         }
 
     input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
-        color: #30d600;
+        color: #30d600;         
     }
 
 .cancel-button {
