@@ -53,6 +53,11 @@ namespace CoyoteMoves.Controllers
             json["future"]["bazookaInfo"]["managerId"] = f_managerID;
             json["future"]["ultiproInfo"]["supervisor"] = f_managerID;
 
+            UserController uc = new UserController();
+            string[] name = uc.GetUserName().Split('.');
+            string creatorName = name[0] + " " + name[1];
+            int creatorID = GetIDFromName(creatorName);
+
             RequestForm obj = null;
             using(var sr = new StringReader(json.ToString()))
             using(var jr = new JsonTextReader(sr))
@@ -61,7 +66,7 @@ namespace CoyoteMoves.Controllers
                 obj = (RequestForm)js.Deserialize<RequestForm>(jr);
             }
             obj.EmployeeId = GetIDFromName((string)json["name"]);
-            obj.CreatedByID = 666;
+            obj.CreatedByID = creatorID;
             obj.Current.BazookaInfo.SecurityItemRights = "";
 
             //EmailSender emailer = new EmailSender();
