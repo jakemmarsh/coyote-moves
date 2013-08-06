@@ -27,7 +27,7 @@ namespace CoyoteMoves.Data_Access
         {
             Collection<RequestForm> requestCollection = new Collection<RequestForm>();
             SqlConnection connection = new SqlConnection(_connectionString);
-            string commandString = "SELECT [UniqueRequestID], [CreateDate] FROM [Intern_CoyoteMoves].[dbo].[RequestData] WHERE [CreateDate] < @end AND [CreateDate] > @begin";
+            string commandString = "SELECT [UniqueRequestID], [CreateDate] FROM [Intern_CoyoteMoves].[dbo].[RequestData] WHERE [CreateDate] <= @end AND [CreateDate] >= @begin";
             SqlCommand command = new SqlCommand(commandString);
 
             command.Parameters.AddWithValue("@begin", begin);
