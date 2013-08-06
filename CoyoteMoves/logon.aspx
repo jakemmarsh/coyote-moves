@@ -42,14 +42,14 @@
         function initBackgrounds() {
             // Randomizing and feeding images to Backstretch
             var images = [
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-01.jpg",
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-02.jpg",
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-03.jpg",
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-04.jpg",
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-05.jpg",
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-06.jpg",
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-07.jpg",
-                "/Coyote.IdentityServer.WebSite/Content/theme-coyote/img/bg-08.jpg"],
+                "Public/img/bg-01.jpg",
+                "Public/img/bg-02.jpg",
+                "Public/img/bg-03.jpg",
+                "Public/img/bg-04.jpg",
+                "Public/img/bg-05.jpg",
+                "Public/img/bg-06.jpg",
+                "Public/img/bg-07.jpg",
+                "Public/img/bg-08.jpg"],
                 randomizeArray = function (arr) {
                     var i = arr.length,
                         j,
