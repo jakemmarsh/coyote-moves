@@ -225,6 +225,7 @@
 
     // watch for change in current desk orientation to update in database
     $scope.$watch('currentDeskOrientation', function () {
+        // TODO: make call to backend to update desk
     });
 
     // watch for change in current floor tab. reload desks, employees, and employee names
