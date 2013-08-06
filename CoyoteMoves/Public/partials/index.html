@@ -70,7 +70,7 @@
 <div ng-hide="!isAdmin">
     <h2 class="black-bg" style="margin-top:5px;" ng-hide="movedEmployees.length == 0">Forms</h2>
     <div class="row clearfix">
-        <div class="tabs">
+        <div class="tabs forms">
             <a href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
         </div>
     </div>
@@ -326,7 +326,7 @@
                                 <input type="text" disabled />
                             </div>
                             <div class="td">
-                                <input type="text" id="Text2" placeholder="Add to group" ng-model="employee.employeeReviewFileInfo.filesToBeAddedTo"/>
+                                <input type="text" id="Text2" placeholder="Add to group" ng-model="employee.reviewInfo.filesToBeAddedTo"/>
                             </div>
                         </div>
 
@@ -338,7 +338,7 @@
                                 <input type="text" disabled />
                             </div>
                             <div class="td">
-                                <input type="text" placeholder="Remove from group" ng-model="employee.employeeReviewFileInfo.filesToBeRemovedFrom"/>
+                                <input type="text" placeholder="Remove from group" ng-model="employee.reviewInfo.filesToBeRemovedFrom"/>
                             </div>
                         </div>
 
