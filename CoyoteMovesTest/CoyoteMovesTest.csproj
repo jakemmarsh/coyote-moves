@@ -61,6 +61,7 @@
     <Compile Include="InfoValidatorTest.cs" />
     <Compile Include="EmailerTests.cs" />
     <Compile Include="DeskTests.cs" />
+    <Compile Include="RequestDataDBTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoyoteMoves\CoyoteMoves.csproj">

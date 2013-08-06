@@ -13,7 +13,7 @@ namespace CoyoteMoves.Emailer.Models
 {
     public class EmailTemplate
     {
-        private string _subject;   //TODO: Add reference number to email
+        private string _subject;   
         private Collection<string> _to;
         private string _from;
         private string _emailBody;
@@ -67,7 +67,7 @@ namespace CoyoteMoves.Emailer.Models
             message.Body = _emailBody;
             memory.Position = 0;
 
-            message.Attachments.Add(new Attachment(memory, "MovesForm"+req.UniqueId+".pdf")); //TODO Add reference number to pdf name
+            message.Attachments.Add(new Attachment(memory, "MovesForm"+req.UniqueId+".pdf")); 
             reader.Close();
 
             return message;
@@ -75,9 +75,7 @@ namespace CoyoteMoves.Emailer.Models
 
         public void mapFieldsFromRequest(RequestForm req, AcroFields form)
         {
-            //TODO: Get First and third fields
-            //TODO: Hate self more
-            //TODO: Be more inefficient
+  
             var fieldKeys = form.Fields.Keys;
 
             foreach (string fieldKey in fieldKeys)
@@ -89,8 +87,6 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("CurrentGroup"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.Group);
                 if (fieldKey.Equals("CurrentManager") || fieldKey.Equals("Current Manager Name"))
-                    //Mitch editted this, I changed the way the manager is stored for the form, it's stored by the managers employee id, not name
-                    //we'll have to go back and change this to convert the id to a name
                     form.SetField(fieldKey, req.Current.BazookaInfo.ManagerID.ToString());
                 if (fieldKey.Equals("CurrentTemplate"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTemplate);
@@ -103,8 +99,6 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("FutureGroup"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.Group);
                 if (fieldKey.Equals("FutureManager"))
-                    //Mitch editted this, I changed the way the manager is stored for the form, it's stored by the managers employee id, not name
-                    //we'll have to go back and change this to convert the id to a name
                     form.SetField(fieldKey, req.Future.BazookaInfo.ManagerID.ToString());
                 if (fieldKey.Equals("FutureTemplate"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.JobTemplate);

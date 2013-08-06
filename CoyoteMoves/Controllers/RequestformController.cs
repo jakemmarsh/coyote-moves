@@ -43,8 +43,9 @@ namespace CoyoteMoves.Controllers
             //emailer.sendMovesRequestSD(obj);
 
             Collection<string> to = new Collection<string>();
-            to.Add("jason.dibabbo@coyote.com");
-            EmailSender emailer = new EmailSender("Testes", to, "coyotemoves@coyote.com", "Testing.", "../../../coyotemoves/coyotemovestemplate.pdf");
+            //to.Add("jason.dibabbo@coyote.com");
+            to.Add("kevin.jasieniecki@coyote.com");
+            EmailSender emailer = new EmailSender("Testes", to, "coyotemoves@coyote.com", "Testing.", HttpContext.Current.Server.MapPath("CoyoteMoves/CoyoteMovesTemplate.pdf"));
             //send the email (with the old and changed info) to service desk and HR to approve of the changes
 
             RequestFormDB formDB = new RequestFormDB();
