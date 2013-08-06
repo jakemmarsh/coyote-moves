@@ -110,10 +110,11 @@
 
 
             // setting future desk number on move form
-            $scope.movedEmployees[$scope.movedEmployees.length - 1].future = {};
-            $scope.movedEmployees[$scope.movedEmployees.length - 1].future.deskInfo = {};
-            $scope.movedEmployees[$scope.movedEmployees.length - 1].future.deskInfo.deskNumber = {};     
-            $scope.movedEmployees[$scope.movedEmployees.length - 1].future.deskInfo.deskNumber = move.deskNumber;
+            var newEmployIndex = ($scope.movedEmployees.length - 1);
+            $scope.movedEmployees[newEmployIndex].future = {};
+            $scope.movedEmployees[newEmployIndex].future.deskInfo = {};
+            $scope.movedEmployees[newEmployIndex].future.deskInfo.deskNumber = {};
+            $scope.movedEmployees[newEmployIndex].future.deskInfo.deskNumber = move.deskNumber;
         }
 
         // change current form tab to newest move
