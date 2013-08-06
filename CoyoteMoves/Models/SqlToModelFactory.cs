@@ -85,5 +85,14 @@ namespace CoyoteMoves.Models
             Desk TempDesk = new Desk(loc, deskNumber, TempGuy);
             return TempDesk;
         }
+
+        public RequestForm RetrieveRequest(Guid uniqueID)
+        {
+            RequestForm toReturn;
+
+
+
+            return null;
+        }
     }
 }

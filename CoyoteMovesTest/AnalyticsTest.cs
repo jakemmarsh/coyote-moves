@@ -1,12 +1,15 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CoyoteMoves.Data_Access;
+using System.Collections.ObjectModel;
+using CoyoteMoves.Models.RequestItems;
 
 namespace CoyoteMovesTest
 {
     [TestClass]
     public class AnalyticsTest
     {
+
 
         private AnalyticsDB _analyticsDB;
 
@@ -20,8 +23,7 @@ namespace CoyoteMovesTest
         [TestCategory("Integration")]
         public void GetDataFromBeginningSuccess()
         {
-            bool testAnalysis = _analyticsDB.GetAllRequestRecords();
-            Assert.IsTrue(testAnalysis);
+            Collection<RequestForm> testAnalysis = _analyticsDB.GetAllRequestRecords();
         }
     }
 }

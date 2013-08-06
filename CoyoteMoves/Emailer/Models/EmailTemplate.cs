@@ -1,4 +1,5 @@
-﻿using CoyoteMoves.Models.RequestItems;
+﻿using CoyoteMoves.Data_Access;
+using CoyoteMoves.Models.RequestItems;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -76,10 +77,15 @@ namespace CoyoteMoves.Emailer.Models
         public void mapFieldsFromRequest(RequestForm req, AcroFields form)
         {
   
+            EmployeeDB empDB = new EmployeeDB();
             var fieldKeys = form.Fields.Keys;
 
             foreach (string fieldKey in fieldKeys)
             {
+                if (fieldKey.Equals("Employee Name"))
+                    form.SetField(fieldKey, empDB.GetFullNameById(req.EmployeeId));
+                if (fieldKey.Equals("Date To Occur On"))   
+                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7)).ToString());
                 if (fieldKey.Equals("CurrentJob Title"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTitle);
                 if (fieldKey.Equals("CurrentDepartment"))
