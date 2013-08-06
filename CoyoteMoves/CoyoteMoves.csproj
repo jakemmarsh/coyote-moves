@@ -245,6 +245,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RequestFormController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Data Access\AnalyticsDB.cs" />
     <Compile Include="Data Access\DeskDB.cs" />
     <Compile Include="Data Access\EmployeeDB.cs" />
     <Compile Include="Data Access\InfoValidator.cs" />
