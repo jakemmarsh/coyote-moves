@@ -9,12 +9,12 @@ using System.Web;
 
 namespace CoyoteMoves.Models
 {
-    public class SqlToModelFactory
+    public class SqlToDeskModelFactory
     {
 
         SqlDataReader reader { get; set; }
 
-        public SqlToModelFactory(SqlDataReader reader)
+        public SqlToDeskModelFactory(SqlDataReader reader)
         {
             this.reader = reader;
         }
@@ -34,7 +34,6 @@ namespace CoyoteMoves.Models
 
             return DeskList;
         }
-
 
         public Employee CreateEmployee()
         {
@@ -84,15 +83,6 @@ namespace CoyoteMoves.Models
 
             Desk TempDesk = new Desk(loc, deskNumber, TempGuy);
             return TempDesk;
-        }
-
-        public RequestForm RetrieveRequest(Guid uniqueID)
-        {
-            RequestForm toReturn;
-
-
-
-            return null;
         }
     }
 }

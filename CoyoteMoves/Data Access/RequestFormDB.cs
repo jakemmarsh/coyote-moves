@@ -12,7 +12,7 @@ namespace CoyoteMoves.Data_Access
     public class RequestFormDB
     {
         public string _connectionString { get; set; }
-        public SqlToModelFactory _factory;
+        
 
         public RequestFormDB()
         {
@@ -209,7 +209,7 @@ namespace CoyoteMoves.Data_Access
 
         public RequestForm RetrieveRequest (Guid uniqueRequestID)
         {
-            return _factory.RetrieveRequest(uniqueRequestID); 
+            return null;
         }
     }
 }

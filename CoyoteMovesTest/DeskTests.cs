@@ -76,5 +76,12 @@ namespace CoyoteMovesTest
                 Assert.AreEqual(5, number);
             }
         }
+
+        [TestMethod, TestCategory("Unit")]
+        public void CheckIfDeskExists()
+        {
+            Assert.IsTrue(_testDesk.CheckIfDeskExisits("5-1"));
+            Assert.IsFalse(_testDesk.CheckIfDeskExisits("5-888"));
+        }
     }
 }
