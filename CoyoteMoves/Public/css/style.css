@@ -154,8 +154,7 @@ h2.black-bg {
         text-decoration: none;
         background: #eee;
         border-top: 4px solid #e7e7e7;
-        font-size: 10px;
-        font-size: 1rem;
+        font-size: 14px;
         line-height: 1.33333;
         font-weight: bold;
         -webkit-font-smoothing: antialiased;
@@ -242,6 +241,7 @@ h2.black-bg {
 
 #displaced-employees-container {
     height: 300px;
+    overflow: hidden;
 }
 
     #selected-desk-container .tr {
@@ -253,6 +253,7 @@ h2.black-bg {
     list-style-type: none;
     -webkit-padding-start: 0px;
     overflow: auto;
+    height: 260px;
 }
 
     #displaced-employees > li {
@@ -422,6 +423,10 @@ input[type=text], input[type=password] {
 
 .nudge--bottom {
     margin-bottom: 10px;
+}
+
+.nudge-half--bottom {
+    margin-bottom: 5px;
 }
 
 .nudge--top {
