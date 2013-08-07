@@ -190,6 +190,43 @@ var mapModule = (function () {
             return desk;
         };
 
+        // limit bounds for panning
+        var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
+        var swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng();
+        var nelat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lat();
+        var nelng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lng();
+
+        var allowedBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(swlat, swlng),
+          new google.maps.LatLng(nelat, nelng)
+        );
+
+        // Listen for the dragend event
+        google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
+
+        function checkBounds() {
+            console.log('bounds');
+            if (!allowedBounds.contains(gallPetersMap.getCenter())) {
+                var C = gallPetersMap.getCenter();
+                var X = C.lng();
+                var Y = C.lat();
+
+                var AmaxX = allowedBounds.getNorthEast().lng();
+                var AmaxY = allowedBounds.getNorthEast().lat();
+                var AminX = allowedBounds.getSouthWest().lng();
+                var AminY = allowedBounds.getSouthWest().lat();
+
+                if (X < AminX) { X = AminX; }
+                if (X > AmaxX) { X = AmaxX; }
+                if (Y < AminY) { Y = AminY; }
+                if (Y > AmaxY) { Y = AmaxY; }
+
+                gallPetersMap.setCenter(new google.maps.LatLng(Y, X));
+
+
+            }
+        }
+
 
         return gallPetersMap;
     }
