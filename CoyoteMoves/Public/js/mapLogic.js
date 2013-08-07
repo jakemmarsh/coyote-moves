@@ -89,30 +89,13 @@ var mapModule = (function () {
         var desk = new google.maps.Polygon({
             paths: paths,
             strokeColor: '#000000',
-            strokeOpacity: 0.8,
+            strokeOpacity: 0.9,
             strokeWeight: 1,
             fillColor: '#5C4033',
             draggable: true,
             fillOpacity: 1,
-            id: employeeId,
+            id: employeeId
         });
-
-
-        //google.maps.event.addListener(desk, 'dblclick', function (evt) {
-        //    giveFocus(desk);
-        //});
-
-        //google.maps.event.addListener(desk, 'click', function (evt) {
-        //    console.log(desk);
-        //});
-
-        //google.maps.event.addListener(desk, "dragstart", function (evt) {
-        //    console.log("dragstart" + evt.latLng);
-        //});
-
-        //google.maps.event.addListener(desk, "dragend", function (evt) {
-        //    console.log("dragend" + evt.latLng);
-        //});
 
         desk.getPosition = function () {
             return coord1;
@@ -122,7 +105,7 @@ var mapModule = (function () {
             desk.setOptions({ fillColor: color });
         }
         desk.modBorder = function (color) {
-            desk.setOptions({ fillColor: color });
+            desk.setOptions({ strokeColor: color });
         }
 
         desk.setMap(map);
