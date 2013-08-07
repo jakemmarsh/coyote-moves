@@ -211,6 +211,9 @@ h2.black-bg {
     padding: 7px 9px;
     position: relative;
     bottom: -2px;
+}
+
+input[type="text"] {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
