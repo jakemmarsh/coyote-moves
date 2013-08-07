@@ -234,6 +234,11 @@ h2.black-bg {
             margin: 0;
         }
 
+        #displaced-employees > li:hover, #displaced-employees > li:focus {
+            cursor: pointer;
+            background: #c9cace;
+        }
+
 .form-half {
     vertical-align: top !important;
     width: 50%;

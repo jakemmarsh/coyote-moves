@@ -177,7 +177,36 @@
     }
 
     $scope.searchForEmployee = function () {
+        $scope.futureDeskOccupant = "";
+        // auto-populate future occupant if one exists
+        for (var i = 0; i < $scope.moves.length; i++) {
+            if ($scope.moves[i].displacedEmployee.toLowerCase() == $scope.employeeToSearchFor.toLowerCase()) {
+                $scope.futureDeskOccupant = $scope.moves[i].movedEmployee;
+            }
+        }
         var employeeId = fetchEmployeeByName($scope.employeeToSearchFor.toLowerCase()).id;
+        for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
+            if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
+                // zoom and pan to desk
+                $scope.maps[$scope.currentFloor].panTo($scope.maps[$scope.currentFloor].desks[i].getPosition());
+                $scope.maps[$scope.currentFloor].setZoom(7);
+
+                // highlight desk and show it in sidebar
+                $scope.selectDesk($scope.maps[$scope.currentFloor].desks[i]);
+                break;
+            }
+        }
+    }
+
+    $scope.selectDisplacedEmployee = function (displacedEmployee) {
+        $scope.futureDeskOccupant = "";
+        // auto-populate future occupant if one exists
+        for (var i = 0; i < $scope.moves.length; i++) {
+            if ($scope.moves[i].displacedEmployee.toLowerCase() == displacedEmployee.toLowerCase()) {
+                $scope.futureDeskOccupant = $scope.moves[i].movedEmployee;
+            }
+        }
+        var employeeId = fetchEmployeeByName(displacedEmployee.toLowerCase()).id;
         for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
             if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
                 // zoom and pan to desk
@@ -225,6 +254,7 @@
 
     // watch for change in current desk orientation to update in database
     $scope.$watch('currentDeskOrientation', function () {
+
         // TODO: make call to backend to update desk
     });
 
