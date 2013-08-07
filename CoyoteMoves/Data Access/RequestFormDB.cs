@@ -209,7 +209,22 @@ namespace CoyoteMoves.Data_Access
 
         public RequestForm RetrieveRequest (Guid uniqueRequestID)
         {
-            return _factory.RetrieveRequest(uniqueRequestID); 
+            RequestForm toReturn = new RequestForm();
+            SqlConnection connection = new SqlConnection(_connectionString);
+            string commandString = "EXEC dbo.spRequestData_GetRequestDataByUniqueID @guid = @guid";
+            SqlCommand command = new SqlCommand(commandString);
+
+            command.Parameters.AddWithValue("@guid", uniqueRequestID);
+            command.Connection = connection;
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            SqlToModelFactory RequestFactory = new SqlToModelFactory(reader);
+            while (reader.Read())
+            {
+                toReturn = RequestFactory.CreateRequest(uniqueRequestID);
+            }
+            connection.Close();
+            return toReturn;
         }
     }
 }

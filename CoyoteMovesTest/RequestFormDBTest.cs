@@ -5,6 +5,8 @@ using CoyoteMoves.Models.RequestItems.RequestTypes;
 using CoyoteMoves.Models.EmployeeData;
 using CoyoteMoves.Data_Access;
 using System.Collections.Generic;
+using CoyoteMoves.Models;
+using System.Data.SqlClient;
 
 namespace CoyoteMovesTest
 {
@@ -19,8 +21,7 @@ namespace CoyoteMovesTest
         {
             _requester = new RequestFormDB();
             _req = new RequestForm(301757);
-            TestStoreRequestFormInDatabaseAsPending();
-            
+            TestStoreRequestFormInDatabaseAsPending();        
         }
 
         [TestCleanup]
@@ -111,6 +112,14 @@ namespace CoyoteMovesTest
             Assert.IsTrue(_requester.HRApproved(_req.UniqueId));
             Assert.IsFalse(_requester.SDApproved(_req.UniqueId));
             Assert.IsTrue(_requester.UpdateRequestToServiceDeskApproved(_req.UniqueId));
+        }
+
+        [TestCategory("Integration")]
+        [TestMethod]
+        public void RequestRetrievedSuccessfully()
+        {
+            RequestForm testRequest = _requester.RetrieveRequest(_req.UniqueId);
+            Assert.AreEqual<RequestForm>(_req, testRequest);
         }
     }
 }
