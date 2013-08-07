@@ -13,7 +13,7 @@ body, html {
 }
 
 body {
-    font-family: "Univers", Arial, sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
     background-color: #fff;
     color: #000;
@@ -130,6 +130,7 @@ h2.black-bg {
     margin: 5px 0;
     font-weight: normal;
     text-transform: uppercase;
+    letter-spacing: .15em;
 }
 
 /* Floor Map */
@@ -148,13 +149,38 @@ h2.black-bg {
 
     .tabs > .tab {
         display: inline-block;
-        padding: 8px 10px;
         font-weight: bold;
         color: #000;
         text-decoration: none;
         background: #eee;
         border-top: 4px solid #e7e7e7;
+        font-size: 10px;
+        font-size: 1rem;
+        line-height: 1.33333;
+        font-weight: bold;
+        -webkit-font-smoothing: antialiased;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: .15em;
+        margin: 0;
+        padding: 0.5em 0.5em 0.45em 0.5em;
     }
+
+        .tabs > .tab:first-child {
+            -webkit-border-radius: 3px 0 0 3px;
+            -moz-border-radius: 3px 0 0 3px;
+            -ms-border-radius: 3px 0 0 3px;
+            -o-border-radius: 3px 0 0 3px;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .tabs > .tab:last-child {
+            -webkit-border-radius: 0 3px 3px 0;
+            -moz-border-radius: 0 3px 3px 0;
+            -ms-border-radius: 0 3px 3px 0;
+            -o-border-radius: 0 3px 3px 0;
+            border-radius: 0 3px 3px 0;
+        }
 
         .tabs > .tab.active {
             border-top: 4px solid #30d600;
@@ -168,6 +194,11 @@ h2.black-bg {
     padding: 7px 9px;
     position: relative;
     bottom: -2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
 }
 
 .map-container {
@@ -200,6 +231,7 @@ h2.black-bg {
         background: #000;
         color: #fff;
         text-transform: uppercase;
+        letter-spacing: .15em;
     }
 
 #selected-desk-container {
@@ -234,6 +266,11 @@ h2.black-bg {
 
         #displaced-employees > li:first-child {
             margin: 0;
+        }
+
+        #displaced-employees > li:hover, #displaced-employees > li:focus {
+            cursor: pointer;
+            background: #c9cace;
         }
 
 .form-half {
@@ -308,42 +345,67 @@ input[type=text], input[type=password] {
         border: 1px solid #30d600;
     }
 
-input[type=submit] {
-    background: #000;
-    color: #fff;
-    padding: 5px 10px;
-    border: none;
-    margin-top: 10px;
-    font-size: 16px;
+.btn {
+    position: relative;
+    display: inline-block;
+    font-size: 10px;
+    font-size: 1rem;
+    line-height: 1.33333;
+    font-weight: bold;
+    -webkit-font-smoothing: antialiased;
     text-transform: uppercase;
-}
-
-    input[type=submit]:disabled {
-        color: #000;
-        background: #c9cace;
-    }
-
-        input[type=submit]:disabled:hover, input[type=submit]:disabled:active {
-            color: #000;
-        }
-
-    input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
-        color: #30d600;         
-    }
-
-.cancel-button {
-    background: #f2dede;
-    color: #b94a48;
-    padding: 5px 10px;
-    border: none;
-    margin-top: 10px;
-    font-size: 16px;
-    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: .15em;
+    margin: 0;
+    padding: 0.5em 0.5em 0.45em 0.5em;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background: #fcfcfc;
+    color: #585858;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #c9cacc;
+    box-shadow: 0px 1px 0px 0px #fff;
     text-decoration: none;
 }
 
-    .cancel-button:hover, .cancel-button:active {
-        color: #000;
+.btn--primary {
+    background: #0592fa;
+    color: #fff;
+    border-color: #0475c8;
+}
+
+    .btn--primary:hover {
+        color: white;
+        background: #199bfa;
+    }
+
+    .btn--primary:active {
+        box-shadow: inset 0 0.15em 0.3em rgba(0,0,0,0.23);
+        border-color: #0466af;
+        background: #0589eb;
+    }
+
+.btn--cancel {
+    background: #d9534f;
+    color: #fff;
+    border-color: #d43f3a;
+}
+
+    .btn--cancel:hover {
+        color: #fff;
+        background: #d2322d;
+    }
+
+    .btn--cancel:active {
+        box-shadow: inset 0 0.15em 0.3em rgba(0,0,0,0.23);
+        border-color: #ac2925;
+        background: #d2322d;
     }
 
 .nudge--left {

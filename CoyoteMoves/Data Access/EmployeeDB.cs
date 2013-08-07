@@ -48,7 +48,7 @@ namespace CoyoteMoves.Data_Access
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                //people can have the same name, so when this command is run, it should return (possibly) a bunch of people
+                //people can have the same name, it could return a bunch of people
                 //with the same name, so get all those people
                 List<int> ids = new List<int>();
                 while (reader.Read())
@@ -72,13 +72,12 @@ namespace CoyoteMoves.Data_Access
                     }
                     else
                     {
-                        //yeah... it just returns the id of the first valid employee
-                        //that's pretty much the best you can do with just the first/last name though
+                        //returns the id of the first valid employee
                         //it's possible this function returns the id of someone other than the person you were looking for
                         return currentID;
                     }
                 }
-                //if we got here, then we didnt' find it in the internal employee, so just return -1
+                //if we got here, we didnt' find it in the internal employee, so return -1
                 return -1;
 
             }
@@ -107,13 +106,6 @@ namespace CoyoteMoves.Data_Access
 
             return nameCollection[0];
         }
-
-        //public Employee GetEmployeeById(int Id)
-        //{
-        //    //Collection<string> 
-        //    //Need to account for template and security settings - refactor employee object or find them
-        //    return null;
-        //}
 
         public Collection<int> GetEmployeeIdsByGroupId(int groupId)
         {

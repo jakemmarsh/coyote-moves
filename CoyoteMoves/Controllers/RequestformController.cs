@@ -22,13 +22,42 @@ namespace CoyoteMoves.Controllers
 {
     public class RequestFormController : ApiController
     {
-        /*
-         * Frontend will send us json (or just the object?) with the future (and current?) coyote moves form information
-         * This controller is for receiving it and turning it into data objects to work with easier
-         * */
         // POST api/RequestForm/ReceiveFormChangeRequest
         public HttpResponseMessage SendChangeRequest(JObject json)
         {
+            int managerID = GetIDFromName((string)json["current"]["bazookaInfo"]["managerId"]);
+            int f_managerID = GetIDFromName((string)json["future"]["bazookaInfo"]["managerId"]);
+
+            HttpResponseMessage useForFailure = new HttpResponseMessage(HttpStatusCode.NotFound);
+            if ((managerID == -1) && (f_managerID == -1))
+            {
+                useForFailure.Content = new StringContent("Both current and future managers were not found.");
+                return useForFailure;
+            }
+            else if (managerID == -1)
+            {
+                useForFailure.Content = new StringContent("Current manager was not found.");
+                return useForFailure;
+            }
+            else if (f_managerID == -1)
+            {
+                useForFailure.Content = new StringContent("Future manager was not found.");
+                return useForFailure;
+            }
+
+            //Front end passes the literal name of the manager, 
+            //so we have to reassign the name to actually be the ID
+            //this way, the JSON lines up with the data object. 
+            json["current"]["bazookaInfo"]["managerId"] = managerID;
+            json["current"]["ultiproInfo"]["supervisor"] = managerID;
+            json["future"]["bazookaInfo"]["managerId"] = f_managerID;
+            json["future"]["ultiproInfo"]["supervisor"] = f_managerID;
+
+            UserController uc = new UserController();
+            string[] name = uc.GetUserName().Split('.');
+            string creatorName = name[0] + " " + name[1];
+            int creatorID = GetIDFromName(creatorName);
+
             RequestForm obj = null;
             using(var sr = new StringReader(json.ToString()))
             using(var jr = new JsonTextReader(sr))
@@ -36,7 +65,9 @@ namespace CoyoteMoves.Controllers
                 var js = new JsonSerializer();
                 obj = (RequestForm)js.Deserialize<RequestForm>(jr);
             }
-            //turn the json into data objects
+            obj.EmployeeId = GetIDFromName((string)json["name"]);
+            obj.CreatedByID = creatorID;
+            obj.Current.BazookaInfo.SecurityItemRights = "";
 
             //EmailSender emailer = new EmailSender();
             //emailer.sendMovesRequestHR(obj);
@@ -44,12 +75,11 @@ namespace CoyoteMoves.Controllers
 
             Collection<string> to = new Collection<string>();
             to.Add("jason.dibabbo@coyote.com");
-            EmailSender emailer = new EmailSender("Testes", to, "coyotemoves@coyote.com", "Testing.", "../../../coyotemoves/coyotemovestemplate.pdf");
-            //send the email (with the old and changed info) to service desk and HR to approve of the changes
+            EmailSender emailer = new EmailSender("Testes", to, "coyotemoves@coyote.com", "Testing.", HttpContext.Current.Server.MapPath("/CoyoteMoves/CoyoteMovesTemplate.pdf"));
+            emailer.sendMovesRequest(obj);
 
             RequestFormDB formDB = new RequestFormDB();
             formDB.StoreRequestFormInDatabaseAsPending(obj);
-            //add it to the queue of "unapproved", log the attempt to change?
 
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
@@ -81,7 +111,6 @@ namespace CoyoteMoves.Controllers
             RequestDataDB dbaccess = new RequestDataDB();
             return dbaccess.GetAllJobTitles();
         }
-
 
         /*
         * INB4: This should probably go in another class, just writing it down so I don't forget

@@ -89,30 +89,13 @@ var mapModule = (function () {
         var desk = new google.maps.Polygon({
             paths: paths,
             strokeColor: '#000000',
-            strokeOpacity: 0.8,
+            strokeOpacity: 0.9,
             strokeWeight: 1,
-            fillColor: '#41FF23',
+            fillColor: '#5C4033',
             draggable: true,
             fillOpacity: 1,
-            id: employeeId,
+            id: employeeId
         });
-
-
-        google.maps.event.addListener(desk, 'dblclick', function (evt) {
-            giveFocus(desk);
-        });
-
-        google.maps.event.addListener(desk, 'click', function (evt) {
-            console.log(desk);
-        });
-
-        //google.maps.event.addListener(desk, "dragstart", function (evt) {
-        //    console.log("dragstart" + evt.latLng);
-        //});
-
-        //google.maps.event.addListener(desk, "dragend", function (evt) {
-        //    console.log("dragend" + evt.latLng);
-        //});
 
         desk.getPosition = function () {
             return coord1;
@@ -121,21 +104,15 @@ var mapModule = (function () {
         desk.modColor = function (color) {
             desk.setOptions({ fillColor: color });
         }
+        desk.modBorder = function (color) {
+            desk.setOptions({ strokeColor: color });
+        }
+
         desk.setMap(map);
 
         return desk;
 
     };
-
-
-    var focusDesk = null;
-
-    function giveFocus(desk) {
-        if (focusDesk != null)
-            focusDesk.modColor('#41FF23');
-        desk.modColor('#FF0000');
-        focusDesk = desk;
-    }
 
     var initializeMap = function(floor) {
 
@@ -208,10 +185,47 @@ var mapModule = (function () {
         gallPetersMap.desks = [];
 
         gallPetersMap.addDesk = function (xpos, ypos, angle, employeeId) {
-            // :)
-            // KEEP GOING FROM HERE.
-            gallPetersMap.desks.push(makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId));
+            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId);
+            gallPetersMap.desks.push(desk);
+            return desk;
         };
+
+        // limit bounds for panning
+        var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
+        var swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng();
+        var nelat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lat();
+        var nelng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lng();
+
+        var allowedBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(swlat, swlng),
+          new google.maps.LatLng(nelat, nelng)
+        );
+
+        // Listen for the dragend event
+        google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
+
+        function checkBounds() {
+            console.log('bounds');
+            if (!allowedBounds.contains(gallPetersMap.getCenter())) {
+                var C = gallPetersMap.getCenter();
+                var X = C.lng();
+                var Y = C.lat();
+
+                var AmaxX = allowedBounds.getNorthEast().lng();
+                var AmaxY = allowedBounds.getNorthEast().lat();
+                var AminX = allowedBounds.getSouthWest().lng();
+                var AminY = allowedBounds.getSouthWest().lat();
+
+                if (X < AminX) { X = AminX; }
+                if (X > AmaxX) { X = AmaxX; }
+                if (Y < AminY) { Y = AminY; }
+                if (Y > AmaxY) { Y = AmaxY; }
+
+                gallPetersMap.setCenter(new google.maps.LatLng(Y, X));
+
+
+            }
+        }
 
 
         return gallPetersMap;

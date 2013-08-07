@@ -54,13 +54,13 @@
                     </div>
                 </div>
                 <span ng-bind="createMoveFormError" class="error-message block"></span>
-                <input type="submit" value="Start Move" class="clearfix" ng-hide="!isAdmin" />
+                <input type="submit" value="Start Move" class="btn btn--primary" ng-hide="!isAdmin" />
             </form>
         </div>
         <div id="displaced-employees-container" ng-hide="!isAdmin || displacedEmployees.length == 0">
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
-                <li ng-repeat="employee in displacedEmployees">
+                <li ng-repeat="employee in displacedEmployees" ng-click="selectDisplacedEmployee(employee.name)">
                     {{ employee.name }}
                 </li>
             </ul>
@@ -75,7 +75,7 @@
         </div>
     </div>
     <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentFormTab == $index">
-        <a href class="cancel-button nudge--bottom" ng-click="cancelSingleMove($index)" ng-hide="!movedEmployees">Close Tab</a>
+        <a href class="btn btn--cancel nudge--bottom" ng-click="cancelSingleMove($index)" ng-hide="!movedEmployees">Close Tab</a>
         <div class="table nudge--top">
         <div class="td form-half soft--right">
             <h3 class="title">Bazooka Changes</h3>
@@ -348,8 +348,8 @@
 
     </form>
     <div class="row soft--left">
-        <a href class="cancel-button nudge--right" class="nudge--left" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
-        <input type="submit" value="Submit Moves" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
-        <input type="submit" value="Submit Move" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
+        <a href class="btn btn--cancel nudge--right" class="nudge--left" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
+        <input type="submit" class="btn btn--primary" value="Submit Moves" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
+        <input type="submit" class="btn btn--primary" value="Submit Move" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
     </div>
 </div>

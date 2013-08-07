@@ -1,4 +1,5 @@
-﻿using CoyoteMoves.Models.RequestItems;
+﻿using CoyoteMoves.Data_Access;
+using CoyoteMoves.Models.RequestItems;
 using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace CoyoteMoves.Emailer.Models
 {
     public class EmailTemplate
     {
-        private string _subject;   //TODO: Add reference number to email
+        private string _subject;   
         private Collection<string> _to;
         private string _from;
         private string _emailBody;
@@ -25,7 +26,7 @@ namespace CoyoteMoves.Emailer.Models
             _to = to;
             _from = from;
             _emailBody = emailBody;
-            _mappedLocation = Path.GetFullPath(pdfLocation);
+            _mappedLocation = pdfLocation;
         }
 
         public void addRecipient(string to)
@@ -62,12 +63,12 @@ namespace CoyoteMoves.Emailer.Models
             {
                 message.To.Add(entry);
             }
-            message.Subject = _subject;
+            message.Subject = _subject+" "+req.UniqueId;
             message.From = new System.Net.Mail.MailAddress(_from);
             message.Body = _emailBody;
             memory.Position = 0;
 
-            message.Attachments.Add(new Attachment(memory, "MovesForm.pdf")); //TODO Add reference number to pdf name
+            message.Attachments.Add(new Attachment(memory, "MovesForm"+req.UniqueId+".pdf")); 
             reader.Close();
 
             return message;
@@ -75,13 +76,16 @@ namespace CoyoteMoves.Emailer.Models
 
         public void mapFieldsFromRequest(RequestForm req, AcroFields form)
         {
-            //TODO: Get First and third fields
-            //TODO: Hate self more
-            //TODO: Be more inefficient
+  
+            EmployeeDB empDB = new EmployeeDB();
             var fieldKeys = form.Fields.Keys;
 
             foreach (string fieldKey in fieldKeys)
             {
+                if (fieldKey.Equals("Employee Name"))
+                    form.SetField(fieldKey, empDB.GetFullNameById(req.EmployeeId));
+                if (fieldKey.Equals("Date To Occur On"))   
+                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7)).ToString());
                 if (fieldKey.Equals("CurrentJob Title"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTitle);
                 if (fieldKey.Equals("CurrentDepartment"))
@@ -89,8 +93,6 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("CurrentGroup"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.Group);
                 if (fieldKey.Equals("CurrentManager") || fieldKey.Equals("Current Manager Name"))
-                    //Mitch editted this, I changed the way the manager is stored for the form, it's stored by the managers employee id, not name
-                    //we'll have to go back and change this to convert the id to a name
                     form.SetField(fieldKey, req.Current.BazookaInfo.ManagerID.ToString());
                 if (fieldKey.Equals("CurrentTemplate"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTemplate);
@@ -103,8 +105,6 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("FutureGroup"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.Group);
                 if (fieldKey.Equals("FutureManager"))
-                    //Mitch editted this, I changed the way the manager is stored for the form, it's stored by the managers employee id, not name
-                    //we'll have to go back and change this to convert the id to a name
                     form.SetField(fieldKey, req.Future.BazookaInfo.ManagerID.ToString());
                 if (fieldKey.Equals("FutureTemplate"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.JobTemplate);
