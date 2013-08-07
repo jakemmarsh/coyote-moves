@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <span ng-bind="createMoveFormError" class="error-message block"></span>
-                <input type="submit" value="Start Move" class="btn btn--primary" ng-hide="!isAdmin" />
+                <input type="submit" value="Start Move" class="btn btn--primary" style="width: 100%;" ng-hide="!isAdmin" />
             </form>
         </div>
         <div id="displaced-employees-container" ng-hide="!isAdmin || displacedEmployees.length == 0">
