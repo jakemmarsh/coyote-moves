@@ -165,7 +165,7 @@ h2.black-bg {
         padding: 0.5em 0.5em 0.45em 0.5em;
     }
 
-        .tabs > .tab:first-child {
+        .tabs > .tab:first-child:not(:only-child) {
             -webkit-border-radius: 3px 0 0 3px;
             -moz-border-radius: 3px 0 0 3px;
             -ms-border-radius: 3px 0 0 3px;
@@ -173,12 +173,20 @@ h2.black-bg {
             border-radius: 3px 0 0 3px;
         }
 
-        .tabs > .tab:last-child {
+        .tabs > .tab:last-child:not(:only-child) {
             -webkit-border-radius: 0 3px 3px 0;
             -moz-border-radius: 0 3px 3px 0;
             -ms-border-radius: 0 3px 3px 0;
             -o-border-radius: 0 3px 3px 0;
             border-radius: 0 3px 3px 0;
+        }
+
+        .tabs > .tab:only-child {
+            -webkit-border-radius: 3px 3px 3px 3px;
+            -moz-border-radius: 3px 3px 3px 3px;
+            -ms-border-radius: 3px 3px 3px 3px;
+            -o-border-radius: 3px 3px 3px 3px;
+            border-radius: 3px 3px 3px 3px;
         }
 
         .tabs > .tab.active {
@@ -198,8 +206,6 @@ h2.black-bg {
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
     border-radius: 3px;
-    height: 40px;
-    margin-top: -1px;
 }
 
 .map-container {
@@ -229,10 +235,10 @@ h2.black-bg {
         padding: 10px;
         margin: 0;
         text-align: center;
-        background: #000;
-        color: #fff;
+        background: #eee;
+        color: #333;
         text-transform: uppercase;
-        letter-spacing: .15em;
+        letter-spacing: .1em;
     }
 
 #selected-desk-container {
@@ -259,7 +265,7 @@ h2.black-bg {
     #displaced-employees > li {
         padding: 10px;
         text-align: center;
-        background: #eee;
+        background: #fff;
         margin: 5px 0;
         font-weight: bold;
         color: #000;
@@ -271,7 +277,6 @@ h2.black-bg {
 
         #displaced-employees > li:hover, #displaced-employees > li:focus {
             cursor: pointer;
-            background: #c9cace;
         }
 
 .form-half {
@@ -494,4 +499,8 @@ input[type=text], input[type=password] {
 .block {
     display: block;
     clear: both;
+}
+
+#global-controls {
+    margin: 10px 0px;
 }

@@ -347,7 +347,7 @@
         </div>
 
     </form>
-    <div class="row soft--left">
+    <div class="row soft--left" id="global-controls">
         <a href class="btn btn--cancel nudge--right" class="nudge--left" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
         <input type="submit" class="btn btn--primary" value="Submit Moves" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
         <input type="submit" class="btn btn--primary" value="Submit Move" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
