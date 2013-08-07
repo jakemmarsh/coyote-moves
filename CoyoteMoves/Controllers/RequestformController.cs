@@ -22,7 +22,7 @@ namespace CoyoteMoves.Controllers
 {
     public class RequestFormController : ApiController
     {
-        // POST api/RequestForm/ReceiveFormChangeRequest
+        // POST api/RequestForm/SendChangeRequest
         public HttpResponseMessage SendChangeRequest(JObject json)
         {
             int managerID = GetIDFromName((string)json["current"]["bazookaInfo"]["managerId"]);

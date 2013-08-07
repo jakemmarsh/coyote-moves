@@ -1,5 +1,6 @@
 ﻿function IndexCtrl($scope, $routeParams, desks, user, requestForm) {
 
+    
     $scope.maps = {
         3: mapModule.initializeMap(3),
         4: mapModule.initializeMap(4),
@@ -34,9 +35,11 @@
     initialize();
 
     var fetchEmployeeByName = function (employeeName) {
-        for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
-            if (employeeName.toLowerCase() == $scope.currentFloorEmployees[i].name.toLowerCase()) {
-                return $scope.currentFloorEmployees[i];
+        if (employeeName) {
+            for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
+                if (employeeName.toLowerCase() == $scope.currentFloorEmployees[i].name.toLowerCase()) {
+                    return $scope.currentFloorEmployees[i];
+                }
             }
         }
     };
@@ -71,104 +74,107 @@
     });
 
     $scope.createMoveForm = function () {
-        var move = {
+        var errorMessage = "",
+            move = {
             deskNumber: $scope.currentDeskNumber,
-            displacedEmployee: $scope.currentDeskOccupant,
-            movedEmployee: $scope.futureDeskOccupant
-        }
+            displacedEmployee: fetchEmployeeByName($scope.currentDeskOccupant),
+            movedEmployee: fetchEmployeeByName($scope.futureDeskOccupant)
+            };
 
-        $scope.moves.push(move);
+        if ($scope.moves.length == 0) {
 
-        var currentInDisplaced = false,
-            currentInMoved = false,
-            futureInMoved = false,
-            newEmployeeIndex;
-
-
-
-        //for (var i = 0; i < $scope.displacedEmployees.length; i++) {
-        //    // if futureDeskOccupant exists in displacedEmployees, remove them
-        //    if ($scope.displacedEmployees[i] == $scope.futureDeskOccupant) {
-        //        $scope.displacedEmployees.splice(i, 1);
-        //    }
-        //    // if currentDeskOccupant has already been displaced, throw error
-        //    if ($scope.displacedEmployees[i] == $scope.currentDeskOccupant) {
-        //        $scope.createMoveFormError = "You have already begun a move to this desk.";
-        //        currentInDisplaced = true;
-        //        return;
-        //    }
-        //}
-
-        for (var i = 0; i < $scope.movedEmployees.length; i++) {
-            if ($scope.movedEmployees[i] == $scope.currentDeskOccupant) {
-                currentInMoved = true;
+            if (!move.movedEmployee) {
+                move.movedEmployee = move.displacedEmployee;
+                $scope.movedEmployees.push(move.movedEmployee);
             }
-            if ($scope.movedEmployees[i] == $scope.futureDeskOccupant) {
-                futureInMoved = true;
+            else {
+                // Setting future desk number property on moved employee
+                move.movedEmployee.future.deskInfo.deskNumber = move.deskNumber;
+                $scope.movedEmployees.push(move.movedEmployee);
+                $scope.displacedEmployees.push(move.displacedEmployee);
             }
+
+            $scope.moves.push(move);
         }
-        // if currentDeskOccupant doesn't exist in displacedEmployees or movedEmployees, add them to displacedEmployees
-        if (!currentInMoved && !currentInDisplaced) {
-            $scope.displacedEmployees.push(fetchEmployeeByName($scope.currentDeskOccupant));
+        else {
+            // If moving a single employee (to a new desk)
+            if (!move.movedEmployee) {
+                move.movedEmployee = move.displacedEmployee;
+                $scope.movedEmployees.push(move.movedEmployee);
+                $scope.createMoveFormError = "";
+            }
+           
+            for (var i = 0; i < $scope.displacedEmployees.length; i++) {
+                // remove name from displaced employee list if move is created for this employee
+                if ($scope.displacedEmployees[i].name == move.movedEmployee.name) {
+                    $scope.displacedEmployees.splice(i, 1);
+                }
+            }
+
+            
+            for (var i = 0; i < $scope.movedEmployees.length; i++) {
+                // Prevents multiple people moving to one desk
+                if ($scope.movedEmployees[i].future.deskInfo.deskNumber == move.deskNumber) {
+                    var name = $scope.movedEmployees[i].name;
+                    $scope.createMoveFormError = name + " is moving to this desk!";
+                    return;
+                }
+
+                // Check if tab is already open for this employee
+                if ($scope.movedEmployees[i].name == move.movedEmployee.name) {
+                    var name = $scope.movedEmployees[i].name;
+                    $scope.createMoveFormError = name + " has a move open!";
+                    return;
+                }
+            }
+
+            move.movedEmployee.future.deskInfo.deskNumber = move.deskNumber;
+            $scope.movedEmployees.push(move.movedEmployee);
+            if (!($scope.movedEmployees[i].name == move.displacedEmployee.name)) {
+                $scope.displacedEmployees.push(move.displacedEmployee);
+            }
+            $scope.moves.push(move);
+            $scope.createMoveFormError = "";
         }
 
-        if (!futureInMoved && !currentInMoved && !currentInDisplaced) {
-            $scope.movedEmployees.push(fetchEmployeeByName($scope.futureDeskOccupant));
-
-
-            // setting future desk number on move form
-            newEmployeeIndex = ($scope.movedEmployees.length - 1);
-            $scope.movedEmployees[newEmployeeIndex].future = {};
-            $scope.movedEmployees[newEmployeeIndex].future.deskInfo = {};
-            $scope.movedEmployees[newEmployeeIndex].future.deskInfo.deskNumber = {};
-            $scope.movedEmployees[newEmployeeIndex].future.deskInfo.deskNumber = move.deskNumber;
-        }
-
-        console.log(newEmployeeIndex);
-        
-        for (var i = 0; i < newEmployeeIndex+1; i++) {
-            console.log($scope.movedEmployees[i].future.deskInfo.deskNumber);
-        }
-
-        // change current form tab to newest move
+        $scope.futureDeskOccupant = "";
         $scope.currentFormTab = $scope.movedEmployees.length - 1;
     }
 
-    // aggregate all move forms and send to back end
     $scope.sendAllForms = function () {
-        $scope.allMovesForms = [];
-
         for (var i = 0; i < $scope.movedEmployees.length; i++) {
-            $scope.allMovesForms.push($scope.movedEmployees[i]);
+            console.debug($scope.movedEmployees[i]);
+            requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
+                console.log(data);
+            },
+            function (errorMessage) {
+                console.log(errorMessage);
+            });
         }
-
-        requestForm.sendForm($scope.allMovesForms).then(function (data) {
-            console.log(data);
-        },
-        function (errorMessage) {
-            console.log(errorMessage);
-        });
+        $scope.cancelAllMoves();
     }
 
     $scope.cancelSingleMove = function (index) {
-        // remove associated displaced employee from list
-        for (var i = 0; i < $scope.moves.length; i++) {
-            if ($scope.moves[i].movedEmployee == $scope.movedEmployees[index]) {
-                for (var j = 0; j < $scope.displacedEmployees.length; j++) {
-                    if ($scope.displacedEmployees[j] == $scope.moves[i].displacedEmployee) {
-                        $scope.displacedEmployees.splice(j, 1);
-                    }
-                }
-            }
-            // if moved employee is still displaced, re-add to displaced employees
-            if ($scope.moves[i].displacedEmployee == $scope.movedEmployees[index]) {
-                $scope.displacedEmployees.push($scope.moves[i].displacedEmployee);
+        var removedForm = $scope.movedEmployees[index];
+        $scope.movedEmployees.splice(index, 1);
+        $scope.currentFormTab = $scope.movedEmployees.length - 1;
+        $scope.moves.splice(index, 1);
+        
+        for (var i = 0; i < $scope.movedEmployees.length; i++) {
+            if ($scope.movedEmployees[i].future.deskInfo.deskNumber == removedForm.current.deskInfo.deskNumber) {
+                $scope.displacedEmployees.push(removedForm);
             }
         }
 
+        for (var i = 0; i < $scope.displacedEmployees.length; i++) {
+            if (removedForm.future.deskInfo.deskNumber == $scope.displacedEmployees[i].current.deskInfo.deskNumber) {
+                $scope.displacedEmployees.splice(i, 1);
+            }
+        }
 
-
-        $scope.movedEmployees.splice(index, 1);
+        if ($scope.displacedEmployees.length === 0 && !$scope.selectedDeskEmployee) {
+            $scope.showSidebar = false;
+        }
     }
 
     $scope.cancelAllMoves = function () {
@@ -177,44 +183,15 @@
     }
 
     $scope.searchForEmployee = function () {
-        $scope.futureDeskOccupant = "";
-        // auto-populate future occupant if one exists
-        for (var i = 0; i < $scope.moves.length; i++) {
-            if ($scope.moves[i].displacedEmployee.toLowerCase() == $scope.employeeToSearchFor.toLowerCase()) {
-                $scope.futureDeskOccupant = $scope.moves[i].movedEmployee;
-            }
-        }
         var employeeId = fetchEmployeeByName($scope.employeeToSearchFor.toLowerCase()).id;
         for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
             if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
-                // zoom and pan to desk
-                $scope.maps[$scope.currentFloor].panTo($scope.maps[$scope.currentFloor].desks[i].getPosition());
-                $scope.maps[$scope.currentFloor].setZoom(7);
-
                 // highlight desk and show it in sidebar
                 $scope.selectDesk($scope.maps[$scope.currentFloor].desks[i]);
-                break;
-            }
-        }
-    }
 
-    $scope.selectDisplacedEmployee = function (displacedEmployee) {
-        $scope.futureDeskOccupant = "";
-        // auto-populate future occupant if one exists
-        for (var i = 0; i < $scope.moves.length; i++) {
-            if ($scope.moves[i].displacedEmployee.toLowerCase() == displacedEmployee.toLowerCase()) {
-                $scope.futureDeskOccupant = $scope.moves[i].movedEmployee;
-            }
-        }
-        var employeeId = fetchEmployeeByName(displacedEmployee.toLowerCase()).id;
-        for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
-            if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
                 // zoom and pan to desk
-                $scope.maps[$scope.currentFloor].panTo($scope.maps[$scope.currentFloor].desks[i].getPosition());
                 $scope.maps[$scope.currentFloor].setZoom(7);
-
-                // highlight desk and show it in sidebar
-                $scope.selectDesk($scope.maps[$scope.currentFloor].desks[i]);
+                $scope.maps[$scope.currentFloor].panTo($scope.focusedDesk.getPosition());
                 break;
             }
         }
@@ -244,7 +221,7 @@
         if ($scope.currentFloorEmployees) {
             for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
                 if ($scope.currentFloorEmployees[i].name.toLowerCase() === $scope.employeeToSearchFor.toLowerCase()) {
-                    // search for employee, in case a match is found before user submits form
+                    // search for employee if a match is found before user submits form
                     $scope.searchForEmployee();
                     break;
                 }
@@ -252,22 +229,18 @@
         }
     });
 
-    // watch for change in current desk orientation to update in database
-    $scope.$watch('currentDeskOrientation', function () {
-
-        // TODO: make call to backend to update desk
-    });
-
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
-        // erase any previously searched for employees
         $scope.employeeToSearchFor = "";
-        // resize map on tab switch to show whole thing
+        if ($scope.displacedEmployees.length === 0) {
+            $scope.showSidebar = false;
+        }
+        else {
+            $scope.selectedDeskEmployee = null;
+        }
         window.setTimeout(function(){                                           
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
-        }, 100);
-
-        // populate desks for current floor
+        },100);
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
             $scope.currentFloorDesks = data;
             $scope.currentFloorEmployees = [];
@@ -281,6 +254,9 @@
                         name: name,
                         id: currentPerson.id,
                         location: currentDesk.location,
+                        future: {
+                            deskInfo: {}
+                        },
                         current: {
                             bazookaInfo: {
                                 jobTitle: currentPerson.jobTitle,
@@ -305,14 +281,15 @@
                         }
                     },
                     newDesk;
-
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
                 // create desk and place it on map
-                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate + i, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id);
+                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate + i * 0.3, currentDesk.location.topLeft.yCoordinate + i * 0.3, currentDesk.location.orientation, employee.id);
                 // add click listener to desk to highlight it and show it in sidebar
                 google.maps.event.addListener(newDesk, 'click', function (event) {
                     $scope.selectDesk(this);
+                    $scope.employeeToSearchFor = "";
+                    $scope.futureDeskOccupant = "";
                     $scope.$apply();
                 });
 
@@ -326,5 +303,16 @@
         function (errorMessage) {
             console.log(errorMessage);
         });
+        window.setTimeout(function () {
+            if ($scope.currentFloor === 3) {
+                // resize map
+            }
+            else if ($scope.currentFloor === 4) {
+                // resize map
+            }
+            else if ($scope.currentFloor === 5) {
+                // resize map
+            }
+        }, 100);
     })
 };
