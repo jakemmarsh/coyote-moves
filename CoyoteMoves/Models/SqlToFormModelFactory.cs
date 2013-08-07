@@ -17,59 +17,59 @@ namespace CoyoteMoves.Models
             this.reader = reader;
         }
 
-        public GetRequest(Guid requestID)
-        {
+        //public GetRequest(Guid requestID)
+        //{
 
-        }
+        //}
 
-        private CoyoteMovesFormEmployeeInfo MakeCurrentInfo()
-        {
+        //private CoyoteMovesFormEmployeeInfo MakeCurrentInfo()
+        //{
 
-        }
+        //}
 
-        private CoyoteMovesFormEmployeeInfo MakeFutureInfo()
-        {
+        //private CoyoteMovesFormEmployeeInfo MakeFutureInfo()
+        //{
 
-        }
+        //}
 
-        private BazookaInfo MakeBazInfo()
-        {
+        //private BazookaInfo MakeBazInfo()
+        //{
 
-        }
+        //}
 
-        private DeskInfo MakeDeskInfo()
-        {
+        //private DeskInfo MakeDeskInfo()
+        //{
 
-        }
+        //}
 
-        private PhoneInfo MakePhoneInfo()
-        {
+        //private PhoneInfo MakePhoneInfo()
+        //{
 
-        }
+        //}
 
-        private UltiproInfo MakeUltiProInfo()
-        {
+        //private UltiproInfo MakeUltiProInfo()
+        //{
 
-        }
+        //}
 
-        private EmailDistributionInfo MakeEmailInfo()
-        {
+        //private EmailDistributionInfo MakeEmailInfo()
+        //{
 
-        }
+        //}
 
-        private EmployeeReviewFileInfo MakeReviewInfo()
-        {
+        //private EmployeeReviewFileInfo MakeReviewInfo()
+        //{
 
-        }
+        //}
 
-        private int GetCreateID()
-        {
+        //private int GetCreateID()
+        //{
 
-        }
+        //}
 
-        private int GetEmployeeID()
-        {
+        //private int GetEmployeeID()
+        //{
 
-        }
+        //}
     }
 }
