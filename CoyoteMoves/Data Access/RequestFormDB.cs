@@ -211,10 +211,10 @@ namespace CoyoteMoves.Data_Access
         {
             RequestForm toReturn = new RequestForm();
             SqlConnection connection = new SqlConnection(_connectionString);
-            string commandString = "EXEC dbo.spRequestData_GetRequestDataByUniqueID @guid = @guid";
+            string commandString = "EXEC dbo.spRequestData_GetRequestDataByUniqueID @guid = @druid";
             SqlCommand command = new SqlCommand(commandString);
 
-            command.Parameters.AddWithValue("@guid", uniqueRequestID);
+            command.Parameters.AddWithValue("@druid", uniqueRequestID);
             command.Connection = connection;
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();

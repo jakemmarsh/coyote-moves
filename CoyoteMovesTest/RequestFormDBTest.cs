@@ -34,6 +34,7 @@ namespace CoyoteMovesTest
         {
             string test = "test";
 
+            _req.CreatedByID = 301758;
             _req.Current.BazookaInfo.JobTitle = "Intern";
             _req.Current.BazookaInfo.JobTemplate = test;
             _req.Current.BazookaInfo.ManagerID = 301757;
@@ -55,7 +56,7 @@ namespace CoyoteMovesTest
             _req.Current.PhoneInfo.PhoneNumber = test;
             _req.Future.PhoneInfo.PhoneNumber = test;
 
-            _req.Current.UltiproInfo.Department = test;
+            _req.Current.UltiproInfo.Department = "17";
             _req.Current.UltiproInfo.JobTitle = test;
             _req.Current.UltiproInfo.Other = test;
             _req.Current.UltiproInfo.Supervisor = test;
@@ -118,8 +119,9 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void RequestRetrievedSuccessfully()
         {
-            RequestForm testRequest = _requester.RetrieveRequest(_req.UniqueId);
-            Assert.AreEqual<RequestForm>(_req, testRequest);
+            RequestForm testRequest = new RequestForm();
+            testRequest = _requester.RetrieveRequest(_req.UniqueId);
+            Assert.AreEqual(_req, testRequest);
         }
     }
 }
