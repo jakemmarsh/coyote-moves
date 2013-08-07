@@ -64,7 +64,6 @@
                     }
                 }
             randomizeArray(images);
-            console.log($.backstretch);
             $.backstretch(images, {
                 // Speed options of Backstretch
                 fade: 1500,
