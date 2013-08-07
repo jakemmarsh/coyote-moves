@@ -290,6 +290,7 @@
                 // add click listener to desk to highlight it and show it in sidebar
                 google.maps.event.addListener(newDesk, 'click', function (event) {
                     $scope.selectDesk(this);
+                    $scope.employeeToSearchFor = "";
                     $scope.$apply();
                 });
 
