@@ -97,23 +97,6 @@ var mapModule = (function () {
             id: employeeId
         });
 
-
-        //google.maps.event.addListener(desk, 'dblclick', function (evt) {
-        //    giveFocus(desk);
-        //});
-
-        //google.maps.event.addListener(desk, 'click', function (evt) {
-        //    console.log(desk);
-        //});
-
-        //google.maps.event.addListener(desk, "dragstart", function (evt) {
-        //    console.log("dragstart" + evt.latLng);
-        //});
-
-        //google.maps.event.addListener(desk, "dragend", function (evt) {
-        //    console.log("dragend" + evt.latLng);
-        //});
-
         desk.getPosition = function () {
             return coord1;
         };
