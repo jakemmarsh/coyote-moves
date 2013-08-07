@@ -162,5 +162,34 @@ namespace CoyoteMoves.Data_Access
                 throw new Exception(ex.Message);
             }
         }
+
+        public bool ChangeDeskPointAndOrientation(string deskNumber, double topLeftX, double topLeftY, double orientation)
+        {
+            if (!CheckIfDeskExisits(deskNumber))
+            {
+                return false;
+            }
+            SqlConnection connection = new SqlConnection(_connectionString);
+            string commandString = "EXEC spDesk_SetDeskPointAndOrientation @x, @y, @angle, @deskNum";
+            SqlCommand command = new SqlCommand(commandString);
+
+            try
+            {
+                command.Parameters.AddWithValue("@x", topLeftX);
+                command.Parameters.AddWithValue("@y", topLeftY);
+                command.Parameters.AddWithValue("@angle", orientation);
+                command.Parameters.AddWithValue("deskNum", deskNumber);
+                command.Connection = connection;
+                connection.Open();
+
+                command.ExecuteNonQuery();
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
