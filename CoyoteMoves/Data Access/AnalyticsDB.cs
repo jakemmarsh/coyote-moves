@@ -12,9 +12,11 @@ namespace CoyoteMoves.Data_Access
     public class AnalyticsDB
     {
         private string _connectionString;
+        private RequestFormDB _requester;
         
         public AnalyticsDB()
-        {  
+        {
+            _requester = new RequestFormDB();
             _connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
         }
 
@@ -35,13 +37,11 @@ namespace CoyoteMoves.Data_Access
             command.Connection = connection;
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
-            SqlToModelFactory RequestFactory = new SqlToModelFactory(reader);
+            SqlToFormModelFactory RequestFactory = new SqlToFormModelFactory(reader);
             while (reader.Read())
             {
-
+                requestCollection.Add(_requester.RetrieveRequest((Guid)reader["UniqueRequestID"]));
             }
-
-            //requestList = RequestFactory.RetrieveRequest(
             connection.Close();
             return requestCollection;
         }

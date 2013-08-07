@@ -12,7 +12,7 @@ namespace CoyoteMoves.Data_Access
     public class RequestFormDB
     {
         public string _connectionString { get; set; }
-        public SqlToModelFactory _factory;
+        public SqlToFormModelFactory _factory;
 
         public RequestFormDB()
         {
@@ -218,11 +218,8 @@ namespace CoyoteMoves.Data_Access
             command.Connection = connection;
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
-            SqlToModelFactory RequestFactory = new SqlToModelFactory(reader);
-            while (reader.Read())
-            {
-                toReturn = RequestFactory.CreateRequest(uniqueRequestID);
-            }
+            SqlToFormModelFactory RequestFactory = new SqlToFormModelFactory(reader);
+            toReturn = RequestFactory.GetRequest(uniqueRequestID);
             connection.Close();
             return toReturn;
         }
