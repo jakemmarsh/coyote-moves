@@ -262,7 +262,7 @@
     <Compile Include="Models\RequestItems\RequestTypes\EmployeeReviewFileInfo.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\PhoneInfo.cs" />
     <Compile Include="Models\RequestItems\RequestTypes\UltiproInfo.cs" />
-    <Compile Include="Models\SqlToModelFactory.cs" />
+    <Compile Include="Models\SqlToDeskModelFactory.cs" />
     <Compile Include="Models\RequestItems\RequestForm.cs" />
     <Compile Include="Models\SeatingData\CoordinatePoint.cs" />
     <Compile Include="Models\SeatingData\Desk.cs" />
@@ -270,6 +270,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\SeatingData\Location.cs" />
+    <Compile Include="Models\SqlToFormModelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

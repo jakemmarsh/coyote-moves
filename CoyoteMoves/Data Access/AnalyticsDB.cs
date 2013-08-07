@@ -35,7 +35,7 @@ namespace CoyoteMoves.Data_Access
             command.Connection = connection;
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
-            SqlToModelFactory RequestFactory = new SqlToModelFactory(reader);
+            SqlToDeskModelFactory RequestFactory = new SqlToDeskModelFactory(reader);
 
             //requestList = RequestFactory.RetrieveRequest(;
             connection.Close();
