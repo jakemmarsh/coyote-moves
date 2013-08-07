@@ -5,12 +5,14 @@ using System.Web;
 using CoyoteMoves.Models.RequestItems;
 using System.Data.SqlClient;
 using System.Data;
+using CoyoteMoves.Models;
 
 namespace CoyoteMoves.Data_Access
 {
     public class RequestFormDB
     {
         public string _connectionString { get; set; }
+        public SqlToModelFactory _factory;
 
         public RequestFormDB()
         {
@@ -203,6 +205,11 @@ namespace CoyoteMoves.Data_Access
                 return false;
             }
             return (bool)approval;
+        }
+
+        public RequestForm RetrieveRequest (Guid uniqueRequestID)
+        {
+            return _factory.RetrieveRequest(uniqueRequestID); 
         }
     }
 }

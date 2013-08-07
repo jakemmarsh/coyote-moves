@@ -177,7 +177,36 @@
     }
 
     $scope.searchForEmployee = function () {
+        $scope.futureDeskOccupant = "";
+        // auto-populate future occupant if one exists
+        for (var i = 0; i < $scope.moves.length; i++) {
+            if ($scope.moves[i].displacedEmployee.toLowerCase() == $scope.employeeToSearchFor.toLowerCase()) {
+                $scope.futureDeskOccupant = $scope.moves[i].movedEmployee;
+            }
+        }
         var employeeId = fetchEmployeeByName($scope.employeeToSearchFor.toLowerCase()).id;
+        for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
+            if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
+                // zoom and pan to desk
+                $scope.maps[$scope.currentFloor].panTo($scope.maps[$scope.currentFloor].desks[i].getPosition());
+                $scope.maps[$scope.currentFloor].setZoom(7);
+
+                // highlight desk and show it in sidebar
+                $scope.selectDesk($scope.maps[$scope.currentFloor].desks[i]);
+                break;
+            }
+        }
+    }
+
+    $scope.selectDisplacedEmployee = function (displacedEmployee) {
+        $scope.futureDeskOccupant = "";
+        // auto-populate future occupant if one exists
+        for (var i = 0; i < $scope.moves.length; i++) {
+            if ($scope.moves[i].displacedEmployee.toLowerCase() == displacedEmployee.toLowerCase()) {
+                $scope.futureDeskOccupant = $scope.moves[i].movedEmployee;
+            }
+        }
+        var employeeId = fetchEmployeeByName(displacedEmployee.toLowerCase()).id;
         for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
             if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
                 // zoom and pan to desk
@@ -194,7 +223,7 @@
     $scope.selectDesk = function (desk) {
         // remove highlight color if previous desk selected
         if ($scope.focusedDesk) {
-            $scope.focusedDesk.modColor('5C4033');
+            $scope.focusedDesk.modColor('#5C4033');
         }
         // select and highlight new desk
         $scope.focusedDesk = desk;
@@ -223,8 +252,16 @@
         }
     });
 
+    // watch for change in current desk orientation to update in database
+    $scope.$watch('currentDeskOrientation', function () {
+
+        // TODO: make call to backend to update desk
+    });
+
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
+        // erase any previously searched for employees
+        $scope.employeeToSearchFor = "";
         // resize map on tab switch to show whole thing
         window.setTimeout(function(){                                           
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
@@ -268,14 +305,21 @@
                         }
                     },
                     newDesk;
+
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
                 // create desk and place it on map
                 newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate + i, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id);
                 // add click listener to desk to highlight it and show it in sidebar
-                google.maps.event.addListener(newDesk, 'click', function (evt) {
-                    $scope.selectDesk(newDesk);
-                    console.log(newDesk);
+                google.maps.event.addListener(newDesk, 'click', function (event) {
+                    $scope.selectDesk(this);
+                    $scope.$apply();
+                });
+
+                // add dragend listener to update desk position in database
+                google.maps.event.addListener(newDesk, "dragend", function (evt) {
+                    // TODO: make call to backend to update desk
+                    console.log("dragend" + evt.latLng);
                 });
             }
         },
