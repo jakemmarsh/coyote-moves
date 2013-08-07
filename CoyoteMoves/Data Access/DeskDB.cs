@@ -38,7 +38,7 @@ namespace CoyoteMoves.Data_Access
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                SqlToModelFactory DeskFactory = new SqlToModelFactory(reader);
+                SqlToDeskModelFactory DeskFactory = new SqlToDeskModelFactory(reader);
                 deskList = DeskFactory.GetAllDesks(floor);
                 connection.Close();
                 return deskList;
@@ -49,7 +49,8 @@ namespace CoyoteMoves.Data_Access
                 throw new Exception(ex.Message);
             }
         }
-         public void AddNamesAndDeskNumbersFromFile(string filePath)
+        
+        public void AddNamesAndDeskNumbersFromFile(string filePath)
         {
             //this should take a csv file
             //assumes each line is :'firstname.lastname,desknumber,'
@@ -135,6 +136,31 @@ namespace CoyoteMoves.Data_Access
             return (result == 1);
         }
 
+        public bool CheckIfDeskExisits(string deskNumber)
+        {
+            SqlConnection conn = new SqlConnection(_connectionString);
+            string command = "SELECT DeskNumber FROM [Intern_CoyoteMoves].[dbo].[Desk] WHERE DeskNumber = @num";
+            SqlCommand cmd = new SqlCommand(command);
 
+            try
+            {
+                cmd.Parameters.AddWithValue("@num", deskNumber);
+                cmd.Connection = conn;
+                conn.Open();
+                object temp = cmd.ExecuteScalar();
+                conn.Close();
+
+                if((temp == null) || (temp == DBNull.Value))
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
