@@ -60,7 +60,7 @@
         <div id="displaced-employees-container" ng-hide="!isAdmin || displacedEmployees.length == 0">
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
-                <li ng-repeat="employee in displacedEmployees">
+                <li ng-repeat="employee in displacedEmployees" ng-click="selectDisplacedEmployee(employee.name)">
                     {{ employee.name }}
                 </li>
             </ul>
