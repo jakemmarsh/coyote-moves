@@ -107,6 +107,8 @@ header {
     height: 40px;
     text-align: center;
     margin: 0;
+    border-bottom: 5px solid #0475c8;
+    box-sizing: content-box;
 }
 
     header img, header h1 {
@@ -125,8 +127,8 @@ h2.black-bg {
     width: 100%;
     display: block;
     padding: 10px;
-    color: #fff;
-    background: #000;
+    color: #333;
+    background-color: #eee;
     margin: 5px 0;
     font-weight: normal;
     text-transform: uppercase;
@@ -240,6 +242,7 @@ h2.black-bg {
 }
 
     #map-sidebar h3 {
+        border-top: 5px solid #0592fa;
         padding: 10px;
         margin: 0;
         text-align: center;
@@ -275,21 +278,11 @@ h2.black-bg {
 }
 
     #displaced-employees > li {
-        padding: 10px;
-        text-align: center;
-        background: #fff;
-        margin: 5px 0;
-        font-weight: bold;
-        color: #000;
+        margin-top: 8px;
     }
-
-        #displaced-employees > li:first-child {
-            margin: 0;
-        }
-
-        #displaced-employees > li:hover, #displaced-employees > li:focus {
-            cursor: pointer;
-        }
+    #displaced-employees > li:last-child() {
+        margin-bottom: 8px;
+    }
 
 .form-half {
     vertical-align: top !important;
