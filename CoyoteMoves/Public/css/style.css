@@ -136,7 +136,7 @@ h2.black-bg {
 /* Floor Map */
 .tabs {
     z-index: 100;
-    margin-left: 10px;
+    padding-left: 10px;
     margin-bottom: 10px;
     min-width: 250px;
     width: 20%;
