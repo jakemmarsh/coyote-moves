@@ -281,9 +281,8 @@
                 // create desk and place it on map
                 newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate + i, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id);
                 // add click listener to desk to highlight it and show it in sidebar
-                google.maps.event.addListener(newDesk, 'click', function () {
-                    debugger;
-                    $scope.selectDesk(newDesk);
+                google.maps.event.addListener(newDesk, 'click', function (event) {
+                    $scope.selectDesk(this);
                     $scope.$apply();
                 });
 
