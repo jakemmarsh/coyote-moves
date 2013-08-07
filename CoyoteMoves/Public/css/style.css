@@ -165,8 +165,12 @@ h2.black-bg {
         margin: 0;
         padding: 0.5em 0.5em 0.45em 0.5em;
     }
-        .tabs > .tab > img {
+        .tabs > .tab svg {
             height: 12px;
+            width: 12px;
+        }
+        .tabs > .tab svg:hover, .tabs > .tab > svg:active {
+            fill: #d2322d;
         }
 
         .tabs > .tab:first-child:not(:only-child) {
@@ -261,6 +265,7 @@ h2.black-bg {
     #selected-desk-container .error-message {
         margin-bottom: 10px;
     }
+
 #displaced-employees {
     margin: 0;
     list-style-type: none;
