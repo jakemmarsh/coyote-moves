@@ -142,18 +142,16 @@
     }
 
     $scope.sendAllForms = function () {
-        $scope.allMovesForms = [];
-
         for (var i = 0; i < $scope.movedEmployees.length; i++) {
-            $scope.allMovesForms.push($scope.movedEmployees[i]);
+            console.debug($scope.movedEmployees[i]);
+            requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
+                console.log(data);
+            },
+            function (errorMessage) {
+                console.log(errorMessage);
+            });
         }
-
-        requestForm.sendForm($scope.allMovesForms).then(function (data) {
-            console.log(data);
-        },
-        function (errorMessage) {
-            console.log(errorMessage);
-        });
+        $scope.cancelAllMoves();
     }
 
     $scope.cancelSingleMove = function (index) {
@@ -291,6 +289,7 @@
                 google.maps.event.addListener(newDesk, 'click', function (event) {
                     $scope.selectDesk(this);
                     $scope.employeeToSearchFor = "";
+                    $scope.futureDeskOccupant = "";
                     $scope.$apply();
                 });
 
