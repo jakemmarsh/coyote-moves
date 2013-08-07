@@ -148,6 +148,7 @@ h2.black-bg {
     }
 
     .tabs > .tab {
+        cursor: pointer;
         display: inline-block;
         font-weight: bold;
         color: #000;
@@ -164,6 +165,9 @@ h2.black-bg {
         margin: 0;
         padding: 0.5em 0.5em 0.45em 0.5em;
     }
+        .tabs > .tab > img {
+            height: 12px;
+        }
 
         .tabs > .tab:first-child:not(:only-child) {
             -webkit-border-radius: 3px 0 0 3px;
@@ -182,11 +186,11 @@ h2.black-bg {
         }
 
         .tabs > .tab:only-child {
-            -webkit-border-radius: 3px 3px 3px 3px;
-            -moz-border-radius: 3px 3px 3px 3px;
-            -ms-border-radius: 3px 3px 3px 3px;
-            -o-border-radius: 3px 3px 3px 3px;
-            border-radius: 3px 3px 3px 3px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            -ms-border-radius: 3px;
+            -o-border-radius: 3px;
+            border-radius: 3px;
         }
 
         .tabs > .tab.active {
@@ -254,6 +258,9 @@ h2.black-bg {
         background: none;
     }
 
+    #selected-desk-container .error-message {
+        margin-bottom: 10px;
+    }
 #displaced-employees {
     margin: 0;
     list-style-type: none;

@@ -71,7 +71,10 @@
     <h2 class="black-bg" style="margin-top:5px;" ng-hide="movedEmployees.length == 0">Forms</h2>
     <div class="row clearfix">
         <div class="tabs forms">
-            <a href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
+            <span href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">
+                <span>{{ employee.name }}</span>
+                <img src="CoyoteMoves/public/img/close.svg" />
+            </span>
         </div>
     </div>
     <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentFormTab == $index">
