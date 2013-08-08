@@ -61,7 +61,7 @@
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
                 <li ng-repeat="employee in displacedEmployees" ng-click="selectDisplacedEmployee(employee.name)">
-                    {{ employee.name }}
+                    <span ng-bind="employee.name"></span>
                 </li>
             </ul>
         </div>
@@ -71,7 +71,9 @@
     <h2 class="black-bg" style="margin-top:5px;" ng-hide="movedEmployees.length == 0">Forms</h2>
     <div class="row clearfix">
         <div class="tabs forms">
-            <a href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">{{ employee.name }}</a>
+            <a href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">
+                <span ng-bind="employee.name"></span>
+            </a>
         </div>
     </div>
     <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentFormTab == $index">

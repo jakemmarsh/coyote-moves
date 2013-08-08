@@ -106,7 +106,7 @@ myModule.factory('requestForm', function ($http, $q) {
         sendForm: function () {
             var deferred = $q.defer();
 
-            $http.get(this.apiPath + 'RequestForm/SendChangeRequest').success(function (data) {
+            $http.post(this.apiPath + 'RequestForm/SendChangeRequest').success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
                 deferred.reject("An error occurred while submitting a change request.");

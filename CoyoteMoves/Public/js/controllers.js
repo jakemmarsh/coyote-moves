@@ -161,21 +161,22 @@
     }
 
     $scope.sendAllForms = function () {
-        if ($scope.displacedEmployees) {
+
+        if ($scope.displacedEmployees.length) {
             $scope.sendFormError = "All displaced employees must be given a new desk before moves may be submitted.";
             return;
         }
 
         for (var i = 0; i < $scope.movedEmployees.length; i++) {
-            console.debug($scope.movedEmployees[i]);
             requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
                 console.log(data);
+                $scope.cancelAllMoves();
             },
             function (errorMessage) {
+                $scope.sendFormError = "Service down";
                 console.log(errorMessage);
             });
         }
-        $scope.cancelAllMoves();
     }
 
     $scope.cancelSingleMove = function (index) {
@@ -204,6 +205,7 @@
     $scope.cancelAllMoves = function () {
         $scope.movedEmployees = [];
         $scope.displacedEmployees = [];
+        $scope.createMoveFormError = "";
         $scope.moves = [];
     }
 
