@@ -230,6 +230,15 @@
     }
 
     $scope.selectDisplacedEmployee = function (displacedEmployee) {
+        $scope.futureDeskOccupant = "";
+
+        // auto-populate future occupant if it exists
+        for (var i = 0; i < $scope.moves.length; i++) {
+            if ($scope.moves[i].displacedEmployee.name.toLowerCase() == displacedEmployee.toLowerCase()) {
+                $scope.futureDeskOccupant = $scope.moves[i].movedEmployee.name;
+            }
+        }
+
         var employeeId = fetchEmployeeByName(displacedEmployee.toLowerCase()).id;
         for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
             if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
@@ -242,6 +251,10 @@
                 break;
             }
         }
+    }
+
+    $scope.setFutureDeskOccupant = function (futureOccupant) {
+        $scope.futureDeskOccupant = futureOccupant;
     }
 
     $scope.selectDesk = function (desk) {
