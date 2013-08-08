@@ -123,7 +123,7 @@
                 // Check if tab is already open for this employee
                 if ($scope.movedEmployees[i].name == move.movedEmployee.name) {
                     var name = $scope.movedEmployees[i].name;
-                    $scope.createMoveFormError = name + " has a move open!";
+                    $scope.createMoveFormError = name + " is already moving, bitch.";
                     return;
                 }
             }

@@ -60,7 +60,7 @@ body {
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   color: #000;
-  background: #30d600;
+  background: #0475c8;
   font-weight: bold;
 }
 
@@ -68,7 +68,7 @@ body {
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
   color: #000;
-  background: #30d600;
+  background: #0475c8;
 }
 
 textarea, input { 
@@ -198,7 +198,7 @@ h2.black-bg {
         }
 
         .tabs > .tab.active {
-            border-top: 4px solid #30d600;
+            border-top: 4px solid #0475c8;
         }
         .tabs > .tab:hover, .tabs > .tab:active {
             background: #e7e7e7;
@@ -313,8 +313,8 @@ input[type="text"] {
         background: none !important;
     }
 
-    .employee-form .tr:nth-last-child(2n+1) {
-        background:#f0f0f0;
+    .employee-form .tr:nth-last-child(2n+1) 
+{        background:#f0f0f0;
     }
 
 h3.title {
@@ -322,7 +322,7 @@ h3.title {
     font-weight: bold;
     text-transform: uppercase;
     margin: 0 0 10px 0;
-    border-bottom: 2px solid #000;
+    border-bottom: 4px solid #0475c8;
     width: 100%;
      
 }
@@ -354,7 +354,7 @@ input[type=text], input[type=password] {
 }
 
     input[type=text]:focus, input[type=password]:focus {
-        border: 1px solid #30d600;
+        border: 1px solid #0475c8;
     }
 
 .btn {
