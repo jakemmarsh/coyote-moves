@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <span ng-bind="createMoveFormError" class="error-message block"></span>
-                <input type="submit" value="Start Move" class="btn btn--primary" ng-hide="!isAdmin" />
+                <input type="submit" value="Start Move" class="btn btn--primary" style="width: 100%;" ng-hide="!isAdmin" />
             </form>
         </div>
         <div id="displaced-employees-container" ng-hide="!isAdmin || displacedEmployees.length == 0">
@@ -348,6 +348,7 @@
 
     </form>
     <div class="row soft--left">
+        <span class="error-message block nudge-half--bottom" ng-bind="sendFormError"></span>
         <a href class="btn btn--cancel nudge--right" class="nudge--left" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
         <input type="submit" class="btn btn--primary" value="Submit Moves" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
         <input type="submit" class="btn btn--primary" value="Submit Move" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
