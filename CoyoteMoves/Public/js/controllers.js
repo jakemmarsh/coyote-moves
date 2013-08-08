@@ -200,11 +200,11 @@
     $scope.selectDesk = function (desk) {
         // remove highlight color if previous desk selected
         if ($scope.focusedDesk) {
-            $scope.focusedDesk.modColor('#5C4033');
+            $scope.focusedDesk.modColor('#f7f7f7');
         }
         // select and highlight new desk
         $scope.focusedDesk = desk;
-        $scope.focusedDesk.modColor('#41FF23');
+        $scope.focusedDesk.modColor('#0592fa');
 
         // get employee from desk
         var employee = fetchEmployeeById(desk.id);
