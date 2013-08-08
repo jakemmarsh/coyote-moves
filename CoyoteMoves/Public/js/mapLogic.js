@@ -91,7 +91,7 @@ var mapModule = (function () {
             strokeColor: '#000000',
             strokeOpacity: 0.9,
             strokeWeight: 1,
-            fillColor: '#5C4033',
+            fillColor: '#f7f7f7',
             draggable: true,
             fillOpacity: 1,
             id: employeeId
