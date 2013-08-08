@@ -81,19 +81,20 @@
                 movedEmployee: fetchEmployeeByName($scope.futureDeskOccupant)
             };
 
+        // Begin the ugly
         if ($scope.moves.length == 0) {
 
-            if (!move.movedEmployee) {
+            if (!move.movedEmployee || (move.displacedEmployee == move.movedEmployee)) {
                 move.movedEmployee = move.displacedEmployee;
-                $scope.movedEmployees.push(move.movedEmployee);
             }
             else {
                 // Setting future desk number property on moved employee
-                move.movedEmployee.future.deskInfo.deskNumber = move.deskNumber;
-                $scope.movedEmployees.push(move.movedEmployee);
+                move.movedEmployee.future.deskInfo.deskNumber = move.deskNumber;        
                 $scope.displacedEmployees.push(move.displacedEmployee);
             }
 
+            $scope.movedEmployees.push(move.movedEmployee);
+            $scope.createMoveFormError = "";
             $scope.moves.push(move);
         }
         else {
@@ -114,13 +115,6 @@
                 blankMove = true;
                 $scope.movedEmployees.push(move.movedEmployee);
                 $scope.createMoveFormError = "";
-            }
-
-            for (var i = 0; i < $scope.displacedEmployees.length; i++) {
-                // remove name from displaced employee list if move is created for this employee
-                if ($scope.displacedEmployees[i].name == move.movedEmployee.name) {
-                    $scope.displacedEmployees.splice(i, 1);
-                }
             }
 
 
@@ -144,7 +138,14 @@
                 }
             }
 
-            if (!blankMove) {
+            for (var i = 0; i < $scope.displacedEmployees.length; i++) {
+                // remove name from displaced employee list if move is created for this employee
+                if ($scope.displacedEmployees[i].name == move.movedEmployee.name) {
+                    $scope.displacedEmployees.splice(i, 1);
+                }
+            }
+
+            if (!blankMove && !$scope.createMoveFormError.length) {
                 move.movedEmployee.future.deskInfo.deskNumber = move.deskNumber;
                 $scope.movedEmployees.push(move.movedEmployee);
                 if (addToDisplaced && !($scope.movedEmployees[i].name == move.displacedEmployee.name)) {
@@ -259,7 +260,6 @@
         $scope.currentDeskNumber = employee.current.deskInfo.deskNumber;
         $scope.currentDeskOccupant = employee.name;
         $scope.currentDeskOrientation = employee.location.orientation;
-        $scope.futureDeskOccupant = "";
         //set current employee
         $scope.selectedDeskEmployee = employee;
     }
