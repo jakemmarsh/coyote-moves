@@ -245,6 +245,7 @@
     }
 
     $scope.selectDesk = function (desk) {
+
         // remove highlight color if previous desk selected
         if ($scope.focusedDesk) {
             $scope.focusedDesk.modColor('#5C4033');
@@ -253,8 +254,13 @@
         $scope.focusedDesk = desk;
         $scope.focusedDesk.modColor('#41FF23');
 
+
         // get employee from desk
         var employee = fetchEmployeeById(desk.id);
+
+        // get desk number from employee
+        $scope.focusedDeskNumber = employee.current.deskInfo.deskNumber;
+
         $scope.showSidebar = true;
         // set data for sidebar
         $scope.currentDeskNumber = employee.current.deskInfo.deskNumber;
@@ -263,6 +269,36 @@
         //set current employee
         $scope.selectedDeskEmployee = employee;
     }
+
+    $scope.$watch('currentDeskOrientation', function () {
+        var deskData, updatedDeskInfo;
+
+        // get all info for desk based on focusedDeskNumber
+        if ($scope.currentFloorDesks) {
+            for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
+                if ($scope.currentFloorDesks[i].deskNumber == $scope.focusedDeskNumber) {
+                    deskData = $scope.currentFloorDesks[i];
+                }
+            }
+
+            // only make changes if new orientation is different from saved orientation
+            if (deskData.location.orientation !== $scope.currentDeskOrientation) {
+                updatedDeskInfo = {
+                    deskNumber: $scope.focusedDeskNumber,
+                    x: deskData.location.topLeft.xCoordinate,
+                    y: deskData.location.topLeft.yCoordinate,
+                    orientation: $scope.currentDeskOrientation
+                };
+
+                desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
+                    // do something with success data
+                },
+                function (errorMessage) {
+                    console.log(errorMessage);
+                });
+            }
+        }
+    });
 
     $scope.$watch('employeeToSearchFor', function () {
         if ($scope.currentFloorEmployees) {
@@ -342,8 +378,30 @@
 
                 // add dragend listener to update desk position in database
                 google.maps.event.addListener(newDesk, "dragend", function (evt) {
-                    // TODO: make call to backend to update desk
-                    console.log("dragend" + evt.latLng);
+                    var deskNumber = fetchEmployeeById(this.id).current.deskInfo.deskNumber,
+                        deskData,
+                        updatedDeskInfo;
+
+                    // get all info for desk based on dragged desk number
+                    for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
+                        if ($scope.currentFloorDesks[i].deskNumber == deskNumber) {
+                            deskData = $scope.currentFloorDesks[i];
+                        }
+                    }
+
+                    updatedDeskInfo = {
+                        deskNumber: deskNumber,
+                        x: evt.latLng.lb,
+                        y: evt.latLng.mb,
+                        orientation: deskData.location.orientation
+                    };
+
+                    desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
+                        console.log(data);
+                    },
+                    function (errorMessage) {
+                        console.log(errorMessage);
+                    });
                 });
             }
         },

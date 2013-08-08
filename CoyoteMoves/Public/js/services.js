@@ -56,6 +56,18 @@ myModule.factory('desks', function ($http, $q) {
             });
 
             return deferred.promise;
+        },
+
+        updateDesk: function (deskNumber, updatedDeskInfo) {
+            var deferred = $q.defer();
+
+            $http.post(this.apiPath + 'Desk/SetDeskOrientationAndPoint/' + deskNumber, updatedDeskInfo).success(function (data) {
+                deferred.resolve(data);
+            }).error(function () {
+                deferred.reject("An error occurred while updating a desk.");
+            });
+
+            return deferred.promise;
         }
 
 
