@@ -106,8 +106,6 @@ header {
     color: #fff;
     height: 40px;
     text-align: center;
-    margin: 0;
-    border-bottom: 5px solid #0475c8;
     box-sizing: content-box;
 }
 
@@ -385,6 +383,7 @@ input[type=text], input[type=password] {
     border: 1px solid #c9cacc;
     box-shadow: 0px 1px 0px 0px #aaa;
     text-decoration: none;
+    height: 100%;
 }
 
 .btn--primary {
@@ -420,6 +419,33 @@ input[type=text], input[type=password] {
         border-color: #ac2925;
         background: #d2322d;
     }
+
+.btn--action {
+    background-color: #0475c8;
+    width: 54px;
+    color: #ddd;
+}
+.btn--row {
+    height: 34px;
+}
+.btn--right {
+    -webkit-border-radius: 0px 3px 3px 0px;
+    -moz-border-radius: 0px 3px 3px 0px;
+    -ms-border-radius: 0px 3px 3px 0px;
+    -o-border-radius: 0px 3px 3px 0px;
+}
+.btn--left {
+    -webkit-border-radius: 3px 0px 0px 3px;
+    -moz-border-radius: 3px 0px 0px 3px;
+    -ms-border-radius: 3px 0px 0px 3px;
+    -o-border-radius: 3px 0px 0px 3px;
+}
+.btn--middle {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+}
 
 .nudge--left {
     margin-left: 10px;
