@@ -59,7 +59,7 @@ body {
 
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
-  color: #000;
+  color: #fff;
   background: #0475c8;
   font-weight: bold;
 }
@@ -67,7 +67,7 @@ body {
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
-  color: #000;
+  color: #fff;
   background: #0475c8;
 }
 
@@ -131,6 +131,7 @@ h2.black-bg {
     font-weight: normal;
     text-transform: uppercase;
     letter-spacing: .15em;
+    margin-bottom: 20px;
 }
 
 /* Floor Map */
@@ -342,10 +343,12 @@ h3.title {
 }
 
 .employee-form {
-    background: #fff;
+    background: #f5f3eF;
     z-index: 99;
     width: 100%;
-    padding: 10px;
+    padding: 20px;
+    border-top: 1px solid #c9cace;
+    border-bottom: 1px solid #c9cace;
 }
 
 input[type=text], input[type=password] {
