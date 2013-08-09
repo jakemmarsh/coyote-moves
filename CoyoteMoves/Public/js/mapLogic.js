@@ -70,7 +70,7 @@ var mapModule = (function () {
         return [xCoord * Math.cos(rad) - yCoord * Math.sin(rad), xCoord * Math.sin(rad) + yCoord * Math.cos(rad)];
     }
 
-    function makeDesk(xcoord, ycoord, deg, map, maptype, employeeId, deskId) {
+    function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId) {
 
         var paths = null,
             rad = (Math.PI / 180) * deg,
@@ -94,16 +94,17 @@ var mapModule = (function () {
             fillColor: '#f7f7f7',
             draggable: true,
             fillOpacity: 1,
-            id: employeeId,
-            title: employeeId,
+            id: employee.id,
         });
+
+        var labelText = deskId + "<br />(CO) " + employee.name;
 
         var marker = new MarkerWithLabel({
             position: new google.maps.LatLng(0,0),
             draggable: false,
             raiseOnDrag: false,
             map: map,
-            labelContent: deskId,
+            labelContent: labelText,
             labelAnchor: new google.maps.Point(30, 20),
             labelClass: "desk-number-label", // the CSS class for the label
             labelStyle: {opacity: 1.0},
@@ -112,7 +113,7 @@ var mapModule = (function () {
         });
 
         google.maps.event.addListener(desk, "mousemove", function(event) {
-            marker.setPosition(event.latLng);
+            marker.setPosition(new google.maps.LatLng(event.latLng.lat() + 2, event.latLng.lng()));
             marker.setVisible(true);
         });
         google.maps.event.addListener(desk, "mouseout", function(event) {
@@ -206,8 +207,8 @@ var mapModule = (function () {
 
         gallPetersMap.desks = [];
 
-        gallPetersMap.addDesk = function (xpos, ypos, angle, employeeId, deskId) {
-            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId, deskId);
+        gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId) {
+            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employee, deskId);
             gallPetersMap.desks.push(desk);
             return desk;
         };
