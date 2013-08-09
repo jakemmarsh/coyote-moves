@@ -123,7 +123,9 @@ var mapModule = (function () {
         });
 
         google.maps.event.addListener(desk, "mousemove", function(event) {
-            marker.setPosition(new google.maps.LatLng(event.latLng.lat() + 2, event.latLng.lng()));
+            var temp = desk.getPoint();
+            temp.y -= 1;
+            marker.setPosition(maptype.projection.fromPointToLatLng(temp));
             marker.setVisible(true);
         });
         google.maps.event.addListener(desk, "mouseout", function(event) {
