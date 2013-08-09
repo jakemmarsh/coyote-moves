@@ -180,7 +180,7 @@ var mapModule = (function () {
             },
             tileSize: new google.maps.Size(256, 256),
             isPng: false,
-            minZoom: 3,
+            minZoom: 4,
             maxZoom: 7,
             name: 'COYOTE'
         });
@@ -191,26 +191,18 @@ var mapModule = (function () {
             gallPetersMap.panTo(desk.getPosition());
         }
 
-        if (floor === 3) {
-            center = new google.maps.Point(47, 40);
-        }
-        else if (floor === 4) {
-            center = new google.maps.Point(11.5, 12.65);
-        }
-        else if (floor === 5) {
-            center = new google.maps.Point(15.13, 30);
-        }
+        center = new google.maps.LatLng(71, -173);
 
 
         var mapOptions = {
-            zoom: 3,
+            zoom: 4,
             panControl: true,
             zoomControl: true,
             mapTypeControl: false,
             scaleControl: false,
             streetViewControl: false,
             overviewMapControl: false,
-            center: gallPetersMapType.projection.fromPointToLatLng(center),
+            center: center,
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'gallPetersMap']
             },
@@ -227,6 +219,8 @@ var mapModule = (function () {
 
         google.maps.event.addListener(gallPetersMap, 'click', function (event) {
             console.log('Point.X.Y: ' + gallPetersMapType.projection.fromLatLngToPoint(event.latLng));
+            console.log('Point.lat.lng: ' + event.latLng);
+
         });
 
         gallPetersMap.desks = [];
