@@ -2,7 +2,7 @@
 
 var mapModule = (function () {
     var center,
-        DESK_CONSTANT_Y = 1.2291675,
+        DESK_CONSTANT_Y = 0.41,
         DESK_CONSTANT_X = DESK_CONSTANT_Y / 2,
         // Note: this value is exact as the map projects a full 360 degrees of longitude
         GALL_PETERS_RANGE_X = 800,
@@ -212,6 +212,10 @@ var mapModule = (function () {
             return desk;
         };
 
+        gallPetersMap.fromLatLngToPoint = function (latLng) {
+            return gallPetersMapType.projection.fromLatLngToPoint(latLng);
+        }
+
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
         var swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng();
@@ -227,7 +231,6 @@ var mapModule = (function () {
         google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
 
         function checkBounds() {
-            console.log('bounds');
             if (!allowedBounds.contains(gallPetersMap.getCenter())) {
                 var C = gallPetersMap.getCenter();
                 var X = C.lng();
