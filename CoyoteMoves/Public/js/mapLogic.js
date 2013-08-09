@@ -2,7 +2,7 @@
 
 var mapModule = (function () {
     var center,
-        DESK_CONSTANT_Y = 1.2291675,
+        DESK_CONSTANT_Y = 0.41,
         DESK_CONSTANT_X = DESK_CONSTANT_Y / 2,
         // Note: this value is exact as the map projects a full 360 degrees of longitude
         GALL_PETERS_RANGE_X = 800,
@@ -64,13 +64,13 @@ var mapModule = (function () {
         var latRadians = Math.asin((origin.y - y) / this.worldCoordinateLatRange);
         var lat = radiansToDegrees(latRadians);
         return new google.maps.LatLng(lat, lng, noWrap);
-    };
+    };    
 
     function transformCoord(xCoord, yCoord, rad) {
         return [xCoord * Math.cos(rad) - yCoord * Math.sin(rad), xCoord * Math.sin(rad) + yCoord * Math.cos(rad)];
     }
 
-    function makeDesk(xcoord, ycoord, deg, map, maptype, employeeId) {
+    function makeDesk(xcoord, ycoord, deg, map, maptype, employeeId, deskId) {
 
         var paths = null,
             rad = (Math.PI / 180) * deg,
@@ -94,7 +94,29 @@ var mapModule = (function () {
             fillColor: '#f7f7f7',
             draggable: true,
             fillOpacity: 1,
-            id: employeeId
+            id: employeeId,
+            title: employeeId,
+        });
+
+        var marker = new MarkerWithLabel({
+            position: new google.maps.LatLng(0,0),
+            draggable: false,
+            raiseOnDrag: false,
+            map: map,
+            labelContent: deskId,
+            labelAnchor: new google.maps.Point(30, 20),
+            labelClass: "desk-number-label", // the CSS class for the label
+            labelStyle: {opacity: 1.0},
+            icon: "http://placehold.it/1x1",
+            visible: false
+        });
+
+        google.maps.event.addListener(desk, "mousemove", function(event) {
+            marker.setPosition(event.latLng);
+            marker.setVisible(true);
+        });
+        google.maps.event.addListener(desk, "mouseout", function(event) {
+            marker.setVisible(false);
         });
 
         desk.getPosition = function () {
@@ -184,8 +206,8 @@ var mapModule = (function () {
 
         gallPetersMap.desks = [];
 
-        gallPetersMap.addDesk = function (xpos, ypos, angle, employeeId) {
-            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId);
+        gallPetersMap.addDesk = function (xpos, ypos, angle, employeeId, deskId) {
+            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId, deskId);
             gallPetersMap.desks.push(desk);
             return desk;
         };
