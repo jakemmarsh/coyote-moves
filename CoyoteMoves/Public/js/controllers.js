@@ -306,6 +306,8 @@
                         orientation: $scope.currentDeskOrientation
                     };
                     deskData.location.orientation = $scope.currentDeskOrientation;
+                    deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
+                    deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
                     desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
                         // do something with success data
