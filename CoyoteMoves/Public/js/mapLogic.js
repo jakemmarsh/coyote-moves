@@ -190,6 +190,10 @@ var mapModule = (function () {
             return desk;
         };
 
+        gallPetersMap.fromLatLngToPoint = function (latLng) {
+            return gallPetersMapType.projection.fromLatLngToPoint(latLng);
+        }
+
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
         var swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng();

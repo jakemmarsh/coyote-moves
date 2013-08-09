@@ -393,7 +393,8 @@
                 google.maps.event.addListener(newDesk, "dragend", function (evt) {
                     var deskNumber = fetchEmployeeById(this.id).current.deskInfo.deskNumber,
                         deskData,
-                        updatedDeskInfo;
+                        updatedDeskInfo,
+                        point = $scope.maps[$scope.currentFloor].fromLatLngToPoint(evt.latLng);
 
                     // get all info for desk based on dragged desk number
                     for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
@@ -404,8 +405,8 @@
 
                     updatedDeskInfo = {
                         deskNumber: deskNumber,
-                        x: evt.latLng.lb,
-                        y: evt.latLng.mb,
+                        x: point.x,
+                        y: point.y,
                         orientation: deskData.location.orientation
                     };
                     $scope.$apply(function () {
