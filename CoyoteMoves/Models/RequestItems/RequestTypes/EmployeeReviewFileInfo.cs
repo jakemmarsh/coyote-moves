@@ -10,6 +10,7 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
         public string FilesToBeAddedTo { get; set; }
         public string FilesToBeRemovedFrom { get; set; }
 
+        //REMOVE DEFAULTS IDIOT
         public EmployeeReviewFileInfo()
         {
             FilesToBeAddedTo = "this";
