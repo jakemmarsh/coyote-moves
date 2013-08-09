@@ -135,7 +135,7 @@ namespace CoyoteMoves.Models
                 Department = reader["C_Department"].ToString(),
                 JobTitle = reader["C_JobTitle"].ToString(),
                 Supervisor = _edb.GetFullNameById((int)reader["C_ManagerID"]),
-                Other = ""
+                Other = reader["C_Other"].ToString() 
             };
         }
 
@@ -146,7 +146,7 @@ namespace CoyoteMoves.Models
                 Department = reader["F_Department"].ToString(),
                 JobTitle = reader["F_JobTitle"].ToString(),
                 Supervisor = _edb.GetFullNameById((int)reader["F_ManagerID"]),
-                Other = ""
+                Other = reader["F_Other"].ToString()
             };
         }
 
