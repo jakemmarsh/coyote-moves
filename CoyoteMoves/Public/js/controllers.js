@@ -161,17 +161,27 @@
     }
 
     $scope.sendAllForms = function () {
-        if ($scope.displacedEmployees) {
+
+        if ($scope.displacedEmployees.length) {
             $scope.sendFormError = "All displaced employees must be given a new desk before moves may be submitted.";
             return;
         }
 
         for (var i = 0; i < $scope.movedEmployees.length; i++) {
-            console.debug($scope.movedEmployees[i]);
+            currentEmployee = $scope.movedEmployees[i].current;
+
+            $scope.movedEmployees[i].future.ultiproInfo.supervisor = ($scope.movedEmployees[i].future.ultiproInfo.supervisor) ? $scope.movedEmployees[i].future.ultiproInfo.supervisor : currentEmployee.ultiproInfo.supervisor;
+            $scope.movedEmployees[i].future.bazookaInfo.managerId = ($scope.movedEmployees[i].future.bazookaInfo.managerId) ? $scope.movedEmployees[i].future.bazookaInfo.managerId : currentEmployee.bazookaInfo.managerId;
+            $scope.movedEmployees[i].future.deskInfo.deskNumber = ($scope.movedEmployees[i].future.deskInfo.deskNumber) ? $scope.movedEmployees[i].future.deskInfo.deskNumber : $scope.movedEmployees[i].current.deskInfo.deskNumber;
+
+            console.log($scope.movedEmployees[i]);
+
+
             requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
                 console.log(data);
             },
             function (errorMessage) {
+                $scope.sendFormError = "Service down";
                 console.log(errorMessage);
             });
         }
@@ -204,6 +214,7 @@
     $scope.cancelAllMoves = function () {
         $scope.movedEmployees = [];
         $scope.displacedEmployees = [];
+        $scope.createMoveFormError = "";
         $scope.moves = [];
     }
 
@@ -283,7 +294,10 @@
         $scope.selectedDeskEmployee = employee;
     }
 
-    $scope.$watch('currentDeskOrientation', function () {
+    $scope.doNothing = function () {
+    }
+
+    $scope.changeOrientation = function () {
         // only make changes to desk if user has rights
         if ($scope.isAdmin) {
             var deskData, updatedDeskInfo;
@@ -299,18 +313,23 @@
                 // only make changes if new orientation is different from saved orientation
                 if (deskData.location.orientation !== $scope.currentDeskOrientation) {
                     $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
+
+                    var deskRep = $scope.maps[$scope.currentFloor].getDesk($scope.focusedDeskNumber);
+
                     updatedDeskInfo = {
                         deskNumber: $scope.focusedDeskNumber,
                         x: deskData.location.topLeft.xCoordinate,
                         y: deskData.location.topLeft.yCoordinate,
                         orientation: $scope.currentDeskOrientation
                     };
+
                     deskData.location.orientation = $scope.currentDeskOrientation;
                     deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
                     deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
                     desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
                         // do something with success data
+                        console.log(data);
                     },
                     function (errorMessage) {
                         console.log(errorMessage);
@@ -318,10 +337,9 @@
                 }
             }
         }
-        
-    });
+    }
 
-    $scope.$watch('employeeToSearchFor', function () {
+    $scope.checkSearch = function () {
         if ($scope.currentFloorEmployees) {
             for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
                 if ($scope.currentFloorEmployees[i].name.toLowerCase() === $scope.employeeToSearchFor.toLowerCase()) {
@@ -331,7 +349,7 @@
                 }
             }
         }
-    });
+    }
 
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
@@ -373,8 +391,37 @@
                         name: name,
                         id: currentPerson.id,
                         location: currentDesk.location,
+                        emailInfo: {
+                            groupsToBeAddedTo: "N/A",
+                            groupsToBeRemovedFrom: "N/A"
+                        },
+                        reviewInfo: {
+                            groupsToBeAddedTo: "N/A",
+                            groupsToBeRemovedFrom: "N/A"
+                        },
                         future: {
-                            deskInfo: {}
+                            bazookaInfo: {
+                                jobTitle: "N/A",
+                                department: "N/A",
+                                group: "N/A",
+                                managerId: "N/A",
+                                jobTemplate: "N/A",
+                                securityItemRights: "N/A"
+                            },
+                            ultiproInfo: {
+                                jobTitle: "N/A",
+                                department: "N/A",
+                                group: "N/A",
+                                supervisor: "N/A",
+                                other: "N/A"
+                            },
+                            deskInfo: {
+                                deskNumber: "N/A",
+                                office: "GX"
+                            },
+                            phoneInfo: {
+                                phoneNumber: "N/A"
+                            }
                         },
                         current: {
                             bazookaInfo: {
@@ -383,6 +430,7 @@
                                 group: currentPerson.group,
                                 managerId: currentPerson.managerName,
                                 jobTemplate: currentPerson.department + " " + currentPerson.jobTitle,
+                                securityItemRights: ""
                             },
                             ultiproInfo: {
                                 jobTitle: currentPerson.jobTitle,
@@ -392,7 +440,8 @@
                                 other: ""
                             },
                             deskInfo: {
-                                deskNumber: currentDesk.deskNumber
+                                deskNumber: currentDesk.deskNumber,
+                                office: "GX"
                             },
                             phoneInfo: {
                                 phoneNumber: currentPerson.phoneNumber

@@ -4,7 +4,7 @@
         <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
     </div>
     <form ng-submit="searchForEmployee()" class="inline-block float-right nudge--right" style="width: 75%;">
-        <input type="text" id="employee-search" ng-model="employeeToSearchFor" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
+        <input type="text" id="employee-search" ng-model="employeeToSearchFor" ng-change="checkSearch()" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
     </form> 
     </div>
     <div id="map-third" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 3">
@@ -50,7 +50,7 @@
                         Orientation
                     </div>
                     <div class="td">
-                        <slider floor="0" ceiling="360" step="45" precision="0" ng-model="currentDeskOrientation"></slider>
+                        <slider floor="0" ceiling="360" step="45" precision="0" ng-model="currentDeskOrientation" move-start="doNothing" move-end="changeOrientation"></slider>
                     </div>
                 </div>
                 <span ng-bind="createMoveFormError" class="error-message block"></span>
@@ -72,7 +72,7 @@
     <div class="row clearfix">
         <div class="tabs forms">
             <span href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">
-                <span>{{ employee.name }}</span>
+                <span ng-bind="employee.name"></span>
                 <a ng-click="cancelSingleMove($index)" class="close">
                     <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(1.5, 1.5); -webkit-transform: scale(1.5, 1.5);" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
                         <path d="M69.879,70.439c2.645-2.792,2.523-7.2-0.269-9.845L38.332,30.982c-2.793-2.644-7.2-2.523-9.845,0.27l-0.05,0.053  c-2.644,2.792-2.524,7.2,0.269,9.845l31.278,29.612c2.793,2.645,7.201,2.523,9.845-0.269L69.879,70.439z"/>
