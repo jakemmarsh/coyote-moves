@@ -298,6 +298,7 @@
 
                 // only make changes if new orientation is different from saved orientation
                 if (deskData.location.orientation !== $scope.currentDeskOrientation) {
+                    $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
                     updatedDeskInfo = {
                         deskNumber: $scope.focusedDeskNumber,
                         x: deskData.location.topLeft.xCoordinate,
@@ -314,6 +315,7 @@
                 }
             }
         }
+        
     });
 
     $scope.$watch('employeeToSearchFor', function () {
