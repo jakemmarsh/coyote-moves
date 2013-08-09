@@ -416,6 +416,9 @@
                             y: point.y,
                             orientation: deskData.location.orientation
                         };
+                        deskData.location.topLeft.xCoordinate = point.x;
+                        deskData.location.topLeft.yCoordinate = point.y;
+
                         $scope.$apply(function () {
                             desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
                                 // do something with success data

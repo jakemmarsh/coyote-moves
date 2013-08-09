@@ -74,10 +74,10 @@ var mapModule = (function () {
 
         var paths = null,
             rad = (Math.PI / 180) * deg,
-            t0 = transformCoord(DESK_CONSTANT_Y, 0, rad),
-            t1 = transformCoord(0, 0, rad),
-            t2 = transformCoord(0, DESK_CONSTANT_X, rad),
-            t3 = transformCoord(DESK_CONSTANT_Y, DESK_CONSTANT_X, rad),
+            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad),
+            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad),
+            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad),
+            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad),
             coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1])),
             coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1])),
             coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1])),
@@ -93,6 +93,7 @@ var mapModule = (function () {
             strokeWeight: 1,
             fillColor: '#f7f7f7',
             draggable: true,
+
             fillOpacity: 1,
             id: employee.id,
         });
@@ -131,13 +132,12 @@ var mapModule = (function () {
             desk.setOptions({ strokeColor: color });
         }
         desk.modPath = function (exx, why, rot) {
-
             var tehPath = null,
             rad0 = (Math.PI / 180) * rot,
-            p0 = transformCoord(DESK_CONSTANT_Y, 0, rad0),
-            p1 = transformCoord(0, 0, rad0),
-            p2 = transformCoord(0, DESK_CONSTANT_X, rad0),
-            p3 = transformCoord(DESK_CONSTANT_Y, DESK_CONSTANT_X, rad0),
+            p0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
+            p1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
+            p2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
+            p3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
 
             c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p0[0], why + p0[1])),
             c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p1[0], why + p1[1])),
@@ -251,7 +251,7 @@ var mapModule = (function () {
         );
 
         // Listen for the dragend event
-        google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
+        //google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
 
         function checkBounds() {
             if (!allowedBounds.contains(gallPetersMap.getCenter())) {

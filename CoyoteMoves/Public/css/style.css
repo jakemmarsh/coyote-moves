@@ -223,7 +223,7 @@ input[type="text"] {
 .map-container {
     float: left;
     width: 85%;
-    height: 600px;
+    height: 700px;
     background:#fff;
     border: 1px solid #c9cace;
     z-index: 99;
@@ -238,7 +238,7 @@ input[type="text"] {
 #map-sidebar {
     float: left;
     width: 15%;
-    height: 600px;
+    height: 700px;
     border: 1px solid #c9cace;
     border-width: 1px 1px 1px 0;
 }
