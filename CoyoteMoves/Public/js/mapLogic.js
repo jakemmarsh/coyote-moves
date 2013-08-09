@@ -70,7 +70,7 @@ var mapModule = (function () {
         return [xCoord * Math.cos(rad) - yCoord * Math.sin(rad), xCoord * Math.sin(rad) + yCoord * Math.cos(rad)];
     }
 
-    function makeDesk(xcoord, ycoord, deg, map, maptype, employeeId, deskId) {
+    function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId) {
 
         var paths = null,
             rad = (Math.PI / 180) * deg,
@@ -94,16 +94,17 @@ var mapModule = (function () {
             fillColor: '#f7f7f7',
             draggable: true,
             fillOpacity: 1,
-            id: employeeId,
-            title: employeeId,
+            id: employee.id,
         });
+
+        var labelText = deskId + "<br />(CO) " + employee.name;
 
         var marker = new MarkerWithLabel({
             position: new google.maps.LatLng(0,0),
             draggable: false,
             raiseOnDrag: false,
             map: map,
-            labelContent: deskId,
+            labelContent: labelText,
             labelAnchor: new google.maps.Point(30, 20),
             labelClass: "desk-number-label", // the CSS class for the label
             labelStyle: {opacity: 1.0},
@@ -112,7 +113,7 @@ var mapModule = (function () {
         });
 
         google.maps.event.addListener(desk, "mousemove", function(event) {
-            marker.setPosition(event.latLng);
+            marker.setPosition(new google.maps.LatLng(event.latLng.lat() + 2, event.latLng.lng()));
             marker.setVisible(true);
         });
         google.maps.event.addListener(desk, "mouseout", function(event) {
@@ -128,6 +129,24 @@ var mapModule = (function () {
         }
         desk.modBorder = function (color) {
             desk.setOptions({ strokeColor: color });
+        }
+        desk.modPath = function (exx, why, rot) {
+
+            var tehPath = null,
+            rad0 = (Math.PI / 180) * rot,
+            p0 = transformCoord(DESK_CONSTANT_Y, 0, rad0),
+            p1 = transformCoord(0, 0, rad0),
+            p2 = transformCoord(0, DESK_CONSTANT_X, rad0),
+            p3 = transformCoord(DESK_CONSTANT_Y, DESK_CONSTANT_X, rad0),
+
+            c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p0[0], why + p0[1])),
+            c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p1[0], why + p1[1])),
+            c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p2[0], why + p2[1])),
+            c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p3[0], why + p3[1]));
+
+            tehPath = [c1, c2, c3, c4];
+
+            desk.setOptions({ paths: tehPath });
         }
 
         desk.setMap(map);
@@ -206,15 +225,19 @@ var mapModule = (function () {
 
         gallPetersMap.desks = [];
 
-        gallPetersMap.addDesk = function (xpos, ypos, angle, employeeId, deskId) {
-            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employeeId, deskId);
+        gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId) {
+            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employee, deskId);
             gallPetersMap.desks.push(desk);
             return desk;
         };
 
         gallPetersMap.fromLatLngToPoint = function (latLng) {
             return gallPetersMapType.projection.fromLatLngToPoint(latLng);
-        }
+        };
+
+        gallPetersMap.fromPointToLatLng = function (point, noWrap) {
+            return gallPetersMapType.projection.fromPointToLatLng(point, noWrap);
+        };
 
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();

@@ -298,6 +298,7 @@
 
                 // only make changes if new orientation is different from saved orientation
                 if (deskData.location.orientation !== $scope.currentDeskOrientation) {
+                    $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
                     updatedDeskInfo = {
                         deskNumber: $scope.focusedDeskNumber,
                         x: deskData.location.topLeft.xCoordinate,
@@ -314,6 +315,7 @@
                 }
             }
         }
+        
     });
 
     $scope.$watch('employeeToSearchFor', function () {
@@ -383,7 +385,7 @@
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
                 // create desk and place it on map * 0.3, currentDesk.location.topLeft.yCoordinate + i * 0.3, currentDesk.location.orientation, employee.id, currentDesk.deskNumber);
-                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id, currentDesk.deskNumber);
+                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee, currentDesk.deskNumber);
                 // add click listener to desk to highlight it and show it in sidebar
                 google.maps.event.addListener(newDesk, 'click', function (event) {
                     $scope.selectDesk(this);
