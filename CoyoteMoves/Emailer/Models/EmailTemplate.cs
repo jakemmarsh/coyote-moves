@@ -86,8 +86,8 @@ namespace CoyoteMoves.Emailer.Models
             {
                 if (fieldKey.Equals("Employee Name"))
                     form.SetField(fieldKey, empDB.GetFullNameById(req.EmployeeId));
-                if (fieldKey.Equals("Date To Occur On"))   
-                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7)).ToString());
+                if (fieldKey.Equals("Date to occur on"))   
+                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7).Date).ToString("d"));
                 if (fieldKey.Equals("CurrentJob Title"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTitle);
                 if (fieldKey.Equals("CurrentDepartment"))

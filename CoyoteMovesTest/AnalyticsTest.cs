@@ -23,7 +23,12 @@ namespace CoyoteMovesTest
         [TestCategory("Integration")]
         public void GetDataFromBeginningSuccess()
         {
-            Collection<RequestForm> testAnalysis = _analyticsDB.GetAllRequestRecords();
+            //Collection<RequestForm> testAnalysis = _analyticsDB.GetAllRequestRecords();
+            //foreach (RequestForm entry in testAnalysis)
+            //{
+            //    if (entry.
+
+            //}
         }
     }
 }
