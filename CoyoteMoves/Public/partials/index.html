@@ -61,7 +61,7 @@
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
                 <li ng-repeat="employee in displacedEmployees" class="soft--sides">
-                    <span ng-bind="employee.name" class="btn btn--primary btn--left" style="width: 210px;" ng-click="selectDisplacedEmployee(employee.name)" title="View Original Desk"></span><span ng-click="setFutureDeskOccupant(employee.name)" class="btn btn--primary btn--right btn--action" title="Move to Selected Desk">move</span>
+                    <span ng-bind="employee.name" class="btn btn--primary btn--left" style="width: 210px;" title="View Original Desk" ng-click="selectDisplacedEmployee(employee.name)"></span><span class="btn btn--primary btn--right btn--action" title="Move to Selected Desk" ng-click="setFutureDeskOccupant(employee.name)">move</span>
                 </li>
             </ul>
         </div>
@@ -74,7 +74,7 @@
             <span href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">
                 <span>{{ employee.name }}</span>
                 <a ng-click="cancelSingleMove($index)" class="close">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(1.5, 1.5); -webkit-transform: scale(1.5, 1.5);" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
                         <path d="M69.879,70.439c2.645-2.792,2.523-7.2-0.269-9.845L38.332,30.982c-2.793-2.644-7.2-2.523-9.845,0.27l-0.05,0.053  c-2.644,2.792-2.524,7.2,0.269,9.845l31.278,29.612c2.793,2.645,7.201,2.523,9.845-0.269L69.879,70.439z"/>
                         <path d="M69.755,40.026c2.644-2.792,2.523-7.201-0.27-9.845l-0.052-0.049c-2.793-2.644-7.201-2.523-9.846,0.27l-29.61,31.275  c-2.645,2.793-2.577,7.259,0.27,9.845l0.053,0.048c2.847,2.585,7.2,2.525,9.845-0.268L69.755,40.026z"/>
                     </svg>
