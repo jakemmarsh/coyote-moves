@@ -541,3 +541,14 @@ input[type=text], input[type=password] {
 #global-controls {
     margin: 10px 0px;
 }
+.desk-number-label {
+    color: #0592fa;
+    background-color: white;
+    font-family: "Lucida Grande", "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    width: 100px;
+    border: 1px solid #111;
+    white-space: nowrap;
+}
