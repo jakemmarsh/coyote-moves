@@ -312,7 +312,6 @@
 
                 // only make changes if new orientation is different from saved orientation
                 if (deskData.location.orientation !== $scope.currentDeskOrientation) {
-                    console.log('changed');
                     $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
 
                     var deskRep = $scope.maps[$scope.currentFloor].getDesk($scope.focusedDeskNumber);
@@ -323,9 +322,6 @@
                         y: deskData.location.topLeft.yCoordinate,
                         orientation: $scope.currentDeskOrientation
                     };
-                    deskData.location.orientation = $scope.currentDeskOrientation;
-                    deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
-                    deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
                     deskData.location.orientation = $scope.currentDeskOrientation;
                     deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
@@ -343,7 +339,7 @@
         }
     }
 
-    $scope.$watch('employeeToSearchFor', function () {
+    $scope.checkSearch = function () {
         if ($scope.currentFloorEmployees) {
             for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
                 if ($scope.currentFloorEmployees[i].name.toLowerCase() === $scope.employeeToSearchFor.toLowerCase()) {
@@ -353,7 +349,7 @@
                 }
             }
         }
-    });
+    }
 
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
