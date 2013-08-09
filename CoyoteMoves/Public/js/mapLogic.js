@@ -205,7 +205,6 @@ var mapModule = (function () {
         google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
 
         function checkBounds() {
-            console.log('bounds');
             if (!allowedBounds.contains(gallPetersMap.getCenter())) {
                 var C = gallPetersMap.getCenter();
                 var X = C.lng();

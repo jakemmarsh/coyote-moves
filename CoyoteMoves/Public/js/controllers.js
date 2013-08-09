@@ -380,7 +380,7 @@
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
                 // create desk and place it on map
-                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate + i * 0.3, currentDesk.location.topLeft.yCoordinate + i * 0.3, currentDesk.location.orientation, employee.id);
+                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee.id);
                 // add click listener to desk to highlight it and show it in sidebar
                 google.maps.event.addListener(newDesk, 'click', function (event) {
                     $scope.selectDesk(this);
@@ -408,12 +408,14 @@
                         y: evt.latLng.mb,
                         orientation: deskData.location.orientation
                     };
-
-                    desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
-                        console.log(data);
-                    },
-                    function (errorMessage) {
-                        console.log(errorMessage);
+                    $scope.$apply(function () {
+                        desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
+                            // do something with success data
+                            console.log(data);
+                        },
+                        function (errorMessage) {
+                            console.log(errorMessage);
+                        });
                     });
                 });
             }
@@ -421,16 +423,5 @@
         function (errorMessage) {
             console.log(errorMessage);
         });
-        window.setTimeout(function () {
-            if ($scope.currentFloor === 3) {
-                // resize map
-            }
-            else if ($scope.currentFloor === 4) {
-                // resize map
-            }
-            else if ($scope.currentFloor === 5) {
-                // resize map
-            }
-        }, 100);
     })
 };
