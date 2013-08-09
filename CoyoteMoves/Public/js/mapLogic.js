@@ -9,7 +9,8 @@ var mapModule = (function () {
         // Note: this value is inexact as the map is cut off at ~ +/- 83 degrees.
         // However, the polar regions produce very little increase in Y range, so
         // we will use the tile size.
-        GALL_PETERS_RANGE_Y = 510;
+        GALL_PETERS_RANGE_Y = 510,
+        thisMap = null;
 
     function degreesToRadians(deg) {
         return deg * (Math.PI / 180);
@@ -97,6 +98,11 @@ var mapModule = (function () {
             fillOpacity: 1,
             id: employee.id,
         });
+        desk.getPoint = function() {
+            var temp = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0));
+            return new google.maps.Point(temp.x + DESK_CONSTANT_Y / 2, temp.y + DESK_CONSTANT_Y /  4);
+        }
+        desk.deskNumber = deskId;
 
         var labelText = deskId + "<br />(CO) " + employee.name;
 
@@ -238,6 +244,7 @@ var mapModule = (function () {
         gallPetersMap.fromPointToLatLng = function (point, noWrap) {
             return gallPetersMapType.projection.fromPointToLatLng(point, noWrap);
         };
+        map = gallPetersMap;
 
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
@@ -275,9 +282,19 @@ var mapModule = (function () {
             }
         }
 
+        gallPetersMap.getDesk = function(deskNumber) {
+            for (var i = 0; i < gallPetersMap.desks.length; i++) {
+                if (gallPetersMap.desks[i].deskNumber == deskNumber) {
+                    return gallPetersMap.desks[i];
+                }
+            }
+            return null;
+        }
 
         return gallPetersMap;
     }
+
+
 
     return {
         initializeMap: initializeMap

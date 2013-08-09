@@ -409,15 +409,17 @@
                                 deskData = $scope.currentFloorDesks[i];
                             }
                         }
+                        var deskRep = $scope.maps[$scope.currentFloor].getDesk(deskNumber);
 
                         updatedDeskInfo = {
                             deskNumber: deskNumber,
-                            x: point.x,
-                            y: point.y,
+                            x: deskRep.getPoint().x,
+                            y: deskRep.getPoint().y,
                             orientation: deskData.location.orientation
                         };
-                        deskData.location.topLeft.xCoordinate = point.x;
-                        deskData.location.topLeft.yCoordinate = point.y;
+
+                        deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
+                        deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
                         $scope.$apply(function () {
                             desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
