@@ -61,7 +61,7 @@
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
                 <li ng-repeat="employee in displacedEmployees" class="soft--sides">
-                    <span ng-bind="employee.name" class="btn btn--primary btn--left" style="width: 210px;" ng-click="selectDisplacedEmployee(employee.name)"></span><span ng-click="setFutureDeskOccupant(employee.name)" class="btn btn--primary btn--right btn--action" title="Move to Selected Desk">move</span>
+                    <span ng-bind="employee.name" class="btn btn--primary btn--left" style="width: 210px;" ng-click="selectDisplacedEmployee(employee.name)" title="View Original Desk"></span><span ng-click="setFutureDeskOccupant(employee.name)" class="btn btn--primary btn--right btn--action" title="Move to Selected Desk">move</span>
                 </li>
             </ul>
         </div>
