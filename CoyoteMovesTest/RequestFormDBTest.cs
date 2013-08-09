@@ -122,24 +122,26 @@ namespace CoyoteMovesTest
         {
             RequestForm testRequest = new RequestForm();
             testRequest = _requester.RetrieveRequest(_req.UniqueId);
-            Assert.AreEqual(testRequest, _req);
+            bool test = CheckEquality(_req, testRequest);
+            Assert.IsTrue(test);
            
         }
 
 
         public bool CheckEquality(object source, object target)
         {
-            //if (source == null || target == null)
-            //    return false;
+            if (source == null || target == null)
+                return false;
+            bool test = true;
+            PropertyInfo[] sourceProperties = source.GetType().GetProperties();
+            foreach (PropertyInfo sourcePropertyInfo in sourceProperties)
+            {
+                PropertyInfo targetPropertyInfo = target.GetType().GetProperty(sourcePropertyInfo.Name);
+                if (!(targetPropertyInfo == sourcePropertyInfo))
+                    test = false;
 
-            //PropertyInfo[] sourceProperties = source.GetType().GetProperties(BindingFlags.Public);
-            //foreach (PropertyInfo sourcePropertyInfo in sourceProperties)
-            //{
-            //    PropertyInfo targetPropertyInfo = target.GetType().GetProperty(sourcePropertyInfo.Name);
-            //    if (
-            //}
-            return false;
-
+            }
+            return test;
 
         }
     }
