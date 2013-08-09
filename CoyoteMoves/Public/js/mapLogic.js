@@ -190,6 +190,10 @@ var mapModule = (function () {
             return desk;
         };
 
+        gallPetersMap.fromLatLngToPoint = function (latLng) {
+            return gallPetersMapType.projection.fromLatLngToPoint(latLng);
+        }
+
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
         var swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng();
@@ -205,7 +209,6 @@ var mapModule = (function () {
         google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
 
         function checkBounds() {
-            console.log('bounds');
             if (!allowedBounds.contains(gallPetersMap.getCenter())) {
                 var C = gallPetersMap.getCenter();
                 var X = C.lng();
