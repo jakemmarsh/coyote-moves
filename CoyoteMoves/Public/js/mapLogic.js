@@ -99,8 +99,11 @@ var mapModule = (function () {
             id: employee.id,
         });
         desk.getPoint = function() {
-            var temp = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0));
-            return new google.maps.Point(temp.x + DESK_CONSTANT_Y / 2, temp.y + DESK_CONSTANT_Y /  4);
+            var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0));
+            var p1 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(1));
+            var p2 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(2));
+            var p3 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(3));
+            return new google.maps.Point((p0.x + p1.x) / 2, (p1.y + p2.y) / 2);
         }
         desk.deskNumber = deskId;
 
