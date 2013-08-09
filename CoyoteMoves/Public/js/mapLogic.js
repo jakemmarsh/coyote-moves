@@ -9,7 +9,8 @@ var mapModule = (function () {
         // Note: this value is inexact as the map is cut off at ~ +/- 83 degrees.
         // However, the polar regions produce very little increase in Y range, so
         // we will use the tile size.
-        GALL_PETERS_RANGE_Y = 510;
+        GALL_PETERS_RANGE_Y = 510,
+        thisMap = null;
 
     function degreesToRadians(deg) {
         return deg * (Math.PI / 180);
@@ -97,6 +98,14 @@ var mapModule = (function () {
             fillOpacity: 1,
             id: employee.id,
         });
+        desk.getPoint = function() {
+            var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0));
+            var p1 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(1));
+            var p2 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(2));
+            var p3 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(3));
+            return new google.maps.Point((p0.x + p1.x) / 2, (p1.y + p2.y) / 2);
+        }
+        desk.deskNumber = deskId;
 
         var labelText = deskId + "<br />(CO) " + employee.name;
 
@@ -174,7 +183,7 @@ var mapModule = (function () {
             },
             tileSize: new google.maps.Size(256, 256),
             isPng: false,
-            minZoom: 3,
+            minZoom: 4,
             maxZoom: 7,
             name: 'COYOTE'
         });
@@ -185,26 +194,18 @@ var mapModule = (function () {
             gallPetersMap.panTo(desk.getPosition());
         }
 
-        if (floor === 3) {
-            center = new google.maps.Point(47, 40);
-        }
-        else if (floor === 4) {
-            center = new google.maps.Point(11.5, 12.65);
-        }
-        else if (floor === 5) {
-            center = new google.maps.Point(15.13, 30);
-        }
+        center = new google.maps.LatLng(71, -173);
 
 
         var mapOptions = {
-            zoom: 3,
+            zoom: 4,
             panControl: true,
             zoomControl: true,
             mapTypeControl: false,
             scaleControl: false,
             streetViewControl: false,
             overviewMapControl: false,
-            center: gallPetersMapType.projection.fromPointToLatLng(center),
+            center: center,
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'gallPetersMap']
             },
@@ -221,6 +222,8 @@ var mapModule = (function () {
 
         google.maps.event.addListener(gallPetersMap, 'click', function (event) {
             console.log('Point.X.Y: ' + gallPetersMapType.projection.fromLatLngToPoint(event.latLng));
+            console.log('Point.lat.lng: ' + event.latLng);
+
         });
 
         gallPetersMap.desks = [];
@@ -238,6 +241,7 @@ var mapModule = (function () {
         gallPetersMap.fromPointToLatLng = function (point, noWrap) {
             return gallPetersMapType.projection.fromPointToLatLng(point, noWrap);
         };
+        map = gallPetersMap;
 
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
@@ -275,9 +279,19 @@ var mapModule = (function () {
             }
         }
 
+        gallPetersMap.getDesk = function(deskNumber) {
+            for (var i = 0; i < gallPetersMap.desks.length; i++) {
+                if (gallPetersMap.desks[i].deskNumber == deskNumber) {
+                    return gallPetersMap.desks[i];
+                }
+            }
+            return null;
+        }
 
         return gallPetersMap;
     }
+
+
 
     return {
         initializeMap: initializeMap

@@ -305,6 +305,9 @@
                         y: deskData.location.topLeft.yCoordinate,
                         orientation: $scope.currentDeskOrientation
                     };
+                    deskData.location.orientation = $scope.currentDeskOrientation;
+                    deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
+                    deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
                     desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
                         // do something with success data
@@ -332,6 +335,7 @@
 
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
+        var center;
         $scope.employeeToSearchFor = "";
         if ($scope.displacedEmployees.length === 0) {
             $scope.showSidebar = false;
@@ -339,9 +343,23 @@
         else {
             $scope.selectedDeskEmployee = null;
         }
-        window.setTimeout(function(){                                           
+        window.setTimeout(function () {
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
-        },100);
+
+            if ($scope.currentFloor === 3) {
+                center = new google.maps.LatLng(67, -173);
+            }
+            else if ($scope.currentFloor === 4) {
+                center = new google.maps.LatLng(67, -173);
+            }
+            else if ($scope.currentFloor === 5) {
+                center = new google.maps.LatLng(67, -177);
+            }
+
+
+            $scope.maps[$scope.currentFloor].panTo(center);
+
+        }, 100);
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
             $scope.currentFloorDesks = data;
             $scope.currentFloorEmployees = [];
@@ -409,15 +427,17 @@
                                 deskData = $scope.currentFloorDesks[i];
                             }
                         }
+                        var deskRep = $scope.maps[$scope.currentFloor].getDesk(deskNumber);
 
                         updatedDeskInfo = {
                             deskNumber: deskNumber,
-                            x: point.x,
-                            y: point.y,
+                            x: deskRep.getPoint().x,
+                            y: deskRep.getPoint().y,
                             orientation: deskData.location.orientation
                         };
-                        deskData.location.topLeft.xCoordinate = point.x;
-                        deskData.location.topLeft.yCoordinate = point.y;
+
+                        deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
+                        deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
                         $scope.$apply(function () {
                             desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
