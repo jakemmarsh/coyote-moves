@@ -19,6 +19,7 @@ namespace CoyoteMoves.Emailer.Models
         private string _from;
         private string _emailBody;
         private string _mappedLocation;
+        private EmployeeDB _empDB;
 
         public EmailTemplate(string subject, Collection<string> to,  string from, string emailBody, string pdfLocation)
         {
@@ -26,6 +27,7 @@ namespace CoyoteMoves.Emailer.Models
             _to = to;
             _from = from;
             _emailBody = emailBody;
+            _empDB = new EmployeeDB();
             _mappedLocation = pdfLocation;
         }
 
@@ -93,7 +95,7 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("CurrentGroup"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.Group);
                 if (fieldKey.Equals("CurrentManager") || fieldKey.Equals("Current Manager Name"))
-                    form.SetField(fieldKey, req.Current.BazookaInfo.ManagerID.ToString());
+                    form.SetField(fieldKey, _empDB.GetFullNameById(req.Current.BazookaInfo.ManagerID));
                 if (fieldKey.Equals("CurrentTemplate"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTemplate);
                 if (fieldKey.Equals("CurrentSecurity ItemRights"))
@@ -105,7 +107,7 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("FutureGroup"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.Group);
                 if (fieldKey.Equals("FutureManager"))
-                    form.SetField(fieldKey, req.Future.BazookaInfo.ManagerID.ToString());
+                    form.SetField(fieldKey, _empDB.GetFullNameById(req.Future.BazookaInfo.ManagerID));
                 if (fieldKey.Equals("FutureTemplate"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.JobTemplate);
                 if (fieldKey.Equals("FutureSecurity ItemRights"))

@@ -7,6 +7,7 @@ using CoyoteMoves.Data_Access;
 using System.Collections.Generic;
 using CoyoteMoves.Models;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace CoyoteMovesTest
 {
@@ -123,6 +124,23 @@ namespace CoyoteMovesTest
             testRequest = _requester.RetrieveRequest(_req.UniqueId);
             Assert.AreEqual(testRequest, _req);
            
+        }
+
+
+        public bool CheckEquality(object source, object target)
+        {
+            //if (source == null || target == null)
+            //    return false;
+
+            //PropertyInfo[] sourceProperties = source.GetType().GetProperties(BindingFlags.Public);
+            //foreach (PropertyInfo sourcePropertyInfo in sourceProperties)
+            //{
+            //    PropertyInfo targetPropertyInfo = target.GetType().GetProperty(sourcePropertyInfo.Name);
+            //    if (
+            //}
+            return false;
+
+
         }
     }
 }
