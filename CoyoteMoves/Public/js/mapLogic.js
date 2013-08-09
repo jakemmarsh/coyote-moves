@@ -93,6 +93,7 @@ var mapModule = (function () {
             strokeWeight: 1,
             fillColor: '#f7f7f7',
             draggable: true,
+
             fillOpacity: 1,
             id: employee.id,
         });
@@ -131,7 +132,6 @@ var mapModule = (function () {
             desk.setOptions({ strokeColor: color });
         }
         desk.modPath = function (exx, why, rot) {
-            exx = desk.lat
             var tehPath = null,
             rad0 = (Math.PI / 180) * rot,
             p0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
@@ -251,7 +251,7 @@ var mapModule = (function () {
         );
 
         // Listen for the dragend event
-        google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
+        //google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
 
         function checkBounds() {
             if (!allowedBounds.contains(gallPetersMap.getCenter())) {
