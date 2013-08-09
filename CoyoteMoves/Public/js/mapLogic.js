@@ -2,7 +2,7 @@
 
 var mapModule = (function () {
     var center,
-        DESK_CONSTANT_Y = 1.2291675,
+        DESK_CONSTANT_Y = 0.41,
         DESK_CONSTANT_X = DESK_CONSTANT_Y / 2,
         // Note: this value is exact as the map projects a full 360 degrees of longitude
         GALL_PETERS_RANGE_X = 800,
