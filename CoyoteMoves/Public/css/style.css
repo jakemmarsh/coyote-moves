@@ -59,16 +59,16 @@ body {
 
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
-  color: #000;
-  background: #30d600;
+  color: #fff;
+  background: #0475c8;
   font-weight: bold;
 }
 
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
-  color: #000;
-  background: #30d600;
+  color: #fff;
+  background: #0475c8;
 }
 
 textarea, input { 
@@ -106,7 +106,7 @@ header {
     color: #fff;
     height: 40px;
     text-align: center;
-    margin: 0;
+    box-sizing: content-box;
 }
 
     header img, header h1 {
@@ -125,12 +125,13 @@ h2.black-bg {
     width: 100%;
     display: block;
     padding: 10px;
-    color: #fff;
-    background: #000;
+    color: #333;
+    background-color: #eee;
     margin: 5px 0;
     font-weight: normal;
     text-transform: uppercase;
     letter-spacing: .15em;
+    margin-bottom: 10px;
 }
 
 /* Floor Map */
@@ -148,6 +149,7 @@ h2.black-bg {
     }
 
     .tabs > .tab {
+        cursor: pointer;
         display: inline-block;
         font-weight: bold;
         color: #000;
@@ -164,8 +166,15 @@ h2.black-bg {
         margin: 0;
         padding: 0.5em 0.5em 0.45em 0.5em;
     }
+        .tabs > .tab svg {
+            height: 12px;
+            width: 12px;
+        }
+        .tabs > .tab svg:hover, .tabs > .tab > svg:active {
+            fill: #d2322d;
+        }
 
-        .tabs > .tab:first-child {
+        .tabs > .tab:first-child:not(:only-child) {
             -webkit-border-radius: 3px 0 0 3px;
             -moz-border-radius: 3px 0 0 3px;
             -ms-border-radius: 3px 0 0 3px;
@@ -173,7 +182,7 @@ h2.black-bg {
             border-radius: 3px 0 0 3px;
         }
 
-        .tabs > .tab:last-child {
+        .tabs > .tab:last-child:not(:only-child) {
             -webkit-border-radius: 0 3px 3px 0;
             -moz-border-radius: 0 3px 3px 0;
             -ms-border-radius: 0 3px 3px 0;
@@ -181,8 +190,16 @@ h2.black-bg {
             border-radius: 0 3px 3px 0;
         }
 
+        .tabs > .tab:only-child {
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            -ms-border-radius: 3px;
+            -o-border-radius: 3px;
+            border-radius: 3px;
+        }
+
         .tabs > .tab.active {
-            border-top: 4px solid #30d600;
+            border-top: 4px solid #0475c8;
         }
         .tabs > .tab:hover, .tabs > .tab:active {
             background: #e7e7e7;
@@ -193,13 +210,14 @@ h2.black-bg {
     padding: 7px 9px;
     position: relative;
     bottom: -2px;
+}
+
+input[type="text"] {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
     border-radius: 3px;
-    height: 40px;
-    margin-top: -1px;
 }
 
 .map-container {
@@ -226,13 +244,14 @@ h2.black-bg {
 }
 
     #map-sidebar h3 {
+        border-top: 5px solid #0592fa;
         padding: 10px;
         margin: 0;
         text-align: center;
-        background: #000;
-        color: #fff;
+        background: #eee;
+        color: #333;
         text-transform: uppercase;
-        letter-spacing: .15em;
+        letter-spacing: .1em;
     }
 
 #selected-desk-container {
@@ -248,6 +267,10 @@ h2.black-bg {
         background: none;
     }
 
+    #selected-desk-container .error-message {
+        margin-bottom: 10px;
+    }
+
 #displaced-employees {
     margin: 0;
     list-style-type: none;
@@ -257,22 +280,11 @@ h2.black-bg {
 }
 
     #displaced-employees > li {
-        padding: 10px;
-        text-align: center;
-        background: #eee;
-        margin: 5px 0;
-        font-weight: bold;
-        color: #000;
+        margin-top: 8px;
     }
-
-        #displaced-employees > li:first-child {
-            margin: 0;
-        }
-
-        #displaced-employees > li:hover, #displaced-employees > li:focus {
-            cursor: pointer;
-            background: #c9cace;
-        }
+    #displaced-employees > li:last-child() {
+        margin-bottom: 8px;
+    }
 
 .form-half {
     vertical-align: top !important;
@@ -302,8 +314,8 @@ h2.black-bg {
         background: none !important;
     }
 
-    .employee-form .tr:nth-last-child(2n+1) {
-        background:#f0f0f0;
+    .employee-form .tr:nth-last-child(2n+1) 
+{        background:#f0f0f0;
     }
 
 h3.title {
@@ -311,7 +323,7 @@ h3.title {
     font-weight: bold;
     text-transform: uppercase;
     margin: 0 0 10px 0;
-    border-bottom: 2px solid #000;
+    border-bottom: 4px solid #0475c8;
     width: 100%;
      
 }
@@ -331,10 +343,12 @@ h3.title {
 }
 
 .employee-form {
-    background: #fff;
+    background: #f5f3eF;
     z-index: 99;
     width: 100%;
-    padding: 10px;
+    padding: 20px;
+    border-top: 1px solid #c9cace;
+    border-bottom: 1px solid #c9cace;
 }
 
 input[type=text], input[type=password] {
@@ -343,7 +357,7 @@ input[type=text], input[type=password] {
 }
 
     input[type=text]:focus, input[type=password]:focus {
-        border: 1px solid #30d600;
+        border: 1px solid #0475c8;
     }
 
 .btn {
@@ -372,6 +386,7 @@ input[type=text], input[type=password] {
     border: 1px solid #c9cacc;
     box-shadow: 0px 1px 0px 0px #aaa;
     text-decoration: none;
+    height: 100%;
 }
 
 .btn--primary {
@@ -407,6 +422,33 @@ input[type=text], input[type=password] {
         border-color: #ac2925;
         background: #d2322d;
     }
+
+.btn--action {
+    background-color: #0475c8;
+    width: 54px;
+    color: #ddd;
+}
+.btn--row {
+    height: 34px;
+}
+.btn--right {
+    -webkit-border-radius: 0px 3px 3px 0px;
+    -moz-border-radius: 0px 3px 3px 0px;
+    -ms-border-radius: 0px 3px 3px 0px;
+    -o-border-radius: 0px 3px 3px 0px;
+}
+.btn--left {
+    -webkit-border-radius: 3px 0px 0px 3px;
+    -moz-border-radius: 3px 0px 0px 3px;
+    -ms-border-radius: 3px 0px 0px 3px;
+    -o-border-radius: 3px 0px 0px 3px;
+}
+.btn--middle {
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+}
 
 .nudge--left {
     margin-left: 10px;
@@ -494,4 +536,19 @@ input[type=text], input[type=password] {
 .block {
     display: block;
     clear: both;
+}
+
+#global-controls {
+    margin: 10px 0px;
+}
+.desk-number-label {
+    color: #0592fa;
+    background-color: white;
+    font-family: "Lucida Grande", "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    width: 100px;
+    border: 1px solid #111;
+    white-space: nowrap;
 }
