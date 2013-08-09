@@ -323,6 +323,9 @@
                         y: deskData.location.topLeft.yCoordinate,
                         orientation: $scope.currentDeskOrientation
                     };
+                    deskData.location.orientation = $scope.currentDeskOrientation;
+                    deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
+                    deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
                     deskData.location.orientation = $scope.currentDeskOrientation;
                     deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
@@ -354,6 +357,7 @@
 
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
+        var center;
         $scope.employeeToSearchFor = "";
         if ($scope.displacedEmployees.length === 0) {
             $scope.showSidebar = false;
@@ -361,9 +365,23 @@
         else {
             $scope.selectedDeskEmployee = null;
         }
-        window.setTimeout(function(){                                           
+        window.setTimeout(function () {
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
-        },100);
+
+            if ($scope.currentFloor === 3) {
+                center = new google.maps.LatLng(67, -173);
+            }
+            else if ($scope.currentFloor === 4) {
+                center = new google.maps.LatLng(67, -173);
+            }
+            else if ($scope.currentFloor === 5) {
+                center = new google.maps.LatLng(67, -177);
+            }
+
+
+            $scope.maps[$scope.currentFloor].panTo(center);
+
+        }, 100);
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
             $scope.currentFloorDesks = data;
             $scope.currentFloorEmployees = [];
