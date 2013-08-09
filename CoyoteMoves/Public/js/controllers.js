@@ -168,15 +168,23 @@
         }
 
         for (var i = 0; i < $scope.movedEmployees.length; i++) {
+            currentEmployee = $scope.movedEmployees[i].current;
+
+            $scope.movedEmployees[i].future.ultiproInfo.supervisor = ($scope.movedEmployees[i].future.ultiproInfo.supervisor) ? $scope.movedEmployees[i].future.ultiproInfo.supervisor : currentEmployee.ultiproInfo.supervisor;
+            $scope.movedEmployees[i].future.bazookaInfo.managerId = ($scope.movedEmployees[i].future.bazookaInfo.managerId) ? $scope.movedEmployees[i].future.bazookaInfo.managerId : currentEmployee.bazookaInfo.managerId;
+
+            console.log($scope.movedEmployees[i], $scope.movedEmployees[i].future.ultiproInfo.managerId, $scope.movedEmployees[i].future.bazookaInfo.managerId);
+
+
             requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
                 console.log(data);
-                $scope.cancelAllMoves();
             },
             function (errorMessage) {
                 $scope.sendFormError = "Service down";
                 console.log(errorMessage);
             });
         }
+        $scope.cancelAllMoves();
     }
 
     $scope.cancelSingleMove = function (index) {
@@ -355,8 +363,36 @@
                         name: name,
                         id: currentPerson.id,
                         location: currentDesk.location,
+                        emailInfo: {
+                            groupsToBeAddedTo: null,
+                            groupsToBeRemovedFrom: null
+                        },
+                        reviewInfo: {
+                            groupsToBeAddedTo: null,
+                            groupsToBeRemovedFrom: null
+                        },
                         future: {
-                            deskInfo: {}
+                            bazookaInfo: {
+                                jobTitle: null,
+                                department: null,
+                                group: null,
+                                managerId: null,
+                                jobTemplate: null,
+                                securityItemRights: null
+                            },
+                            ultiproInfo: {
+                                jobTitle: null,
+                                department: null,
+                                group: null,
+                                supervisor: null,
+                                other: null
+                            },
+                            deskInfo: {
+                                deskNumber: null
+                            },
+                            phoneInfo: {
+                                phoneNumber: null
+                            }
                         },
                         current: {
                             bazookaInfo: {
