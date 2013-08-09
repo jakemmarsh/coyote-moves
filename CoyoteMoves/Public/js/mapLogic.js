@@ -130,6 +130,24 @@ var mapModule = (function () {
         desk.modBorder = function (color) {
             desk.setOptions({ strokeColor: color });
         }
+        desk.modPath = function (exx, why, rot) {
+
+            var tehPath = null,
+            rad0 = (Math.PI / 180) * rot,
+            p0 = transformCoord(DESK_CONSTANT_Y, 0, rad0),
+            p1 = transformCoord(0, 0, rad0),
+            p2 = transformCoord(0, DESK_CONSTANT_X, rad0),
+            p3 = transformCoord(DESK_CONSTANT_Y, DESK_CONSTANT_X, rad0),
+
+            c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p0[0], why + p0[1])),
+            c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p1[0], why + p1[1])),
+            c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p2[0], why + p2[1])),
+            c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p3[0], why + p3[1]));
+
+            tehPath = [c1, c2, c3, c4];
+
+            desk.setOptions({ paths: tehPath });
+        }
 
         desk.setMap(map);
 
@@ -215,7 +233,11 @@ var mapModule = (function () {
 
         gallPetersMap.fromLatLngToPoint = function (latLng) {
             return gallPetersMapType.projection.fromLatLngToPoint(latLng);
-        }
+        };
+
+        gallPetersMap.fromPointToLatLng = function (point, noWrap) {
+            return gallPetersMapType.projection.fromPointToLatLng(point, noWrap);
+        };
 
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
