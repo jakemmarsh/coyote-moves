@@ -315,7 +315,7 @@ input[type="text"] {
     }
 
     .employee-form .tr:nth-last-child(2n+1) 
-{        background:#f0f0f0;
+{        background:#fff;
     }
 
 h3.title {
