@@ -50,7 +50,7 @@
                         Orientation
                     </div>
                     <div class="td">
-                        <slider floor="0" ceiling="360" step="45" precision="0" ng-model="currentDeskOrientation"></slider>
+                        <slider floor="0" ceiling="360" step="45" precision="0" ng-model="currentDeskOrientation" move-start="doNothing" move-end="changeOrientation"></slider>
                     </div>
                 </div>
                 <span ng-bind="createMoveFormError" class="error-message block"></span>

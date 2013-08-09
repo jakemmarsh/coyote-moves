@@ -172,8 +172,9 @@
 
             $scope.movedEmployees[i].future.ultiproInfo.supervisor = ($scope.movedEmployees[i].future.ultiproInfo.supervisor) ? $scope.movedEmployees[i].future.ultiproInfo.supervisor : currentEmployee.ultiproInfo.supervisor;
             $scope.movedEmployees[i].future.bazookaInfo.managerId = ($scope.movedEmployees[i].future.bazookaInfo.managerId) ? $scope.movedEmployees[i].future.bazookaInfo.managerId : currentEmployee.bazookaInfo.managerId;
+            $scope.movedEmployees[i].future.deskInfo.deskNumber = ($scope.movedEmployees[i].future.deskInfo.deskNumber) ? $scope.movedEmployees[i].future.deskInfo.deskNumber : $scope.movedEmployees[i].current.deskInfo.deskNumber;
 
-            console.log($scope.movedEmployees[i], $scope.movedEmployees[i].future.ultiproInfo.managerId, $scope.movedEmployees[i].future.bazookaInfo.managerId);
+            console.log($scope.movedEmployees[i]);
 
 
             requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
@@ -293,7 +294,10 @@
         $scope.selectedDeskEmployee = employee;
     }
 
-    $scope.$watch('currentDeskOrientation', function () {
+    $scope.doNothing = function () {
+    }
+
+    $scope.changeOrientation = function () {
         // only make changes to desk if user has rights
         if ($scope.isAdmin) {
             var deskData, updatedDeskInfo;
@@ -308,7 +312,11 @@
 
                 // only make changes if new orientation is different from saved orientation
                 if (deskData.location.orientation !== $scope.currentDeskOrientation) {
+                    console.log('changed');
                     $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
+
+                    var deskRep = $scope.maps[$scope.currentFloor].getDesk($scope.focusedDeskNumber);
+
                     updatedDeskInfo = {
                         deskNumber: $scope.focusedDeskNumber,
                         x: deskData.location.topLeft.xCoordinate,
@@ -316,8 +324,13 @@
                         orientation: $scope.currentDeskOrientation
                     };
 
+                    deskData.location.orientation = $scope.currentDeskOrientation;
+                    deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
+                    deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
+
                     desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
                         // do something with success data
+                        console.log(data);
                     },
                     function (errorMessage) {
                         console.log(errorMessage);
@@ -325,8 +338,7 @@
                 }
             }
         }
-        
-    });
+    }
 
     $scope.$watch('employeeToSearchFor', function () {
         if ($scope.currentFloorEmployees) {
@@ -366,34 +378,35 @@
                         id: currentPerson.id,
                         location: currentDesk.location,
                         emailInfo: {
-                            groupsToBeAddedTo: null,
-                            groupsToBeRemovedFrom: null
+                            groupsToBeAddedTo: "N/A",
+                            groupsToBeRemovedFrom: "N/A"
                         },
                         reviewInfo: {
-                            groupsToBeAddedTo: null,
-                            groupsToBeRemovedFrom: null
+                            groupsToBeAddedTo: "N/A",
+                            groupsToBeRemovedFrom: "N/A"
                         },
                         future: {
                             bazookaInfo: {
-                                jobTitle: null,
-                                department: null,
-                                group: null,
-                                managerId: null,
-                                jobTemplate: null,
-                                securityItemRights: null
+                                jobTitle: "N/A",
+                                department: "N/A",
+                                group: "N/A",
+                                managerId: "N/A",
+                                jobTemplate: "N/A",
+                                securityItemRights: "N/A"
                             },
                             ultiproInfo: {
-                                jobTitle: null,
-                                department: null,
-                                group: null,
-                                supervisor: null,
-                                other: null
+                                jobTitle: "N/A",
+                                department: "N/A",
+                                group: "N/A",
+                                supervisor: "N/A",
+                                other: "N/A"
                             },
                             deskInfo: {
-                                deskNumber: null
+                                deskNumber: "N/A",
+                                office: "GX"
                             },
                             phoneInfo: {
-                                phoneNumber: null
+                                phoneNumber: "N/A"
                             }
                         },
                         current: {
@@ -403,6 +416,7 @@
                                 group: currentPerson.group,
                                 managerId: currentPerson.managerName,
                                 jobTemplate: currentPerson.department + " " + currentPerson.jobTitle,
+                                securityItemRights: ""
                             },
                             ultiproInfo: {
                                 jobTitle: currentPerson.jobTitle,
@@ -412,7 +426,8 @@
                                 other: ""
                             },
                             deskInfo: {
-                                deskNumber: currentDesk.deskNumber
+                                deskNumber: currentDesk.deskNumber,
+                                office: "GX"
                             },
                             phoneInfo: {
                                 phoneNumber: currentPerson.phoneNumber
