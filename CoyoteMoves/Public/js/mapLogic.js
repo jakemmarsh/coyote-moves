@@ -131,13 +131,13 @@ var mapModule = (function () {
             desk.setOptions({ strokeColor: color });
         }
         desk.modPath = function (exx, why, rot) {
-
+            exx = desk.lat
             var tehPath = null,
             rad0 = (Math.PI / 180) * rot,
-            p0 = transformCoord(DESK_CONSTANT_Y, 0, rad0),
-            p1 = transformCoord(0, 0, rad0),
-            p2 = transformCoord(0, DESK_CONSTANT_X, rad0),
-            p3 = transformCoord(DESK_CONSTANT_Y, DESK_CONSTANT_X, rad0),
+            p0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
+            p1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
+            p2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
+            p3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
 
             c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p0[0], why + p0[1])),
             c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p1[0], why + p1[1])),
