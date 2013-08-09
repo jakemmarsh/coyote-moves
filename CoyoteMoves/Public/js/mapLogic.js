@@ -215,7 +215,11 @@ var mapModule = (function () {
 
         gallPetersMap.fromLatLngToPoint = function (latLng) {
             return gallPetersMapType.projection.fromLatLngToPoint(latLng);
-        }
+        };
+
+        gallPetersMap.fromPointToLatLng = function (point, noWrap) {
+            return gallPetersMapType.projection.fromPointToLatLng(point, noWrap);
+        };
 
         // limit bounds for panning
         var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
