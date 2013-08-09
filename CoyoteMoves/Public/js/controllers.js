@@ -284,31 +284,34 @@
     }
 
     $scope.$watch('currentDeskOrientation', function () {
-        var deskData, updatedDeskInfo;
+        // only make changes to desk if user has rights
+        if ($scope.isAdmin) {
+            var deskData, updatedDeskInfo;
 
-        // get all info for desk based on focusedDeskNumber
-        if ($scope.currentFloorDesks) {
-            for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
-                if ($scope.currentFloorDesks[i].deskNumber == $scope.focusedDeskNumber) {
-                    deskData = $scope.currentFloorDesks[i];
+            // get all info for desk based on focusedDeskNumber
+            if ($scope.currentFloorDesks) {
+                for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
+                    if ($scope.currentFloorDesks[i].deskNumber == $scope.focusedDeskNumber) {
+                        deskData = $scope.currentFloorDesks[i];
+                    }
                 }
-            }
 
-            // only make changes if new orientation is different from saved orientation
-            if (deskData.location.orientation !== $scope.currentDeskOrientation) {
-                updatedDeskInfo = {
-                    deskNumber: $scope.focusedDeskNumber,
-                    x: deskData.location.topLeft.xCoordinate,
-                    y: deskData.location.topLeft.yCoordinate,
-                    orientation: $scope.currentDeskOrientation
-                };
+                // only make changes if new orientation is different from saved orientation
+                if (deskData.location.orientation !== $scope.currentDeskOrientation) {
+                    updatedDeskInfo = {
+                        deskNumber: $scope.focusedDeskNumber,
+                        x: deskData.location.topLeft.xCoordinate,
+                        y: deskData.location.topLeft.yCoordinate,
+                        orientation: $scope.currentDeskOrientation
+                    };
 
-                desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
-                    // do something with success data
-                },
-                function (errorMessage) {
-                    console.log(errorMessage);
-                });
+                    desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
+                        // do something with success data
+                    },
+                    function (errorMessage) {
+                        console.log(errorMessage);
+                    });
+                }
             }
         }
     });
@@ -391,33 +394,36 @@
 
                 // add dragend listener to update desk position in database
                 google.maps.event.addListener(newDesk, "dragend", function (evt) {
-                    var deskNumber = fetchEmployeeById(this.id).current.deskInfo.deskNumber,
-                        deskData,
-                        updatedDeskInfo,
-                        point = $scope.maps[$scope.currentFloor].fromLatLngToPoint(evt.latLng);
+                    // only store changes if user has rights
+                    if($scope.isAdmin) {
+                        var deskNumber = fetchEmployeeById(this.id).current.deskInfo.deskNumber,
+                            deskData,
+                            updatedDeskInfo,
+                            point = $scope.maps[$scope.currentFloor].fromLatLngToPoint(evt.latLng);
 
-                    // get all info for desk based on dragged desk number
-                    for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
-                        if ($scope.currentFloorDesks[i].deskNumber == deskNumber) {
-                            deskData = $scope.currentFloorDesks[i];
+                        // get all info for desk based on dragged desk number
+                        for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
+                            if ($scope.currentFloorDesks[i].deskNumber == deskNumber) {
+                                deskData = $scope.currentFloorDesks[i];
+                            }
                         }
-                    }
 
-                    updatedDeskInfo = {
-                        deskNumber: deskNumber,
-                        x: point.x,
-                        y: point.y,
-                        orientation: deskData.location.orientation
-                    };
-                    $scope.$apply(function () {
-                        desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
-                            // do something with success data
-                            console.log(data);
-                        },
-                        function (errorMessage) {
-                            console.log(errorMessage);
+                        updatedDeskInfo = {
+                            deskNumber: deskNumber,
+                            x: point.x,
+                            y: point.y,
+                            orientation: deskData.location.orientation
+                        };
+                        $scope.$apply(function () {
+                            desks.updateDesk(deskNumber, updatedDeskInfo).then(function (data) {
+                                // do something with success data
+                                console.log(data);
+                            },
+                            function (errorMessage) {
+                                console.log(errorMessage);
+                            });
                         });
-                    });
+                    }
                 });
             }
         },
