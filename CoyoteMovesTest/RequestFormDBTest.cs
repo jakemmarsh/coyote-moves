@@ -119,12 +119,10 @@ namespace CoyoteMovesTest
         [TestMethod]
         public void RequestRetrievedSuccessfully()
         {
-            //TODO: GET ACTUAL EQUALITY. REFLECTION??
             RequestForm testRequest = new RequestForm();
             testRequest = _requester.RetrieveRequest(_req.UniqueId);
-            bool test1 = (testRequest.CreatedByID == _req.CreatedByID);
-            Assert.AreEqual(testRequest.Current.BazookaInfo.Department, _req.Current.BazookaInfo.Department);
-            Assert.AreEqual(testRequest.Future.BazookaInfo.Department, _req.Future.BazookaInfo.Department);
+            Assert.AreEqual(testRequest, _req);
+           
         }
     }
 }

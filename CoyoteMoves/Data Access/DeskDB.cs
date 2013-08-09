@@ -84,7 +84,7 @@ namespace CoyoteMoves.Data_Access
             return (result == 1);
         }
 
-        public bool CheckIfDeskExisits(string deskNumber)
+        public bool CheckIfDeskExists(string deskNumber)
         {
             SqlConnection conn = new SqlConnection(_connectionString);
             string command = "SELECT DeskNumber FROM [Intern_CoyoteMoves].[dbo].[Desk] WHERE DeskNumber = @num";
@@ -113,7 +113,7 @@ namespace CoyoteMoves.Data_Access
 
         public bool ChangeDeskPointAndOrientation(string deskNumber, double topLeftX, double topLeftY, double orientation)
         {
-            if (!CheckIfDeskExisits(deskNumber))
+            if (!CheckIfDeskExists(deskNumber))
             {
                 return false;
             }
