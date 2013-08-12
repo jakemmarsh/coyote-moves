@@ -1,32 +1,32 @@
 ﻿<div class="clearfix">
 <div class="row">
     <div class="tabs">
-        <a href ng-click="currentFloor = 3" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href ng-click="currentFloor = 4" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href ng-click="currentFloor = 5" class="tab" ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
+        <a href data-ng-click="currentFloor = 3" class="tab" data-ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href data-ng-click="currentFloor = 4" class="tab" data-ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href data-ng-click="currentFloor = 5" class="tab" data-ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
     </div>
-    <form ng-submit="searchForEmployee()" class="inline-block float-right nudge--right" style="width: 75%;">
-        <input type="text" id="employee-search" ng-model="employeeToSearchFor" ng-change="checkSearch()" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
+    <form data-ng-submit="searchForEmployee()" class="inline-block float-right nudge--right" style="width: 75%;">
+        <input type="text" id="employee-search" data-ng-model="employeeToSearchFor" data-ng-change="checkSearch()" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
     </form> 
     </div>
-    <div id="map-third" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 3">
+    <div id="map-third" class="map-container" data-ng-class="{true:'', false:'full-width'}[showSidebar]" data-ng-show="currentFloor == 3">
         <div id="map-canvas-3" class="full-width full-height"></div>
     </div>
-    <div id="map-fourth" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 4">
+    <div id="map-fourth" class="map-container" data-ng-class="{true:'', false:'full-width'}[showSidebar]" data-ng-show="currentFloor == 4">
         <div id="map-canvas-4" class="full-width full-height"></div>
     </div>
-    <div id="map-fifth" class="map-container" ng-class="{true:'', false:'full-width'}[showSidebar]" ng-show="currentFloor == 5">
+    <div id="map-fifth" class="map-container" data-ng-class="{true:'', false:'full-width'}[showSidebar]" data-ng-show="currentFloor == 5">
         <div id="map-canvas-5" class="full-width full-height"></div>
     </div>
-    <div id="map-sidebar" ng-class="{true:'', false:'no-width'}[showSidebar]">
-        <div id="selected-desk-container" ng-show="selectedDeskEmployee">
+    <div id="map-sidebar" data-ng-class="{true:'', false:'no-width'}[showSidebar]">
+        <div id="selected-desk-container" data-ng-show="selectedDeskEmployee">
             <h3>Selected Desk</h3>
-            <form class="soft--sides" ng-submit="createMoveForm()">
+            <form class="soft--sides" data-ng-submit="createMoveForm()">
                 <div class="tr">
                     <div class="td soft-half--right">
                         Desk Number
                     </div>
 
                     <div class="td">
-                        <span class="text--bold" ng-bind="currentDeskNumber"/>
+                        <span class="text--bold" data-ng-bind="currentDeskNumber"/>
                     </div>
                 </div>
                 <div class="tr">
@@ -34,46 +34,46 @@
                         Occupant
                     </div>
                     <div class="td">
-                        <span class="text--bold" ng-bind="currentDeskOccupant"/>
+                        <span class="text--bold" data-ng-bind="currentDeskOccupant"/>
                     </div>
                 </div>
-                <div class="tr" ng-hide="!isAdmin">
+                <div class="tr" data-ng-hide="!isAdmin">
                     <div class="td soft-half--right">
                         Future Occupant
                     </div>
                     <div class="td">
-                        <input type="text" ng-model="futureDeskOccupant" bs-typeahead="currentFloorEmployeeNames" data-items="20" data-min-length="0"/>
+                        <input type="text" data-ng-model="futureDeskOccupant" bs-typeahead="currentFloorEmployeeNames" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
-                <div class="tr" ng-hide="!isAdmin">
+                <div class="tr" data-ng-hide="!isAdmin">
                     <div class="td soft-half--right">
                         Orientation
                     </div>
                     <div class="td">
-                        <slider floor="0" ceiling="360" step="45" precision="0" ng-model="currentDeskOrientation" move-start="doNothing" move-end="changeOrientation"></slider>
+                        <slider floor="0" ceiling="360" step="45" precision="0" data-ng-model="currentDeskOrientation" move-start="doNothing" move-end="changeOrientation"></slider>
                     </div>
                 </div>
-                <span ng-bind="createMoveFormError" class="error-message block"></span>
-                <input type="submit" value="Start Move" class="btn btn--primary" style="width: 100%;" ng-hide="!isAdmin" />
+                <span data-ng-bind="createMoveFormError" class="error-message block"></span>
+                <input type="submit" value="Start Move" class="btn btn--primary" style="width: 100%;" data-ng-hide="!isAdmin" />
             </form>
         </div>
-        <div id="displaced-employees-container" ng-hide="!isAdmin || displacedEmployees.length == 0">
+        <div id="displaced-employees-container" data-ng-hide="!isAdmin || displacedEmployees.length == 0">
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
-                <li ng-repeat="employee in displacedEmployees" class="soft--sides">
-                    <span ng-bind="employee.name" class="btn btn--primary btn--left" style="width: 210px;" title="View Original Desk" ng-click="selectDisplacedEmployee(employee.name)"></span><span class="btn btn--primary btn--right btn--action" title="Move to Selected Desk" ng-click="setFutureDeskOccupant(employee.name)">move</span>
+                <li data-ng-repeat="employee in displacedEmployees" class="soft--sides clearfix">
+                    <span data-ng-bind="employee.name" class="btn btn--primary btn--left float-left" style="width: 210px;" title="View Original Desk" data-ng-click="selectDisplacedEmployee(employee.name)"></span><span class="btn btn--primary btn--right btn--action float-right" title="Move to Selected Desk" data-ng-click="setFutureDeskOccupant(employee.name)">move</span>
                 </li>
             </ul>
         </div>
     </div>
 </div>
-<div ng-hide="!isAdmin">
-    <h2 class="black-bg" style="margin-top:5px;" ng-hide="movedEmployees.length == 0">Forms</h2>
+<div data-ng-hide="!isAdmin">
+    <h2 class="black-bg" style="margin-top:5px;" data-ng-hide="movedEmployees.length == 0">Forms</h2>
     <div class="row clearfix">
         <div class="tabs forms">
-            <span href ng-click="$parent.currentFormTab = $index" class="tab" ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" ng-repeat="employee in movedEmployees">
-                <span ng-bind="employee.name"></span>
-                <a ng-click="cancelSingleMove($index)" class="close">
+            <span href data-ng-click="$parent.currentFormTab = $index" class="tab" data-ng-class="{true: 'active', false: ''}[$parent.currentFormTab == $index]" data-ng-repeat="employee in movedEmployees">
+                <span data-ng-bind="employee.name"></span>
+                <a data-ng-click="cancelSingleMove($index)" class="close">
                     <svg xmlns="http://www.w3.org/2000/svg" style="transform: scale(1.5, 1.5); -webkit-transform: scale(1.5, 1.5);" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
                         <path d="M69.879,70.439c2.645-2.792,2.523-7.2-0.269-9.845L38.332,30.982c-2.793-2.644-7.2-2.523-9.845,0.27l-0.05,0.053  c-2.644,2.792-2.524,7.2,0.269,9.845l31.278,29.612c2.793,2.645,7.201,2.523,9.845-0.269L69.879,70.439z"/>
                         <path d="M69.755,40.026c2.644-2.792,2.523-7.201-0.27-9.845l-0.052-0.049c-2.793-2.644-7.201-2.523-9.846,0.27l-29.61,31.275  c-2.645,2.793-2.577,7.259,0.27,9.845l0.053,0.048c2.847,2.585,7.2,2.525,9.845-0.268L69.755,40.026z"/>
@@ -82,7 +82,7 @@
             </span>
         </div>
     </div>
-    <form class="employee-form" novalidate ng-repeat="employee in movedEmployees" ng-show="currentFormTab == $index">
+    <form class="employee-form" novalidate data-ng-repeat="employee in movedEmployees" data-ng-show="currentFormTab == $index">
         <div class="table">
         <div class="td form-half soft--right">
             <h3 class="title">Bazooka Changes</h3>
@@ -104,10 +104,10 @@
                         Job Title:
                     </div>
                     <div class="td">
-                        <input type="text" id="job-title-current" placeholder="Current Title" ng-model="employee.current.bazookaInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
+                        <input type="text" id="job-title-current" placeholder="Current Title" data-ng-model="employee.current.bazookaInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                     </div>
                     <div class="td">
-                        <input type="text" id="job-title-future" placeholder="Future Title" ng-model="employee.future.bazookaInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
+                        <input type="text" id="job-title-future" placeholder="Future Title" data-ng-model="employee.future.bazookaInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
 
@@ -116,10 +116,10 @@
                         Department:
                     </div>
                     <div class="td">
-                        <input type="text" id="department-current" placeholder="Current Department" ng-model="employee.current.bazookaInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
+                        <input type="text" id="department-current" placeholder="Current Department" data-ng-model="employee.current.bazookaInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                     </div>
                     <div class="td">
-                        <input type="text" id="department-future" placeholder="Future Department" ng-model="employee.future.bazookaInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
+                        <input type="text" id="department-future" placeholder="Future Department" data-ng-model="employee.future.bazookaInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
 
@@ -128,10 +128,10 @@
                         Group:
                     </div>
                     <div class="td">
-                        <input type="text" id="group-current" placeholder="Current Group" ng-model="employee.current.bazookaInfo.group" bs-typeahead="groups" data-items="20" data-min-length="0"/>
+                        <input type="text" id="group-current" placeholder="Current Group" data-ng-model="employee.current.bazookaInfo.group" bs-typeahead="groups" data-items="20" data-min-length="0"/>
                     </div>
                     <div class="td">
-                        <input type="text" id="group-future" placeholder="Future Group" ng-model="employee.future.bazookaInfo.group" bs-typeahead="groups" data-items="20" data-min-length="0"/>
+                        <input type="text" id="group-future" placeholder="Future Group" data-ng-model="employee.future.bazookaInfo.group" bs-typeahead="groups" data-items="20" data-min-length="0"/>
                     </div>
                 </div>
 
@@ -140,10 +140,10 @@
                         Manager:
                     </div>
                     <div class="td">
-                        <input type="text" id="manager-current" placeholder="Current Manager" ng-model="employee.current.bazookaInfo.managerId"/>
+                        <input type="text" id="manager-current" placeholder="Current Manager" data-ng-model="employee.current.bazookaInfo.managerId"/>
                     </div>
                     <div class="td">
-                        <input type="text" id="manager-future" placeholder="Future Manager" ng-model="employee.future.bazookaInfo.managerId"/>
+                        <input type="text" id="manager-future" placeholder="Future Manager" data-ng-model="employee.future.bazookaInfo.managerId"/>
                     </div>
                 </div>
 
@@ -152,10 +152,10 @@
                         Job Template:
                     </div>
                     <div class="td">
-                        <input type="text" id="template-current" placeholder="Carrier Sales" ng-model="employee.current.bazookaInfo.jobTemplate"/>
+                        <input type="text" id="template-current" placeholder="Carrier Sales" data-ng-model="employee.current.bazookaInfo.jobTemplate"/>
                     </div>
                     <div class="td">
-                        <input type="text" id="template-future" placeholder="Carrier Sales Manager" ng-model="employee.future.bazookaInfo.jobTemplate"/>
+                        <input type="text" id="template-future" placeholder="Carrier Sales Manager" data-ng-model="employee.future.bazookaInfo.jobTemplate"/>
                     </div>
                 </div>
 
@@ -167,7 +167,7 @@
                         <input type="text" disabled />
                     </div>
                     <div class="td">
-                        <input type="text" id="security-rights" placeholder="" ng-model="employee.future.bazookaInfo.securityItemRights"/>
+                        <input type="text" id="security-rights" placeholder="" data-ng-model="employee.future.bazookaInfo.securityItemRights"/>
                     </div>
                 </div>
             </div>
@@ -192,10 +192,10 @@
                             Desk Number:
                         </div>
                         <div class="td">
-                            <input type="text" id="current-desk" placeholder="Current Number" ng-model="employee.current.deskInfo.deskNumber" disabled/>
+                            <input type="text" id="current-desk" placeholder="Current Number" data-ng-model="employee.current.deskInfo.deskNumber" disabled/>
                         </div>
                         <div class="td">
-                            <input type="text" id="future-desk" placeholder="Future Number" ng-model="employee.future.deskInfo.deskNumber"/>
+                            <input type="text" id="future-desk" placeholder="Future Number" data-ng-model="employee.future.deskInfo.deskNumber"/>
                         </div>
                     </div>
 
@@ -204,10 +204,10 @@
                             Office Relocation:
                         </div>
                         <div class="td">
-                            <input type="text" id="current-office" placeholder="Current Office" ng-model="employee.current.deskInfo.office"/>
+                            <input type="text" id="current-office" placeholder="Current Office" data-ng-model="employee.current.deskInfo.office"/>
                         </div>
                         <div class="td">
-                            <input type="text" id="future-office" placeholder="Future Office" ng-model="employee.future.deskInfo.office"/>
+                            <input type="text" id="future-office" placeholder="Future Office" data-ng-model="employee.future.deskInfo.office"/>
                         </div>
                     </div>
                 </div>
@@ -221,10 +221,10 @@
                         </div>
 
                         <div class="td">
-                            <input type="text" id="current-phone-number" placeholder="Old Number" ng-model="employee.current.phoneInfo.phoneNumber"/>
+                            <input type="text" id="current-phone-number" placeholder="Old Number" data-ng-model="employee.current.phoneInfo.phoneNumber"/>
                         </div>
                         <div class="td">
-                            <input type="text" id="future-phone-number" placeholder="New Number" ng-model="employee.future.phoneInfo.phoneNumber"/>
+                            <input type="text" id="future-phone-number" placeholder="New Number" data-ng-model="employee.future.phoneInfo.phoneNumber"/>
                         </div>
                     </div>
                 </div>
@@ -250,10 +250,10 @@
                             Job Title:
                         </div>
                         <div class="td">
-                            <input type="text" id="ultipro-title-current" placeholder="Current Title" ng-model="employee.current.ultiproInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
+                            <input type="text" id="ultipro-title-current" placeholder="Current Title" data-ng-model="employee.current.ultiproInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                         </div>
                         <div class="td">
-                            <input type="text" id="ultipro-title-future" placeholder="Future Title" ng-model="employee.future.ultiproInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
+                            <input type="text" id="ultipro-title-future" placeholder="Future Title" data-ng-model="employee.future.ultiproInfo.jobTitle" bs-typeahead="jobTitles" data-items="20" data-min-length="0"/>
                         </div>
                     </div>
 
@@ -262,10 +262,10 @@
                             Department:
                         </div>
                         <div class="td">
-                            <input type="text" id="Text4" placeholder="Current Department" ng-model="employee.current.ultiproInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
+                            <input type="text" id="Text4" placeholder="Current Department" data-ng-model="employee.current.ultiproInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                         </div>
                         <div class="td">
-                            <input type="text" id="Text5" placeholder="Future Department" ng-model="employee.future.ultiproInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
+                            <input type="text" id="Text5" placeholder="Future Department" data-ng-model="employee.future.ultiproInfo.department" bs-typeahead="departments" data-items="20" data-min-length="0"/>
                         </div>
                     </div>
         
@@ -274,10 +274,10 @@
                             Supervisor:
                         </div>
                         <div class="td">
-                            <input type="text" id="Text8" placeholder="Current Manager" ng-model="employee.current.ultiproInfo.supervisor"/>
+                            <input type="text" id="Text8" placeholder="Current Manager" data-ng-model="employee.current.ultiproInfo.supervisor"/>
                         </div>
                         <div class="td">
-                            <input type="text" id="Text9" placeholder="Future Manager" ng-model="employee.future.ultiproInfo.supervisor"/>
+                            <input type="text" id="Text9" placeholder="Future Manager" data-ng-model="employee.future.ultiproInfo.supervisor"/>
                         </div>
                     </div>
 
@@ -289,7 +289,7 @@
                             <input type="text" id="Text12" disabled />
                         </div>
                         <div class="td">
-                            <input type="text" id="Text13" ng-model="employee.future.ultiproInfo.other"/>
+                            <input type="text" id="Text13" data-ng-model="employee.future.ultiproInfo.other"/>
                         </div>
                     </div>
                 </div>
@@ -305,7 +305,7 @@
                                 <input type="text" disabled />
                             </div>
                             <div class="td">
-                                <input type="text" id="added-phone-group" placeholder="Add to group" ng-model="employee.emailInfo.groupsToBeAddedTo"/>
+                                <input type="text" id="added-phone-group" placeholder="Add to group" data-ng-model="employee.emailInfo.groupsToBeAddedTo"/>
                             </div>
                         </div>
 
@@ -317,7 +317,7 @@
                                 <input type="text" disabled />
                             </div>
                             <div class="td">
-                                <input type="text" placeholder="Remove from group" ng-model="employee.emailInfo.groupsToBeRemovedFrom"/>
+                                <input type="text" placeholder="Remove from group" data-ng-model="employee.emailInfo.groupsToBeRemovedFrom"/>
                             </div>
                         </div>
                     </div>
@@ -333,7 +333,7 @@
                                 <input type="text" disabled />
                             </div>
                             <div class="td">
-                                <input type="text" id="Text2" placeholder="Add to group" ng-model="employee.ReviewInfo.filesToBeAddedTo"/>
+                                <input type="text" id="Text2" placeholder="Add to group" data-ng-model="employee.ReviewInfo.filesToBeAddedTo"/>
                             </div>
                         </div>
 
@@ -345,7 +345,7 @@
                                 <input type="text" disabled />
                             </div>
                             <div class="td">
-                                <input type="text" placeholder="Remove from group" ng-model="employee.ReviewInfo.filesToBeRemovedFrom"/>
+                                <input type="text" placeholder="Remove from group" data-ng-model="employee.ReviewInfo.filesToBeRemovedFrom"/>
                             </div>
                         </div>
 
@@ -355,9 +355,9 @@
 
     </form>
     <div class="row soft--left" id="global-controls">
-        <span class="error-message block nudge-half--bottom" ng-bind="sendFormError"></span>
-        <a href class="btn btn--cancel nudge--right" class="nudge--left" ng-click="cancelAllMoves()" ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
-        <input type="submit" class="btn btn--primary" value="Submit Moves" ng-show="movedEmployees.length > 1" ng-hide="movedEmployees.length <= 1" ng-click="sendAllForms()" />
-        <input type="submit" class="btn btn--primary" value="Submit Move" ng-show="movedEmployees.length == 1" ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" ng-click="sendAllForms()"/>
+        <span class="error-message block nudge-half--bottom" data-ng-bind="sendFormError"></span>
+        <a href class="btn btn--cancel nudge--right" class="nudge--left" data-ng-click="cancelAllMoves()" data-ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
+        <input type="submit" class="btn btn--primary" value="Submit Moves" data-ng-show="movedEmployees.length > 1" data-ng-hide="movedEmployees.length <= 1" data-ng-click="sendAllForms()" />
+        <input type="submit" class="btn btn--primary" value="Submit Move" data-ng-show="movedEmployees.length == 1" data-ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" data-ng-click="sendAllForms()"/>
     </div>
 </div>
