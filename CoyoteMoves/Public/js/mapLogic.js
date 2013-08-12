@@ -1,6 +1,4 @@
-﻿
-
-var mapModule = (function () {
+﻿var mapModule = (function () {
     var center,
         DESK_CONSTANT_Y = 0.41,
         DESK_CONSTANT_X = DESK_CONSTANT_Y / 2,
@@ -36,22 +34,23 @@ var mapModule = (function () {
     };
 
     GallPetersProjection.prototype.fromLatLngToPoint = function (latLng) {
-
-        var origin = this.worldOrigin_;
-        var x = origin.x + this.worldCoordinatePerLonDegree_ * latLng.lng();
-
-        // Note that latitude is measured from the world coordinate origin
-        // at the top left of the map.
-        var latRadians = degreesToRadians(latLng.lat());
-        var y = origin.y - this.worldCoordinateLatRange * Math.sin(latRadians);
+        var origin = this.worldOrigin_,
+            x = origin.x + this.worldCoordinatePerLonDegree_ * latLng.lng(),
+            // Note that latitude is measured from the world coordinate origin
+            // at the top left of the map.
+            latRadians = degreesToRadians(latLng.lat()),
+            y = origin.y - this.worldCoordinateLatRange * Math.sin(latRadians);
 
         return new google.maps.Point(x, y);
     };
 
     GallPetersProjection.prototype.fromPointToLatLng = function (point, noWrap) {
-
-        var y = point.y;
-        var x = point.x;
+        var y = point.y,
+            x = point.x,
+            origin,
+            lng,
+            latRadians,
+            lat;
 
         if (y < 0) {
             y = 0;
@@ -60,10 +59,10 @@ var mapModule = (function () {
             y = GALL_PETERS_RANGE_Y;
         }
 
-        var origin = this.worldOrigin_;
-        var lng = (x - origin.x) / this.worldCoordinatePerLonDegree_;
-        var latRadians = Math.asin((origin.y - y) / this.worldCoordinateLatRange);
-        var lat = radiansToDegrees(latRadians);
+        origin = this.worldOrigin_;
+        lng = (x - origin.x) / this.worldCoordinatePerLonDegree_;
+        latRadians = Math.asin((origin.y - y) / this.worldCoordinateLatRange);
+        lat = radiansToDegrees(latRadians);
         return new google.maps.LatLng(lat, lng, noWrap);
     };    
 
@@ -72,22 +71,50 @@ var mapModule = (function () {
     }
 
     function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId) {
-
         var paths = null,
-            rad = (Math.PI / 180) * deg,
-            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad),
-            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad),
-            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad),
-            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad),
-            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1])),
-            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1])),
-            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1])),
+            rad,
+            t0,
+            t1,
+            t2,
+            t3,
+            coord1,
+            coord2,
+            coord3,
+            coord4,
+            desk,
+            labelText,
+            marker;
+
+        if (deg == 0 || deg == 180) {
+            rad = (Math.PI / 180) * deg;
+            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1]));
+            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1]));
+            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1]));
             coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t3[0], ycoord + t3[1]));
+        }
+
+        else {
+            console.log('desk is rotated');
+            // do different math here to account for desk being rotated upon placement
+            rad = (Math.PI / 180) * deg;
+            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1]));
+            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1]));
+            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1]));
+            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t3[0], ycoord + t3[1]));
+        }
 
         paths = [coord1, coord2, coord3, coord4];
 
 
-        var desk = new google.maps.Polygon({
+        desk = new google.maps.Polygon({
             paths: paths,
             strokeColor: '#000000',
             strokeOpacity: 0.9,
@@ -98,24 +125,27 @@ var mapModule = (function () {
             fillOpacity: 1,
             id: employee.id,
         });
+
         desk.getPoint = function() {
-            var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0));
-            var p1 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(1));
-            var p2 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(2));
-            var p3 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(3));
+            var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0)),
+                p1 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(1)),
+                p2 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(2)),
+                p3 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(3));
+
             return new google.maps.Point((p0.x + p1.x) / 2, (p1.y + p2.y) / 2);
         }
+
         desk.deskNumber = deskId;
 
-        var labelText = deskId + "<br />(CO) " + employee.name;
+        labelText = deskId + "<br />(CO) " + employee.name;
 
-        var marker = new MarkerWithLabel({
+        marker = new MarkerWithLabel({
             position: new google.maps.LatLng(0,0),
             draggable: false,
             raiseOnDrag: false,
             map: map,
             labelContent: labelText,
-            labelAnchor: new google.maps.Point(30, 20),
+            labelAnchor: new google.maps.Point(20, 10),
             labelClass: "desk-number-label", // the CSS class for the label
             labelStyle: {opacity: 1.0},
             icon: "http://placehold.it/1x1",
@@ -123,7 +153,10 @@ var mapModule = (function () {
         });
 
         google.maps.event.addListener(desk, "mousemove", function(event) {
-            marker.setPosition(new google.maps.LatLng(event.latLng.lat() + 2, event.latLng.lng()));
+            var temp = desk.getPoint();
+            temp.y -= 0.8;
+            temp.x -= 0.3;
+            marker.setPosition(maptype.projection.fromPointToLatLng(temp));
             marker.setVisible(true);
         });
         google.maps.event.addListener(desk, "mouseout", function(event) {
@@ -141,7 +174,7 @@ var mapModule = (function () {
             desk.setOptions({ strokeColor: color });
         }
         desk.modPath = function (exx, why, rot) {
-            var tehPath = null,
+            var newPaths = null,
             rad0 = (Math.PI / 180) * rot,
             p0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
             p1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
@@ -153,9 +186,9 @@ var mapModule = (function () {
             c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p2[0], why + p2[1])),
             c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p3[0], why + p3[1]));
 
-            tehPath = [c1, c2, c3, c4];
+            newPaths = [c1, c2, c3, c4];
 
-            desk.setOptions({ paths: tehPath });
+            desk.setOptions({ paths: newPaths });
         }
 
         desk.setMap(map);
@@ -166,27 +199,26 @@ var mapModule = (function () {
 
     var initializeMap = function(floor) {
 
-        var gallPetersMap;
+        var gallPetersMap,
+            gallPetersMapType = new google.maps.ImageMapType({
+                getTileUrl: function (coord, zoom) {
+                    var numTiles = 1 << zoom;
 
-        var gallPetersMapType = new google.maps.ImageMapType({
-            getTileUrl: function (coord, zoom) {
-                var numTiles = 1 << zoom;
+                    // Don't wrap tiles vertically.
+                    if (coord.y < 0 || coord.y >= numTiles) {
+                        return null;
+                    }
 
-                // Don't wrap tiles vertically.
-                if (coord.y < 0 || coord.y >= numTiles) {
-                    return null;
-                }
-
-                var baseURL = 'coyotemoves/public/img/floor-' + floor + '/';
-                baseURL += zoom + '_' + coord.x + '_' + coord.y + '.gif';
-                return baseURL;
-            },
-            tileSize: new google.maps.Size(256, 256),
-            isPng: false,
-            minZoom: 4,
-            maxZoom: 7,
-            name: 'COYOTE'
-        });
+                    var baseURL = 'coyotemoves/public/img/floor-' + floor + '/';
+                    baseURL += zoom + '_' + coord.x + '_' + coord.y + '.gif';
+                    return baseURL;
+                },
+                tileSize: new google.maps.Size(256, 256),
+                isPng: false,
+                minZoom: 4,
+                maxZoom: 7,
+                name: 'COYOTE'
+            });
 
         gallPetersMapType.projection = new GallPetersProjection();
 
@@ -244,10 +276,10 @@ var mapModule = (function () {
         map = gallPetersMap;
 
         // limit bounds for panning
-        var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat();
-        var swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng();
-        var nelat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lat();
-        var nelng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lng();
+        var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat(),
+            swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng(),
+            nelat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lat(),
+            nelng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lng();
 
         var allowedBounds = new google.maps.LatLngBounds(
           new google.maps.LatLng(swlat, swlng),
@@ -259,14 +291,13 @@ var mapModule = (function () {
 
         function checkBounds() {
             if (!allowedBounds.contains(gallPetersMap.getCenter())) {
-                var C = gallPetersMap.getCenter();
-                var X = C.lng();
-                var Y = C.lat();
-
-                var AmaxX = allowedBounds.getNorthEast().lng();
-                var AmaxY = allowedBounds.getNorthEast().lat();
-                var AminX = allowedBounds.getSouthWest().lng();
-                var AminY = allowedBounds.getSouthWest().lat();
+                var C = gallPetersMap.getCenter(),
+                    X = C.lng(),
+                    Y = C.lat(),
+                    AmaxX = allowedBounds.getNorthEast().lng(),
+                    AmaxY = allowedBounds.getNorthEast().lat(),
+                    AminX = allowedBounds.getSouthWest().lng(),
+                    AminY = allowedBounds.getSouthWest().lat();
 
                 if (X < AminX) { X = AminX; }
                 if (X > AmaxX) { X = AmaxX; }

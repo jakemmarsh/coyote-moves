@@ -278,7 +278,6 @@
         $scope.focusedDesk = desk;
         $scope.focusedDesk.modColor('#0592fa');
 
-
         // get employee from desk
         var employee = fetchEmployeeById(desk.id);
 
