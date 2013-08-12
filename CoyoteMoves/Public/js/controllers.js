@@ -451,7 +451,7 @@
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
                 // create desk and place it on map * 0.3, currentDesk.location.topLeft.yCoordinate + i * 0.3, currentDesk.location.orientation, employee.id, currentDesk.deskNumber);
-                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee, currentDesk.deskNumber);
+                newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee, currentDesk.deskNumber, $scope.isAdmin);
                 // add click listener to desk to highlight it and show it in sidebar
                 google.maps.event.addListener(newDesk, 'click', function (event) {
                     $scope.selectDesk(this);
@@ -467,7 +467,8 @@
                         var deskNumber = fetchEmployeeById(this.id).current.deskInfo.deskNumber,
                             deskData,
                             updatedDeskInfo,
-                            point = $scope.maps[$scope.currentFloor].fromLatLngToPoint(evt.latLng);
+                            point = $scope.maps[$scope.currentFloor].fromLatLngToPoint(evt.latLng),
+                            deskRep;
 
                         // get all info for desk based on dragged desk number
                         for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
@@ -475,7 +476,7 @@
                                 deskData = $scope.currentFloorDesks[i];
                             }
                         }
-                        var deskRep = $scope.maps[$scope.currentFloor].getDesk(deskNumber);
+                        deskRep = $scope.maps[$scope.currentFloor].getDesk(deskNumber);
 
                         updatedDeskInfo = {
                             deskNumber: deskNumber,

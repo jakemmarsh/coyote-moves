@@ -70,7 +70,7 @@
         return [xCoord * Math.cos(rad) - yCoord * Math.sin(rad), xCoord * Math.sin(rad) + yCoord * Math.cos(rad)];
     }
 
-    function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId) {
+    function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId, isAdmin) {
         var paths = null,
             rad,
             t0,
@@ -98,33 +98,46 @@
         }
 
         else {
-            console.log('desk is rotated');
             // do different math here to account for desk being rotated upon placement
             rad = (Math.PI / 180) * deg;
-            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
-            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
-            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
-            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
-            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1]));
-            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1]));
-            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1]));
-            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t3[0], ycoord + t3[1]));
+            t0 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t1 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t2 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t3 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t0[0], ycoord + 0.2 + t0[1]));
+            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t1[0], ycoord + 0.2 + t1[1]));
+            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t2[0], ycoord + 0.2 + t2[1]));
+            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t3[0], ycoord + 0.2 + t3[1]));
         }
 
         paths = [coord1, coord2, coord3, coord4];
 
+        if (isAdmin) {
+            desk = new google.maps.Polygon({
+                paths: paths,
+                strokeColor: '#000000',
+                strokeOpacity: 0.9,
+                strokeWeight: 1,
+                fillColor: '#f7f7f7',
+                draggable: true,
 
-        desk = new google.maps.Polygon({
-            paths: paths,
-            strokeColor: '#000000',
-            strokeOpacity: 0.9,
-            strokeWeight: 1,
-            fillColor: '#f7f7f7',
-            draggable: true,
+                fillOpacity: 1,
+                id: employee.id,
+            });
+        }
+        else {
+            desk = new google.maps.Polygon({
+                paths: paths,
+                strokeColor: '#000000',
+                strokeOpacity: 0.9,
+                strokeWeight: 1,
+                fillColor: '#f7f7f7',
+                draggable: false,
 
-            fillOpacity: 1,
-            id: employee.id,
-        });
+                fillOpacity: 1,
+                id: employee.id,
+            });
+        }
 
         desk.getPoint = function() {
             var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0)),
@@ -154,7 +167,7 @@
 
         google.maps.event.addListener(desk, "mousemove", function(event) {
             var temp = desk.getPoint();
-            temp.y -= 0.8;
+            temp.y = (temp.y - 0.8) - (7 - map.getZoom());
             temp.x -= 0.3;
             marker.setPosition(maptype.projection.fromPointToLatLng(temp));
             marker.setVisible(true);
@@ -260,8 +273,8 @@
 
         gallPetersMap.desks = [];
 
-        gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId) {
-            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employee, deskId);
+        gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId, isAdmin) {
+            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employee, deskId, isAdmin);
             gallPetersMap.desks.push(desk);
             return desk;
         };
