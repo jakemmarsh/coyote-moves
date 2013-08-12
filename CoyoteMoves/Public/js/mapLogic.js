@@ -150,7 +150,7 @@
 
         desk.deskNumber = deskId;
 
-        labelText = deskId + "<br />(CO) " + employee.name;
+        labelText = employee.name;
 
         marker = new MarkerWithLabel({
             position: new google.maps.LatLng(0,0),
@@ -263,14 +263,6 @@
         gallPetersMap.mapTypes.set('gallPetersMap', gallPetersMapType);
         gallPetersMap.setMapTypeId('gallPetersMap');
 
-
-
-        google.maps.event.addListener(gallPetersMap, 'click', function (event) {
-            console.log('Point.X.Y: ' + gallPetersMapType.projection.fromLatLngToPoint(event.latLng));
-            console.log('Point.lat.lng: ' + event.latLng);
-
-        });
-
         gallPetersMap.desks = [];
 
         gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId, isAdmin) {
@@ -287,41 +279,6 @@
             return gallPetersMapType.projection.fromPointToLatLng(point, noWrap);
         };
         map = gallPetersMap;
-
-        // limit bounds for panning
-        var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat(),
-            swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng(),
-            nelat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lat(),
-            nelng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lng();
-
-        var allowedBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(swlat, swlng),
-          new google.maps.LatLng(nelat, nelng)
-        );
-
-        // Listen for the dragend event
-        //google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
-
-        function checkBounds() {
-            if (!allowedBounds.contains(gallPetersMap.getCenter())) {
-                var C = gallPetersMap.getCenter(),
-                    X = C.lng(),
-                    Y = C.lat(),
-                    AmaxX = allowedBounds.getNorthEast().lng(),
-                    AmaxY = allowedBounds.getNorthEast().lat(),
-                    AminX = allowedBounds.getSouthWest().lng(),
-                    AminY = allowedBounds.getSouthWest().lat();
-
-                if (X < AminX) { X = AminX; }
-                if (X > AmaxX) { X = AmaxX; }
-                if (Y < AminY) { Y = AminY; }
-                if (Y > AmaxY) { Y = AmaxY; }
-
-                gallPetersMap.setCenter(new google.maps.LatLng(Y, X));
-
-
-            }
-        }
 
         gallPetersMap.getDesk = function(deskNumber) {
             for (var i = 0; i < gallPetersMap.desks.length; i++) {
