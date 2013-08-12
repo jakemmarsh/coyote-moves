@@ -467,7 +467,8 @@
                         var deskNumber = fetchEmployeeById(this.id).current.deskInfo.deskNumber,
                             deskData,
                             updatedDeskInfo,
-                            point = $scope.maps[$scope.currentFloor].fromLatLngToPoint(evt.latLng);
+                            point = $scope.maps[$scope.currentFloor].fromLatLngToPoint(evt.latLng),
+                            deskRep;
 
                         // get all info for desk based on dragged desk number
                         for (var i = 0; i < $scope.currentFloorDesks.length; i++) {
@@ -475,7 +476,7 @@
                                 deskData = $scope.currentFloorDesks[i];
                             }
                         }
-                        var deskRep = $scope.maps[$scope.currentFloor].getDesk(deskNumber);
+                        deskRep = $scope.maps[$scope.currentFloor].getDesk(deskNumber);
 
                         updatedDeskInfo = {
                             deskNumber: deskNumber,
