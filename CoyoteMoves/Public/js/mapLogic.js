@@ -70,7 +70,7 @@
         return [xCoord * Math.cos(rad) - yCoord * Math.sin(rad), xCoord * Math.sin(rad) + yCoord * Math.cos(rad)];
     }
 
-    function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId) {
+    function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId, isAdmin) {
         var paths = null,
             rad,
             t0,
@@ -113,18 +113,32 @@
 
         paths = [coord1, coord2, coord3, coord4];
 
+        if (isAdmin) {
+            desk = new google.maps.Polygon({
+                paths: paths,
+                strokeColor: '#000000',
+                strokeOpacity: 0.9,
+                strokeWeight: 1,
+                fillColor: '#f7f7f7',
+                draggable: true,
 
-        desk = new google.maps.Polygon({
-            paths: paths,
-            strokeColor: '#000000',
-            strokeOpacity: 0.9,
-            strokeWeight: 1,
-            fillColor: '#f7f7f7',
-            draggable: true,
+                fillOpacity: 1,
+                id: employee.id,
+            });
+        }
+        else {
+            desk = new google.maps.Polygon({
+                paths: paths,
+                strokeColor: '#000000',
+                strokeOpacity: 0.9,
+                strokeWeight: 1,
+                fillColor: '#f7f7f7',
+                draggable: false,
 
-            fillOpacity: 1,
-            id: employee.id,
-        });
+                fillOpacity: 1,
+                id: employee.id,
+            });
+        }
 
         desk.getPoint = function() {
             var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0)),
@@ -260,8 +274,8 @@
 
         gallPetersMap.desks = [];
 
-        gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId) {
-            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employee, deskId);
+        gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId, isAdmin) {
+            var desk = makeDesk(xpos, ypos, angle, gallPetersMap, gallPetersMapType, employee, deskId, isAdmin);
             gallPetersMap.desks.push(desk);
             return desk;
         };
