@@ -186,7 +186,7 @@
         desk.modBorder = function (color) {
             desk.setOptions({ strokeColor: color });
         }
-        desk.modPath = function (exx, why, rot) {
+        desk.modPath = function (newX, newY, rot) {
             var newPaths = null,
             rad0 = (Math.PI / 180) * rot,
             p0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
@@ -194,10 +194,10 @@
             p2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
             p3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
 
-            c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p0[0], why + p0[1])),
-            c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p1[0], why + p1[1])),
-            c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p2[0], why + p2[1])),
-            c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p3[0], why + p3[1]));
+            c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p0[0], newY + p0[1])),
+            c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p1[0], newY + p1[1])),
+            c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p2[0], newY + p2[1])),
+            c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p3[0], newY + p3[1]));
 
             newPaths = [c1, c2, c3, c4];
 

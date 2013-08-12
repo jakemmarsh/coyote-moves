@@ -180,8 +180,6 @@
             $scope.movedEmployees[i].future.bazookaInfo.managerId = ($scope.movedEmployees[i].future.bazookaInfo.managerId) ? $scope.movedEmployees[i].future.bazookaInfo.managerId : currentEmployee.bazookaInfo.managerId;
             $scope.movedEmployees[i].future.deskInfo.deskNumber = ($scope.movedEmployees[i].future.deskInfo.deskNumber) ? $scope.movedEmployees[i].future.deskInfo.deskNumber : $scope.movedEmployees[i].current.deskInfo.deskNumber;
 
-            console.log($scope.movedEmployees[i]);
-
 
             requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
                 console.log(data);
@@ -259,6 +257,7 @@
                 break;
             }
         }
+
     }
 
     $scope.selectDisplacedEmployee = function (displacedEmployee) {
@@ -298,7 +297,6 @@
             $scope.focusedDesk = null;
         }
         // select and highlight new desk
-        desk.modColor('#0592fa');
         $scope.focusedDesk = desk;
         $scope.focusedDesk.modColor('#0592fa');
         if (!$scope.$$phase) {
@@ -384,18 +382,17 @@
     $scope.$watch('currentFloor', function () {
         var center;
 
+        // erase search bar
+        $scope.employeeToSearchFor = "";
+
         // disable search bar until desks are loaded
         $scope.loadingFloorData = true;
-
 
         // unfocus any desk
         if ($scope.focusedDesk) {
             $scope.focusedDesk.modColor('#f7f7f7');
             $scope.focusedDesk = null;
         }
-
-        // erase search bar
-        $scope.employeeToSearchFor = "";
 
         // determine whether or not to show sidebar
         if ($scope.displacedEmployees.length === 0) {
