@@ -98,17 +98,16 @@
         }
 
         else {
-            console.log('desk is rotated');
             // do different math here to account for desk being rotated upon placement
             rad = (Math.PI / 180) * deg;
-            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
-            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
-            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
-            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
-            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1]));
-            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1]));
-            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1]));
-            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t3[0], ycoord + t3[1]));
+            t0 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t1 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t2 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t3 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t0[0], ycoord + 0.2 + t0[1]));
+            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t1[0], ycoord + 0.2 + t1[1]));
+            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t2[0], ycoord + 0.2 + t2[1]));
+            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + 0.1 + t3[0], ycoord + 0.2 + t3[1]));
         }
 
         paths = [coord1, coord2, coord3, coord4];
