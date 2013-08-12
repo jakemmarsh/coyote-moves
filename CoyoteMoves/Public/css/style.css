@@ -543,11 +543,11 @@ input[type=text], input[type=password] {
 }
 .desk-number-label {
     color: #0592fa;
-    background-color: white;
+    background-color: #ffffff;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     border: 1px solid #111;
     white-space: nowrap;
-    
+    position: relative;
 }
