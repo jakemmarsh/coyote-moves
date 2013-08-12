@@ -72,18 +72,44 @@
 
     function makeDesk(xcoord, ycoord, deg, map, maptype, employee, deskId) {
         var paths = null,
-            rad = (Math.PI / 180) * deg,
-            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad),
-            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad),
-            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad),
-            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad),
-            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1])),
-            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1])),
-            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1])),
-            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t3[0], ycoord + t3[1])),
+            rad,
+            t0,
+            t1,
+            t2,
+            t3,
+            coord1,
+            coord2,
+            coord3,
+            coord4,
             desk,
             labelText,
             marker;
+
+        if (deg == 0 || deg == 180) {
+            rad = (Math.PI / 180) * deg;
+            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1]));
+            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1]));
+            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1]));
+            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t3[0], ycoord + t3[1]));
+        }
+
+        else {
+            console.log('desk is rotated');
+            // do different math here to account for desk being rotated upon placement
+            rad = (Math.PI / 180) * deg;
+            t0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t1 = transformCoord(DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad);
+            t2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            t3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad);
+            coord1 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t0[0], ycoord + t0[1]));
+            coord2 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t1[0], ycoord + t1[1]));
+            coord3 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t2[0], ycoord + t2[1]));
+            coord4 = maptype.projection.fromPointToLatLng(new google.maps.Point(xcoord + t3[0], ycoord + t3[1]));
+        }
 
         paths = [coord1, coord2, coord3, coord4];
 
@@ -128,7 +154,7 @@
 
         google.maps.event.addListener(desk, "mousemove", function(event) {
             var temp = desk.getPoint();
-            temp.y -= 0.4;
+            temp.y -= 0.8;
             temp.x -= 0.3;
             marker.setPosition(maptype.projection.fromPointToLatLng(temp));
             marker.setVisible(true);
@@ -160,7 +186,7 @@
             c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p2[0], why + p2[1])),
             c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p3[0], why + p3[1]));
 
-            tehPath = [c1, c2, c3, c4];
+            newPaths = [c1, c2, c3, c4];
 
             desk.setOptions({ paths: newPaths });
         }
