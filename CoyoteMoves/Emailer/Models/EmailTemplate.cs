@@ -79,6 +79,8 @@ namespace CoyoteMoves.Emailer.Models
         public void mapFieldsFromRequest(RequestForm req, AcroFields form)
         {
   
+            //Use (Group)ManagerFirstName.ManagerLastName for review info
+            //Example: (T4)Bill.Loupee, (T32)Drew.Meagrow
             EmployeeDB empDB = new EmployeeDB();
             var fieldKeys = form.Fields.Keys;
 

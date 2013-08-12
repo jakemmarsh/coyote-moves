@@ -12,6 +12,9 @@ using CoyoteMoves.Data_Access;
  * - Dynamic Counts of each group
  */ 
 
+
+//TODO: Implement Interface (IEmailSender) so we can moq shit
+
 namespace CoyoteMoves.Emailer.Models
 {
     public class EmailSender
