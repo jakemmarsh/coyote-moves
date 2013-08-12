@@ -79,6 +79,8 @@ namespace CoyoteMoves.Emailer.Models
         public void mapFieldsFromRequest(RequestForm req, AcroFields form)
         {
   
+            //Use (Group)ManagerFirstName.ManagerLastName for review info
+            //Example: (T4)Bill.Loupee, (T32)Drew.Meagrow
             EmployeeDB empDB = new EmployeeDB();
             var fieldKeys = form.Fields.Keys;
 
@@ -86,8 +88,8 @@ namespace CoyoteMoves.Emailer.Models
             {
                 if (fieldKey.Equals("Employee Name"))
                     form.SetField(fieldKey, empDB.GetFullNameById(req.EmployeeId));
-                if (fieldKey.Equals("Date To Occur On"))   
-                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7)).ToString());
+                if (fieldKey.Equals("Date to occur on"))   
+                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7).Date).ToString("d"));
                 if (fieldKey.Equals("CurrentJob Title"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTitle);
                 if (fieldKey.Equals("CurrentDepartment"))
