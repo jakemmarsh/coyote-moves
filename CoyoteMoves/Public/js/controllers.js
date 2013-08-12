@@ -1,12 +1,12 @@
 ﻿function IndexCtrl($scope, $routeParams, desks, user, requestForm) {
-
-    
+    // initialize map for each tab/floor
     $scope.maps = {
         3: mapModule.initializeMap(3),
         4: mapModule.initializeMap(4),
         5: mapModule.initializeMap(5)
     };
 
+    // initialize all starting variables
     $scope.currentFloor = 3;
     $scope.currentFormTab = 0;
     $scope.isAdmin = false;
@@ -15,6 +15,10 @@
     $scope.moves = [];
     $scope.showSidebar = false;
 
+    // disable search bar until desks are loaded
+    $scope.loadingFloorData = true;
+
+    // any functions/calls that need to be made immediately
     var initialize = function () {
         user.getUserRoles().then(function (data) {
             $scope.userRoles = data;
@@ -34,6 +38,7 @@
 
     initialize();
 
+    // function to return an employee object after searching current floor by employee name
     var fetchEmployeeByName = function (employeeName) {
         if (employeeName) {
             for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
@@ -44,6 +49,7 @@
         }
     };
 
+    // function to return an employee object after searching current floor by employee ID
     var fetchEmployeeById = function (employeeId) {
         for (var i = 0; i < $scope.currentFloorEmployees.length; i++) {
             if (employeeId === $scope.currentFloorEmployees[i].id) {
@@ -52,20 +58,19 @@
         }
     };
 
+    // get all data for autocompleting form inputs
     requestForm.getAllJobTitles().then(function (data) {
         $scope.jobTitles = data;
     },
     function (errorMessage) {
         console.log(errorMessage);
     });
-
     requestForm.getAllGroups().then(function (data) {
         $scope.groups = data;
     },
     function (errorMessage) {
         console.log(errorMessage);
     });
-
     requestForm.getAllDepartments().then(function (data) {
         $scope.departments = data;
     },
@@ -73,15 +78,16 @@
         console.log(errorMessage);
     });
 
+    // create a new move form upon "Start Move" submit
     $scope.createMoveForm = function () {
         var addToDisplaced = true,
+            // create a move object for later reference
             move = {
                 deskNumber: $scope.currentDeskNumber,
                 displacedEmployee: fetchEmployeeByName($scope.currentDeskOccupant),
                 movedEmployee: fetchEmployeeByName($scope.futureDeskOccupant)
             };
 
-        // Begin the ugly
         if ($scope.moves.length == 0) {
 
             if (!move.movedEmployee || (move.displacedEmployee == move.movedEmployee)) {
@@ -129,7 +135,7 @@
                 // Check if tab is already open for this employee
                 if (!blankMove && ($scope.movedEmployees[i].name == move.movedEmployee.name)) {
                     var name = $scope.movedEmployees[i].name;
-                    $scope.createMoveFormError = name + " is already moving, bitch.";
+                    $scope.createMoveFormError = "A move has already been started for " + name + ".";
                     return;
                 }
 
@@ -161,7 +167,7 @@
     }
 
     $scope.sendAllForms = function () {
-
+        // show error if there are still displaced employees
         if ($scope.displacedEmployees.length) {
             $scope.sendFormError = "All displaced employees must be given a new desk before moves may be submitted.";
             return;
@@ -181,37 +187,49 @@
                 console.log(data);
             },
             function (errorMessage) {
-                $scope.sendFormError = "Service down";
+                $scope.sendFormError = "There was an error submitting the move(s) you have requested. Please try again or contact the help desk.";
                 console.log(errorMessage);
             });
         }
+        // remove all moves after processing them
         $scope.cancelAllMoves();
     }
 
     $scope.cancelSingleMove = function (index) {
+        // store the move to be cancelled
         var removedForm = $scope.movedEmployees[index];
+
+        // remove from list of moved employees
         $scope.movedEmployees.splice(index, 1);
+
+        // change active form tab
         $scope.currentFormTab = $scope.movedEmployees.length - 1;
+
+        // remove object from list of moves
         $scope.moves.splice(index, 1);
 
+        // if a displaced employee results from move cancel, store them
         for (var i = 0; i < $scope.movedEmployees.length; i++) {
             if ($scope.movedEmployees[i].future.deskInfo.deskNumber == removedForm.current.deskInfo.deskNumber) {
                 $scope.displacedEmployees.push(removedForm);
             }
         }
 
+        // if a displaced employee is re-placed at a desk from move cancel, remove them from list
         for (var i = 0; i < $scope.displacedEmployees.length; i++) {
             if (removedForm.future.deskInfo.deskNumber == $scope.displacedEmployees[i].current.deskInfo.deskNumber) {
                 $scope.displacedEmployees.splice(i, 1);
             }
         }
 
+        // if there are no more displaced employees and no desk is selected, hide sidebar
         if ($scope.displacedEmployees.length === 0 && !$scope.selectedDeskEmployee) {
             $scope.showSidebar = false;
         }
     }
 
     $scope.cancelAllMoves = function () {
+        // empty all lists and/or errors
         $scope.movedEmployees = [];
         $scope.displacedEmployees = [];
         $scope.createMoveFormError = "";
@@ -219,6 +237,8 @@
     }
 
     $scope.searchForEmployee = function () {
+        var employeeId;
+
         $scope.futureDeskOccupant = "";
         // auto-populate future occupant if one exists
         for (var i = 0; i < $scope.moves.length; i++) {
@@ -226,7 +246,8 @@
                 $scope.futureDeskOccupant = $scope.moves[i].movedEmployee.name;
             }
         }
-        var employeeId = fetchEmployeeByName($scope.employeeToSearchFor.toLowerCase()).id;
+
+        employeeId = fetchEmployeeByName($scope.employeeToSearchFor.toLowerCase()).id;
         for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
             if ($scope.maps[$scope.currentFloor].desks[i].id === employeeId) {
                 // highlight desk and show it in sidebar
@@ -264,6 +285,7 @@
         }
     }
 
+    // set future desk occupant upon click of "move" button in displaced employees list
     $scope.setFutureDeskOccupant = function (futureOccupant) {
         $scope.futureDeskOccupant = futureOccupant;
     }
@@ -273,10 +295,15 @@
         // remove highlight color if previous desk selected
         if ($scope.focusedDesk) {
             $scope.focusedDesk.modColor('#f7f7f7');
+            $scope.focusedDesk = null;
         }
         // select and highlight new desk
+        desk.modColor('#0592fa');
         $scope.focusedDesk = desk;
         $scope.focusedDesk.modColor('#0592fa');
+        if (!$scope.$$phase) {
+            $scope.$apply();
+        }
 
         // get employee from desk
         var employee = fetchEmployeeById(desk.id);
@@ -311,10 +338,13 @@
 
                 // only make changes if new orientation is different from saved orientation
                 if (deskData.location.orientation !== $scope.currentDeskOrientation) {
+                    // rotate on map
                     $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
 
+                    // get desk info for changed desk
                     var deskRep = $scope.maps[$scope.currentFloor].getDesk($scope.focusedDeskNumber);
 
+                    // define new data to be saved to database
                     updatedDeskInfo = {
                         deskNumber: $scope.focusedDeskNumber,
                         x: deskData.location.topLeft.xCoordinate,
@@ -353,13 +383,29 @@
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
         var center;
+
+        // disable search bar until desks are loaded
+        $scope.loadingFloorData = true;
+
+
+        // unfocus any desk
+        if ($scope.focusedDesk) {
+            $scope.focusedDesk.modColor('#f7f7f7');
+            $scope.focusedDesk = null;
+        }
+
+        // erase search bar
         $scope.employeeToSearchFor = "";
+
+        // determine whether or not to show sidebar
         if ($scope.displacedEmployees.length === 0) {
             $scope.showSidebar = false;
         }
         else {
             $scope.selectedDeskEmployee = null;
         }
+
+        // resize map on tab change
         window.setTimeout(function () {
             google.maps.event.trigger($scope.maps[$scope.currentFloor], 'resize');
 
@@ -377,7 +423,10 @@
             $scope.maps[$scope.currentFloor].panTo(center);
 
         }, 100);
+
+        // load all desks for new floor
         desks.getDesksByFloor($scope.currentFloor).then(function (data) {
+            $scope.loadingFloorData = false;
             $scope.currentFloorDesks = data;
             $scope.currentFloorEmployees = [];
             $scope.currentFloorEmployeeNames = [];
@@ -450,7 +499,7 @@
                     newDesk;
                 $scope.currentFloorEmployeeNames.push(name);
                 $scope.currentFloorEmployees.push(employee);
-                // create desk and place it on map * 0.3, currentDesk.location.topLeft.yCoordinate + i * 0.3, currentDesk.location.orientation, employee.id, currentDesk.deskNumber);
+                // create desk and place it on map
                 newDesk = $scope.maps[currentDesk.location.floor].addDesk(currentDesk.location.topLeft.xCoordinate, currentDesk.location.topLeft.yCoordinate, currentDesk.location.orientation, employee, currentDesk.deskNumber, $scope.isAdmin);
                 // add click listener to desk to highlight it and show it in sidebar
                 google.maps.event.addListener(newDesk, 'click', function (event) {

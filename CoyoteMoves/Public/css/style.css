@@ -128,7 +128,6 @@ h2.black-bg {
     color: #333;
     background-color: #eee;
     margin: 5px 0;
-    font-weight: normal;
     text-transform: uppercase;
     letter-spacing: .15em;
     margin-bottom: 10px;
@@ -559,4 +558,5 @@ input[type=text], input[type=password] {
     border: 1px solid #111;
     white-space: nowrap;
     position: relative;
+    padding: 3px;
 }
