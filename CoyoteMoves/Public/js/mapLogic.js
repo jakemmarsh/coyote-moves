@@ -167,7 +167,7 @@
 
         google.maps.event.addListener(desk, "mousemove", function(event) {
             var temp = desk.getPoint();
-            temp.y -= 0.8;
+            temp.y = (temp.y - 0.8) - (7 - map.getZoom());
             temp.x -= 0.3;
             marker.setPosition(maptype.projection.fromPointToLatLng(temp));
             marker.setVisible(true);
