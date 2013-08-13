@@ -1,8 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CoyoteMoves.Controllers;
-using System.Net.Http;
 using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Mvc;
 using CoyoteMoves.Data_Access;
 
 namespace CoyoteMovesTest
