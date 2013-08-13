@@ -16,7 +16,7 @@ namespace CoyoteMovesTest
         [TestInitialize]
         public void setup()
         {
-           _validator = new InfoValidator();
+            _validator = new InfoValidator();
         }
 
         [TestMethod]
