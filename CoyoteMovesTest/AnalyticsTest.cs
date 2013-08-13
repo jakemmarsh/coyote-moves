@@ -23,7 +23,15 @@ namespace CoyoteMovesTest
         [TestCategory("Integration")]
         public void GetDataFromBeginningSuccess()
         {
-            Collection<RequestForm> testAnalysis = _analyticsDB.GetAllRequestRecords();
+            Collection<RequestForm> testAnalysis = _analyticsDB.GetAllApprovedRequests();
+        }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void GetGroupChangeSuccess()
+        {
+            string test = _analyticsDB.GetAllGroupChangeInformation();
+            Assert.Equals(test, "test");
         }
     }
 }
