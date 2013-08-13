@@ -14,10 +14,12 @@ namespace CoyoteMoves.Data_Access
     {
         private string _connectionString;
         private RequestFormDB _requester;
+        private RequestDataDB _dataRequest;
         
         public AnalyticsDB()
         {
             _requester = new RequestFormDB();
+            _dataRequest = new RequestDataDB();
             _connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
         }
 
@@ -45,6 +47,36 @@ namespace CoyoteMoves.Data_Access
             }
             connection.Close();
             return requestCollection;
+        }
+
+        public string GetGroupChangeInformationBetweenDates(SqlDateTime begin, SqlDateTime end)
+        {
+            Collection<RequestForm> forms = GetApprovedRequestsBetweenDates(begin, end);
+            List<string> groups = _dataRequest.GetAllGroups();
+            Dictionary<string, int> groupCount = new Dictionary<string, int>();
+
+            foreach (string entry in groups)
+            {
+                groupCount.Add(entry, 0);
+            }
+
+            foreach (RequestForm entry in forms)
+            {
+                string pastGroup = entry.Current.BazookaInfo.Group;
+                string futureGroup = entry.Future.BazookaInfo.Group;
+                if (groupCount.ContainsKey(pastGroup))
+                    groupCount[pastGroup]--;
+
+                if (groupCount.ContainsKey(futureGroup))
+                    groupCount[futureGroup]++;
+            }
+
+            return groupCount.ToString();
+        }
+
+        public string GetAllGroupChangeInformation()
+        {
+            return GetGroupChangeInformationBetweenDates(SqlDateTime.MinValue, SqlDateTime.MaxValue);
         }
 
         

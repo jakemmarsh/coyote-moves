@@ -84,8 +84,8 @@ namespace CoyoteMoves.Controllers
             obj.EmployeeId = GetIDFromName((string)json["name"]);
             obj.CreatedByID = creatorID;
             obj.Current.BazookaInfo.SecurityItemRights = "";
-            obj.ReviewInfo.FilesToBeRemovedFrom = "(" + obj.Current.BazookaInfo.Group + ")" + currManagerName.Replace(" ", ".")+" ,"+obj.ReviewInfo.FilesToBeRemovedFrom;
-            obj.ReviewInfo.FilesToBeAddedTo = "(" + obj.Future.BazookaInfo.Group + ")" + futureManagerName.Replace(" ", ".")+" ,"+obj.ReviewInfo.FilesToBeAddedTo;
+            obj.ReviewInfo.FilesToBeRemovedFrom = "(" + obj.Current.BazookaInfo.Group + ")" + currManagerName.Replace(" ", ".")+" "+obj.ReviewInfo.FilesToBeRemovedFrom;
+            obj.ReviewInfo.FilesToBeAddedTo = "(" + obj.Future.BazookaInfo.Group + ")" + futureManagerName.Replace(" ", ".")+" "+obj.ReviewInfo.FilesToBeAddedTo;
 
             return obj;
 

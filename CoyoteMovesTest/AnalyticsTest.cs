@@ -48,5 +48,13 @@ namespace CoyoteMovesTest
             }
             Assert.IsTrue(test);
         }
+
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void GetGroupChangeSuccess()
+        {
+            string test = _analyticsDB.GetAllGroupChangeInformation();
+            Assert.Equals(test, "test");
+        }
     }
 }
