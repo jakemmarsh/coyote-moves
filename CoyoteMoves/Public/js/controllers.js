@@ -325,6 +325,10 @@
     $scope.doNothing = function () {
     }
 
+    $scope.$watch('currentDeskOrientation', function () {
+        $scope.changeOrientation();
+    });
+
     $scope.changeOrientation = function () {
         // only make changes to desk if user has rights
         if ($scope.isAdmin) {
@@ -338,34 +342,31 @@
                     }
                 }
 
-                // only make changes if new orientation is different from saved orientation
-                if (deskData.location.orientation !== $scope.currentDeskOrientation) {
-                    // rotate on map
-                    $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
+                // rotate on map
+                $scope.focusedDesk.modPath(deskData.location.topLeft.xCoordinate, deskData.location.topLeft.yCoordinate, $scope.currentDeskOrientation);
 
-                    // get desk info for changed desk
-                    var deskRep = $scope.maps[$scope.currentFloor].getDesk($scope.focusedDeskNumber);
+                // get desk info for changed desk
+                var deskRep = $scope.maps[$scope.currentFloor].getDesk($scope.focusedDeskNumber);
 
-                    // define new data to be saved to database
-                    updatedDeskInfo = {
-                        deskNumber: $scope.focusedDeskNumber,
-                        x: deskData.location.topLeft.xCoordinate,
-                        y: deskData.location.topLeft.yCoordinate,
-                        orientation: $scope.currentDeskOrientation
-                    };
+                // define new data to be saved to database
+                updatedDeskInfo = {
+                    deskNumber: $scope.focusedDeskNumber,
+                    x: deskData.location.topLeft.xCoordinate,
+                    y: deskData.location.topLeft.yCoordinate,
+                    orientation: $scope.currentDeskOrientation
+                };
 
-                    deskData.location.orientation = $scope.currentDeskOrientation;
-                    deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
-                    deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
+                deskData.location.orientation = $scope.currentDeskOrientation;
+                deskData.location.topLeft.xCoordinate = deskRep.getPoint().x;
+                deskData.location.topLeft.yCoordinate = deskRep.getPoint().y;
 
-                    desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
-                        // do something with success data
-                        console.log(data);
-                    },
-                    function (errorMessage) {
-                        console.log(errorMessage);
-                    });
-                }
+                desks.updateDesk($scope.focusedDeskNumber, updatedDeskInfo).then(function (data) {
+                    // do something with success data
+                    console.log(data);
+                },
+                function (errorMessage) {
+                    console.log(errorMessage);
+                });
             }
         }
     }
