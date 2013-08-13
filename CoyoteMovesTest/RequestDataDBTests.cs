@@ -37,20 +37,6 @@ namespace CoyoteMovesTest
         [TestCategory("Integration")]
         public void GetAllGroupsSuccess()
         {
-            List<string> groupList = new List<string>();
-            groupList = _requester.GetAllGroups();
-            Assert.AreEqual(177, groupList.Count);
-        }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        public void GetAllJobTitlesSuccess()
-        {
-            List<string> realJobList = new List<string>(){"Unknown", "President","Manager", "Sales Rep", "Ops Rep", "Dispatch", "Accounts Payable", "Accounts Receivable", "Legal", "Rates", "Other", 
-                "Shipping/Receiving", "Purchasing", "Project Manager", "Chief Technology Officer", "Trainer", "Office Manager", "Intern","Temp", "Driver Services Rep", "Team Lead",  "Assistant Manger"};
-            List<string> jobList = new List<string>();
-            jobList = _requester.GetAllJobTitles();
-            CollectionAssert.AreEqual(realJobList, jobList);
 
         }
     }

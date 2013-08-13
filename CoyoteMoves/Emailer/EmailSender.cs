@@ -12,19 +12,16 @@ using CoyoteMoves.Data_Access;
  * - Dynamic Counts of each group
  */ 
 
-
-//TODO: Implement Interface (IEmailSender) so we can moq shit
-
 namespace CoyoteMoves.Emailer.Models
 {
     public class EmailSender
     {
 
-        private string _smtp = "10.3.10.112"; //Magic numbers for coyote SMTP server, could store in DB and call that, but let's be honest here that's ridiculous
+        string _smtp = "10.3.10.112"; //Magic numbers for coyote SMTP server, could store in DB and call that, but let's be honest here that's ridiculous
         EmailTemplate _template;
         RequestFormDB _requester;
-        private string HRAddress = "coyotemoves@coyote.com";
-        private string SDAddress = "servicedesk@coyote.com";
+        string HRAddress = "coyotemoves@coyote.com";
+        string SDAddress = "servicedesk@coyote.com";
 
         public EmailSender()
         {

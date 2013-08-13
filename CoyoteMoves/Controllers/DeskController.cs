@@ -21,6 +21,11 @@ namespace CoyoteMoves.Controllers
             return DeskList;
         }
 
+        public List<Desk> GetDesks()
+        {
+            return DeskDataBaseConnection.GetAllDesks();
+        }
+
         // POST api/Desk/SetDeskOrientationAndPoint/{deskNumber}
         public HttpResponseMessage SetDeskOrientationAndPoint(JObject json)
         {

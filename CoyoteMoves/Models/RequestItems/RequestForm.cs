@@ -8,6 +8,11 @@ namespace CoyoteMoves.Models.RequestItems
 {
     public class RequestForm
     {
+        /// <summary>
+        /// So this is the class that will deal with 'storing' all the data from the json passed from the frontend
+        /// just has a bunch of request types (based off of pdf we got from Mario)
+        /// </summary>
+
         public Guid UniqueId { get; set; }
         public int EmployeeId { get; set; }
         public CoyoteMovesFormEmployeeInfo Current { get; set; }

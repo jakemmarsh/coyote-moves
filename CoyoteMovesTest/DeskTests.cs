@@ -26,21 +26,30 @@ namespace CoyoteMovesTest
             _empID = 117;
             _testDesk = new DeskDB();
             _validator = new InfoValidator();
-            _testDesk.InsertInformationIntoDeskDB(_deskNum, _topLeftX, _topLeftY, _orient, _floorNum, _empID);
         }
 
-        [TestCleanup]
-        public void cleanup()
-        {
-            _testDesk.RemoveDeskFromDeskDB(_deskNum);
+        //[TestMethod]
+        //[TestCategory("Integration")]
+        //public void TestAddNamesAndDeskNumbersFromFile()
+        //{
+        //    DeskDB test = new DeskDB();
+        //    //this function takes three minutes to run...
 
-        }
+        //    //Do NOT run this function, unless you want to insert ~1000 people into the database
+        //    //test.AddNamesAndDeskNumbersFromFile(@"C:\\Users\mitchell.hymel\Downloads\Blueprints.txt");
+        //}
+
         [TestMethod]
         [TestCategory("Integration")]
         public void DeskInsertedSuccessfully()
         {
-            bool validation = _validator.ValidateDeskNumber(_deskNum);
-            Assert.IsTrue(validation);
+            bool validation1 = _testDesk.InsertInformationIntoDeskDB(_deskNum, _topLeftX, _topLeftY, _orient, _floorNum, _empID);
+            bool validation2 = _validator.ValidateDeskNumber(_deskNum);
+            Assert.IsTrue(validation1);
+            Assert.IsTrue(validation2);
+            bool removeValidation = _testDesk.RemoveDeskFromDeskDB(_deskNum);
+            Assert.IsTrue(removeValidation);
+            
         }
 
         [TestMethod]
@@ -71,27 +80,8 @@ namespace CoyoteMovesTest
         [TestMethod, TestCategory("Unit")]
         public void CheckIfDeskExists()
         {
-            Assert.IsTrue(_testDesk.CheckIfDeskExists("5-1"));
-            Assert.IsFalse(_testDesk.CheckIfDeskExists("5-888"));
+            Assert.IsTrue(_testDesk.CheckIfDeskExisits("5-1"));
+            Assert.IsFalse(_testDesk.CheckIfDeskExisits("5-888"));
         }
-
-        [TestMethod]
-        [TestCategory("Integration")]
-        public void DeskOrientationEditSuccess()
-        {
-            Assert.IsTrue(_validator.ValidateDeskInfo(_deskNum, _topLeftX, _topLeftY, _orient));
-            bool validation = _testDesk.ChangeDeskPointAndOrientation(_deskNum, 3, 4, 1);
-            Assert.IsTrue(validation);
-            Assert.IsTrue(_validator.ValidateDeskInfo(_deskNum, 3, 4, 1));
-        }
-        
-        [TestMethod]
-        [TestCategory("Integration")]
-        public void DeskOrientationEditFailureNoDesk()
-        {
-            bool validation = _testDesk.ChangeDeskPointAndOrientation("THX1193", _topLeftX, _topLeftY, _orient);
-            Assert.IsFalse(validation);
-        }
-
     }
 }
