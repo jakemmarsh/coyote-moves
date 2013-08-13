@@ -541,6 +541,10 @@ input[type=text], input[type=password] {
     color: #ff0000;
 }
 
+.success-message {
+    color: #468847;
+}
+
 .block {
     display: block;
     clear: both;

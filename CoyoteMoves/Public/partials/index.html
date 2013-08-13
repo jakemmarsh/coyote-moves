@@ -357,6 +357,7 @@
     </form>
     <div class="row soft--left" id="global-controls">
         <span class="error-message block nudge-half--bottom" data-ng-bind="sendFormError"></span>
+        <span class="success-message block nudge-half--bottom" data-ng-bind="sendFormSuccess"></span>
         <a href class="btn btn--cancel nudge--right" class="nudge--left" data-ng-click="cancelAllMoves()" data-ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
         <input type="submit" class="btn btn--primary" value="Submit Moves" data-ng-show="movedEmployees.length > 1" data-ng-hide="movedEmployees.length <= 1" data-ng-click="sendAllForms()" />
         <input type="submit" class="btn btn--primary" value="Submit Move" data-ng-show="movedEmployees.length == 1" data-ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" data-ng-click="sendAllForms()"/>
