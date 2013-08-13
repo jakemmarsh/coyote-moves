@@ -4,6 +4,11 @@
       $locationProvider.html5Mode(true);
 
       $routeProvider.
-          when('/coyotemoves', { templateUrl: 'coyotemoves/public/partials/index.html', controller: IndexCtrl }).
+          when('/coyotemoves',
+          {
+              templateUrl: 'coyotemoves/public/partials/index.html',
+              controller: IndexCtrl,
+              resolve: IndexCtrl.resolve
+          }).
           otherwise({ redirectTo: '/coyotemoves' });
   }]);

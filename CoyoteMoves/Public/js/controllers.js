@@ -1,4 +1,4 @@
-﻿function IndexCtrl($scope, $routeParams, desks, user, requestForm) {
+﻿function IndexCtrl($scope, $routeParams, desks, userRoles, requestForm) {
     // initialize map for each tab/floor
     $scope.maps = {
         3: mapModule.initializeMap(3),
@@ -15,28 +15,17 @@
     $scope.moves = [];
     $scope.showSidebar = false;
 
+    $scope.userRoles = userRoles;
+    console.log($scope.userRoles);
+    for (var i = 0; i < $scope.userRoles.length; i++) {
+        // if user is an admin, set variable to true (TODO)
+        if ($scope.userRoles[i].toLowerCase() == 'users') {
+            $scope.isAdmin = true;
+        }
+    }
+
     // disable search bar until desks are loaded
     $scope.loadingFloorData = true;
-
-    // any functions/calls that need to be made immediately
-    var initialize = function () {
-        user.getUserRoles().then(function (data) {
-            $scope.userRoles = data;
-            console.log(data);
-            // check all roles that the logged in user has
-            for (var i = 0; i < $scope.userRoles.length; i++) {
-                // if user is an admin, set variable to true (TODO)
-                if ($scope.userRoles[i].toLowerCase() == 'users') {
-                    $scope.isAdmin = true;
-                }
-            }
-        },
-        function (errorMessage) {
-            console.log(errorMessage);
-        });
-    };
-
-    initialize();
 
     // function to return an employee object after searching current floor by employee name
     var fetchEmployeeByName = function (employeeName) {
@@ -172,6 +161,7 @@
         // show error if there are still displaced employees
         if ($scope.displacedEmployees.length) {
             $scope.sendFormError = "All displaced employees must be given a new desk before moves may be submitted.";
+            $scope.sendFormSuccess = "";
             return;
         }
 
@@ -189,6 +179,7 @@
             },
             function (errorMessage) {
                 $scope.sendFormError = "The following error occurred while requesting the above move(s): " + errorMessage + ". Please try again or contact the help desk.";
+                $scope.sendFormSuccess = "";
                 console.log(errorMessage);
                 return;
             });
@@ -300,6 +291,9 @@
     }
 
     $scope.selectDesk = function (desk) {
+        // erase previous messages
+        $scope.sendFormSuccess = "";
+        $scope.sendFormError = "";
 
         // remove highlight color if previous desk selected
         if ($scope.focusedDesk) {
@@ -391,6 +385,10 @@
     // watch for change in current floor tab. reload desks, employees, and employee names
     $scope.$watch('currentFloor', function () {
         var center;
+
+        // erase previous messages
+        $scope.sendFormSuccess = "";
+        $scope.sendFormError = "";
 
         // erase previous desks
         for (var i = 0; i < $scope.maps[$scope.currentFloor].desks.length; i++) {
@@ -568,3 +566,16 @@
         });
     })
 };
+
+IndexCtrl.resolve = {
+    userRoles: function (user, $q) {
+        var deferred = $q.defer();
+
+        user.getUserRoles().then(function (data) {
+            deferred.resolve(data);
+        }, function (errorData) {
+            deferred.reject();
+        });
+        return deferred.promise;
+    }
+}
