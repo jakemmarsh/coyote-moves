@@ -41,11 +41,11 @@ namespace CoyoteMoves.Emailer.Models
 
             if (req == null)
             {
-                throw new ArgumentNullException("req");
+                throw new NullReferenceException("req");
             }
             if (string.IsNullOrEmpty(_mappedLocation))
             {
-                throw new ArgumentNullException("_templateLocation");
+                throw new IOException("_templateLocation");
             }
 
 

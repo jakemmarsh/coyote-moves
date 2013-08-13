@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Moq;
 using System.IO;
+using System.Net.Mail;
 
 
 namespace CoyoteMovesTest
@@ -14,6 +15,8 @@ namespace CoyoteMovesTest
     public class EmailerTests
     {
         private EmailSender _emailer;
+        private EmailTemplate _template;
+        private EmailTemplate _falseTemplate;
         private RequestForm _req;
         private Collection<string> _to;
 
@@ -23,6 +26,8 @@ namespace CoyoteMovesTest
             _to = new Collection<string> { };
             _emailer = new EmailSender("New Coyote Moves Request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
             _req = new RequestForm(989);
+            _template = new EmailTemplate("one", _to, "coyotemovesrequest@coyote.com", "dere you go", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
+            _falseTemplate = new EmailTemplate("one", _to, "three@four.com", "", "../../CoyoteMoves/CoyoteMovesTemplate.pdf");
 
 
             _req.Current = new CoyoteMovesFormEmployeeInfo();
@@ -119,6 +124,23 @@ namespace CoyoteMovesTest
         {
             bool testSent = _emailer.sendMovesRequestSD(null);
         }
+        
+        [TestCategory("Unit")]
+        [TestMethod]
+        [ExpectedException(typeof(System.NullReferenceException))]
+        public void messageNeedsRequest()
+        {
+            MailMessage testMessage = _template.movesFormRequest(new RequestForm());
+
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        [ExpectedException(typeof(System.IO.IOException))]
+        public void messageNeedsPdf()
+        {
+            MailMessage testMessage = _falseTemplate.movesFormRequest(_req);
+        }
 
         [TestCategory("Unit")]
         [TestMethod]
@@ -127,6 +149,10 @@ namespace CoyoteMovesTest
             bool testSent = _emailer.sendMovesRequest(_req, "GX");
             Assert.IsFalse(testSent);
         }
+
+        
+
+
 
     }
 

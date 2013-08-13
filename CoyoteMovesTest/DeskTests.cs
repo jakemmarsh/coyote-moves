@@ -68,9 +68,20 @@ namespace CoyoteMovesTest
             }
         }
 
-        //[TestMethod]
-        //[TestCategory("Integration")]
-        //public void 
+        [TestMethod]
+        [TestCategory("Integration")]
+        public void GetDesksSuccess()
+        {
+            bool validation = true;
+            List<Desk> deskList = _testDesk.GetAllDesks();
+            foreach (Desk desk in deskList)
+            {
+                validation = _validator.ValidateDeskNumber(desk.DeskNumber);
+            }
+
+            Assert.IsTrue(validation);
+        }
+
 
         [TestMethod, TestCategory("Unit")]
         public void CheckIfDeskExists()
