@@ -16,12 +16,11 @@ namespace CoyoteMovesTest
         private EmailSender _emailer;
         private RequestForm _req;
         private Collection<string> _to;
-        private Mock<EmailSender> _mockedEmailer;
 
         [TestInitialize]
         public void Setup()
         {
-            _to = new Collection<string> {};
+            _to = new Collection<string> { };
             _emailer = new EmailSender("New Coyote Moves Request", _to, "CoyoteMoves_request@coyote.com", "Here you go!", "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
             _req = new RequestForm(989);
 
@@ -58,10 +57,10 @@ namespace CoyoteMovesTest
             _req.Current.UltiproInfo.Department = "test";
             _req.Future.UltiproInfo.Department = "test";
             _req.Current.UltiproInfo.Supervisor = "test";
-            _req.Future.UltiproInfo.Supervisor = "test"; 
+            _req.Future.UltiproInfo.Supervisor = "test";
             _req.Current.UltiproInfo.Other = "test";
             _req.Future.UltiproInfo.Other = "test?";
-           
+
             _req.Current.DeskInfo.DeskNumber = "test";
             _req.Future.DeskInfo.DeskNumber = "test";
             _req.Current.DeskInfo.Office = "test";
@@ -70,11 +69,11 @@ namespace CoyoteMovesTest
             _req.Current.PhoneInfo.PhoneNumber = "8472718339";
             _req.Future.PhoneInfo.PhoneNumber = "99995953214";
 
-            _req.EmailInfo.GroupsToBeAddedTo =   "one, two, three" ;
-            _req.EmailInfo.GroupsToBeRemovedFrom = "one, two, three"; 
+            _req.EmailInfo.GroupsToBeAddedTo = "one, two, three";
+            _req.EmailInfo.GroupsToBeRemovedFrom = "one, two, three";
 
-            _req.ReviewInfo.FilesToBeAddedTo =  "one, two, three" ;
-            _req.ReviewInfo.FilesToBeRemovedFrom =  "one, two, three" ;
+            _req.ReviewInfo.FilesToBeAddedTo = "one, two, three";
+            _req.ReviewInfo.FilesToBeRemovedFrom = "one, two, three";
 
         }
 

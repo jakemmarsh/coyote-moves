@@ -10,7 +10,7 @@ using CoyoteMoves.Data_Access;
  * - Desk Movement by date
  * - Count of each group
  * - Dynamic Counts of each group
- */ 
+ */
 
 namespace CoyoteMoves.Emailer.Models
 {
@@ -26,14 +26,14 @@ namespace CoyoteMoves.Emailer.Models
         public EmailSender()
         {
             Collection<string> to = new Collection<string>();
-         
+
             _template = new EmailTemplate(
                 "New Coyote Moves Request",
                 to,
                 "CoyoteMovesRequest@coyote.com",
                 "",
                 "../../../CoyoteMoves/CoyoteMovesTemplate.pdf");
-            
+
             _requester = new RequestFormDB();
         }
 
@@ -71,7 +71,7 @@ namespace CoyoteMoves.Emailer.Models
             return isSent;
 
         }
-        
+
         public bool sendMovesRequest(RequestForm req)
         {
             if (req == null)
@@ -84,7 +84,7 @@ namespace CoyoteMoves.Emailer.Models
 
             return (smtp != null && _toSend != null);
         }
-     
+
         public bool sendMovesRequestHR(RequestForm req)
         {
             return sendMovesRequest(req, "HR");

@@ -43,5 +43,27 @@ namespace CoyoteMoves.Data_Access
             command.Connection.Close();
             return false;
         }
+
+        public bool ValidateDeskInfo(string number, double topLeftX, double topLeftY, double orient)
+        {
+            bool deskReturn = false;
+            SqlConnection connection = new SqlConnection(_connectionString);
+            SqlCommand command = new SqlCommand("Select [DeskNumber], [TopLeftX], [TopLeftY], [Orientation] from Intern_CoyoteMoves.dbo.Desk where DeskNumber=@deskNum");
+            command.Parameters.AddWithValue("@deskNum", number);
+            command.Connection = connection;
+            command.Connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                deskReturn = (reader["DeskNumber"].ToString() == number);
+                deskReturn = (reader["TopLeftX"].ToString() == topLeftX.ToString());
+                deskReturn = (reader["TopLeftY"].ToString() == topLeftY.ToString());
+                deskReturn = (reader["Orientation"].ToString() == orient.ToString());
+            }
+
+            command.Connection.Close();
+            return deskReturn;
+
+        }
     }
 }
