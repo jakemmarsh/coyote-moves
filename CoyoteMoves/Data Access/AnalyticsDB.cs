@@ -51,6 +51,7 @@ namespace CoyoteMoves.Data_Access
 
         public string GetGroupChangeInformationBetweenDates(SqlDateTime begin, SqlDateTime end)
         {
+            string info = "";
             Collection<RequestForm> forms = GetApprovedRequestsBetweenDates(begin, end);
             List<string> groups = _dataRequest.GetAllGroups();
             Dictionary<string, int> groupCount = new Dictionary<string, int>();
@@ -62,16 +63,27 @@ namespace CoyoteMoves.Data_Access
 
             foreach (RequestForm entry in forms)
             {
-                string pastGroup = entry.Current.BazookaInfo.Group;
-                string futureGroup = entry.Future.BazookaInfo.Group;
-                if (groupCount.ContainsKey(pastGroup))
-                    groupCount[pastGroup]--;
+                if (entry != null)
+                {
+                    string pastGroup = entry.Current.BazookaInfo.Group;
+                    string futureGroup = entry.Future.BazookaInfo.Group;
+                    if (groupCount.ContainsKey(pastGroup))
+                        groupCount[pastGroup] -= 1;
 
-                if (groupCount.ContainsKey(futureGroup))
-                    groupCount[futureGroup]++;
+                    if (groupCount.ContainsKey(futureGroup))
+                        groupCount[futureGroup] += 1;
+                }
             }
 
-            return groupCount.ToString();
+            foreach (string entry in groups)
+            {
+                if (groupCount[entry] != 0)
+                {
+                    info += String.Format("Group {0} changed by {1} people \n", entry, groupCount[entry]);
+                }
+
+            }
+            return info; 
         }
 
         public string GetAllGroupChangeInformation()
