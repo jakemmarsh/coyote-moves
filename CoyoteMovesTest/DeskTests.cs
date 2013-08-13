@@ -68,6 +68,10 @@ namespace CoyoteMovesTest
             }
         }
 
+        //[TestMethod]
+        //[TestCategory("Integration")]
+        //public void 
+
         [TestMethod, TestCategory("Unit")]
         public void CheckIfDeskExists()
         {
@@ -92,6 +96,32 @@ namespace CoyoteMovesTest
             bool validation = _testDesk.ChangeDeskPointAndOrientation("THX1193", _topLeftX, _topLeftY, _orient);
             Assert.IsFalse(validation);
         }
+
+        //public List<Desk> GetAllDesks()
+        //{
+        //    List<Desk> deskList = new List<Desk>();
+        //    SqlConnection connection = new SqlConnection(_connectionString);
+        //    string commandString = "EXEC dbo.spDesk_GetAllDesks";
+        //    SqlCommand command = new SqlCommand(commandString);
+
+        //    try
+        //    {
+        //        command.Connection = connection;
+        //        connection.Open();
+        //        SqlDataReader reader = command.ExecuteReader();
+
+        //        SqlToDeskModelFactory DeskFactory = new SqlToDeskModelFactory(reader);
+        //        deskList = DeskFactory.GetAllDesks();
+        //        connection.Close();
+        //        return deskList;
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }
+        //}
+
 
     }
 }

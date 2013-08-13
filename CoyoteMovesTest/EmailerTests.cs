@@ -56,8 +56,8 @@ namespace CoyoteMovesTest
             _req.Future.UltiproInfo.JobTitle = "test";
             _req.Current.UltiproInfo.Department = "test";
             _req.Future.UltiproInfo.Department = "test";
-            _req.Current.UltiproInfo.Supervisor = "test";
-            _req.Future.UltiproInfo.Supervisor = "test";
+            _req.Current.UltiproInfo.Supervisor = "120 ";
+            _req.Future.UltiproInfo.Supervisor = "350";
             _req.Current.UltiproInfo.Other = "test";
             _req.Future.UltiproInfo.Other = "test?";
 

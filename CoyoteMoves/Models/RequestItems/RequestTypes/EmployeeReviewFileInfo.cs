@@ -12,8 +12,8 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
 
         public EmployeeReviewFileInfo()
         {
-            FilesToBeAddedTo = "this";
-            FilesToBeRemovedFrom = "sucks";
+            FilesToBeAddedTo = "";
+            FilesToBeRemovedFrom = "";
         }
     }
 }
