@@ -167,6 +167,8 @@
     }
 
     $scope.sendAllForms = function () {
+        $scope.movesProcessed = 0;
+        $scope.sendFormError = "";
         // show error if there are still displaced employees
         if ($scope.displacedEmployees.length) {
             $scope.sendFormError = "All displaced employees must be given a new desk before moves may be submitted.";
@@ -183,14 +185,22 @@
 
             requestForm.sendForm($scope.movedEmployees[i]).then(function (data) {
                 console.log(data);
+                $scope.movesProcessed += 1;
             },
             function (errorMessage) {
-                $scope.sendFormError = "There was an error submitting the move(s) you have requested. Please try again or contact the help desk.";
+                $scope.sendFormError = "The following error occurred while requesting the above move(s): " + errorMessage + ". Please try again or contact the help desk.";
                 console.log(errorMessage);
+                return;
             });
         }
-        // remove all moves after processing them
-        $scope.cancelAllMoves();
+        $scope.$watch('movesProcessed', function () {
+            if ($scope.movedEmployees.length == $scope.movesProcessed) {
+                $scope.sendFormError = "";
+                $scope.sendFormSuccess = "Your moves have been successfully requested. You will receive notification once they have been approved.";
+                // remove all moves after processing them
+                $scope.cancelAllMoves();
+            }
+        });
     }
 
     $scope.cancelSingleMove = function (index) {
