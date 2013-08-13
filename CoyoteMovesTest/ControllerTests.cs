@@ -65,7 +65,7 @@ namespace CoyoteMovesTest
                              'filesToBeRemovedFrom':'34345'}}";
 
             _jsonObject = JObject.Parse(json);
-           _controller = new RequestFormController();
+            _controller = new RequestFormController();
         }
 
         [TestCategory("Unit")]

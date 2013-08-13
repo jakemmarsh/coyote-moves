@@ -28,13 +28,13 @@ namespace CoyoteMoves.Data_Access
             command.Connection.Close();
 
             return (result == 1);
-            
+
         }
 
         private bool UpdateRequestToApprovedStatus(Guid UniqueRequestID, string ApprovalDept)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
-            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept +"=1 WHERE UniqueRequestID=@UniqueRequestID");
+            SqlCommand command = new SqlCommand("UPDATE Intern_CoyoteMoves.dbo.RequestData SET " + ApprovalDept + "=1 WHERE UniqueRequestID=@UniqueRequestID");
             command.Parameters.Add("@UniqueRequestID", SqlDbType.UniqueIdentifier).Value = UniqueRequestID;
             command.Connection = connection;
             command.Connection.Open();
@@ -75,7 +75,7 @@ namespace CoyoteMoves.Data_Access
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                approved = (bool)(reader[OtherDept]); 
+                approved = (bool)(reader[OtherDept]);
             }
 
             connection.Close();
@@ -206,7 +206,7 @@ namespace CoyoteMoves.Data_Access
             return (bool)approval;
         }
 
-        public RequestForm RetrieveRequest (Guid uniqueRequestID)
+        public RequestForm RetrieveRequest(Guid uniqueRequestID)
         {
             SqlConnection connection = new SqlConnection(_connectionString);
             string commandstring = "EXEC [Intern_CoyoteMoves].[dbo].[spRequestData_GetRequestDataByUniqueID] @guid";
@@ -226,7 +226,7 @@ namespace CoyoteMoves.Data_Access
             {
                 throw new Exception(ex.Message);
             }
-            
+
         }
     }
 }
