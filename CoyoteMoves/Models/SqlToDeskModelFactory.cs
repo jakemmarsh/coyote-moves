@@ -19,6 +19,22 @@ namespace CoyoteMoves.Models
             this.reader = reader;
         }
 
+        public List<Desk> GetAllDesks()
+        {
+            if (this.reader == null)
+            {
+                return null;
+            }
+
+            List<Desk> DeskList = new List<Desk>();
+            while (reader.Read())
+            {
+                DeskList.Add(CreateDesk());
+            }
+
+            return DeskList;
+        }
+
         public List<Desk> GetAllDesks(int floor)
         {
             if (this.reader == null)
@@ -29,7 +45,7 @@ namespace CoyoteMoves.Models
             List<Desk> DeskList = new List<Desk>();
             while (reader.Read())
             {
-                DeskList.Add(CreateDesk(floor));
+                DeskList.Add(CreateDesk());
             }
 
             return DeskList;
@@ -73,12 +89,12 @@ namespace CoyoteMoves.Models
             }
         }
 
-        public Desk CreateDesk(int floor)
+        public Desk CreateDesk()
         {
             string deskNumber = reader["DeskNumber"].ToString();
             CoordinatePoint TopLeft = new CoordinatePoint((double)reader["TopLeftX"], (double)reader["TopLeftY"]);
             double Orientation = (double)reader["Orientation"];
-            Location loc = new Location(floor, TopLeft, Orientation);
+            Location loc = new Location((int)reader["FloorNumber"], TopLeft, Orientation);
             Employee TempGuy = this.CreateEmployee();
 
             Desk TempDesk = new Desk(loc, deskNumber, TempGuy);

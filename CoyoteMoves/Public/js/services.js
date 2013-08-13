@@ -33,7 +33,19 @@
             $http.get(this.apiPath + 'User/GetUserRoles/').success(function (data) {
                 deferred.resolve(data);
             }).error(function () {
-                deferred.reject("An error occurred while fetching user.");
+                deferred.reject("An error occurred while fetching user's roles.");
+            });
+
+            return deferred.promise;
+        },
+
+        getUserEmail: function () {
+            var deferred = $q.defer();
+
+            $http.get(this.apiPath + 'User/GetUserEmail/').success(function (data) {
+                deferred.resolve(data);
+            }).error(function () {
+                deferred.reject("An error occurred while fetching user's email address.");
             });
 
             return deferred.promise;
@@ -120,8 +132,8 @@ myModule.factory('requestForm', function ($http, $q) {
 
             $http.post(this.apiPath + 'RequestForm/SendChangeRequest', moveForm).success(function (data) {
                 deferred.resolve(data);
-            }).error(function () {
-                deferred.reject("An error occurred while submitting a change request.");
+            }).error(function (errorMessage) {
+                deferred.reject(errorMessage);
             });
 
             return deferred.promise;

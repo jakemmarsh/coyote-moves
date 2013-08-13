@@ -4,7 +4,7 @@
         <a href data-ng-click="currentFloor = 3" class="tab" data-ng-class="{true: 'active', false: ''}[currentFloor == 3]">3rd Floor</a><a href data-ng-click="currentFloor = 4" class="tab" data-ng-class="{true: 'active', false: ''}[currentFloor == 4]">4th Floor</a><a href data-ng-click="currentFloor = 5" class="tab" data-ng-class="{true: 'active', false: ''}[currentFloor == 5]">5th Floor</a>
     </div>
     <form data-ng-submit="searchForEmployee()" class="inline-block float-right nudge--right" style="width: 75%;">
-        <input type="text" id="employee-search" data-ng-model="employeeToSearchFor" data-ng-change="checkSearch()" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
+        <input type="text" id="employee-search" data-ng-model="employeeToSearchFor" data-ng-change="checkSearch()" data-ng-disabled="loadingFloorData" placeholder="Search for an employee..." bs-typeahead="currentFloorEmployeeNames" data-min-length="1" />
     </form> 
     </div>
     <div id="map-third" class="map-container" data-ng-class="{true:'', false:'full-width'}[showSidebar]" data-ng-show="currentFloor == 3">
@@ -50,7 +50,7 @@
                         Orientation
                     </div>
                     <div class="td">
-                        <slider floor="0" ceiling="360" step="45" precision="0" data-ng-model="currentDeskOrientation" move-start="doNothing" move-end="changeOrientation"></slider>
+                        <slider floor="0" ceiling="360" step="45" precision="0" data-ng-model="currentDeskOrientation" move-start="doNothing" move-end="doNothing"></slider>
                     </div>
                 </div>
                 <span data-ng-bind="createMoveFormError" class="error-message block"></span>
@@ -61,7 +61,8 @@
             <h3>Displaced Employees</h3>
             <ul id="displaced-employees">
                 <li data-ng-repeat="employee in displacedEmployees" class="soft--sides clearfix">
-                    <span data-ng-bind="employee.name" class="btn btn--primary btn--left float-left" style="width: 210px;" title="View Original Desk" data-ng-click="selectDisplacedEmployee(employee.name)"></span><span class="btn btn--primary btn--right btn--action float-right" title="Move to Selected Desk" data-ng-click="setFutureDeskOccupant(employee.name)">move</span>
+                    <span data-ng-bind="employee.name" class="btn btn--primary btn--left float-left" style="width: 210px;" title="View Original Desk" data-ng-click="selectDisplacedEmployee(employee.name)"></span>
+                    <span class="btn btn--primary btn--right btn--action float-right" title="Move to Selected Desk" data-ng-click="setFutureDeskOccupant(employee.name)">move</span>
                 </li>
             </ul>
         </div>
@@ -356,6 +357,7 @@
     </form>
     <div class="row soft--left" id="global-controls">
         <span class="error-message block nudge-half--bottom" data-ng-bind="sendFormError"></span>
+        <span class="success-message block nudge-half--bottom" data-ng-bind="sendFormSuccess"></span>
         <a href class="btn btn--cancel nudge--right" class="nudge--left" data-ng-click="cancelAllMoves()" data-ng-hide="movedEmployees.length <= 1">Close All Tabs</a>
         <input type="submit" class="btn btn--primary" value="Submit Moves" data-ng-show="movedEmployees.length > 1" data-ng-hide="movedEmployees.length <= 1" data-ng-click="sendAllForms()" />
         <input type="submit" class="btn btn--primary" value="Submit Move" data-ng-show="movedEmployees.length == 1" data-ng-hide="movedEmployees.length > 1 || movedEmployees.length == 0" data-ng-click="sendAllForms()"/>

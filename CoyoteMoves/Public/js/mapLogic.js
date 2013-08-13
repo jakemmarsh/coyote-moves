@@ -64,7 +64,7 @@
         latRadians = Math.asin((origin.y - y) / this.worldCoordinateLatRange);
         lat = radiansToDegrees(latRadians);
         return new google.maps.LatLng(lat, lng, noWrap);
-    };    
+    };
 
     function transformCoord(xCoord, yCoord, rad) {
         return [xCoord * Math.cos(rad) - yCoord * Math.sin(rad), xCoord * Math.sin(rad) + yCoord * Math.cos(rad)];
@@ -139,7 +139,7 @@
             });
         }
 
-        desk.getPoint = function() {
+        desk.getPoint = function () {
             var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0)),
                 p1 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(1)),
                 p2 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(2)),
@@ -150,29 +150,29 @@
 
         desk.deskNumber = deskId;
 
-        labelText = deskId + "<br />(CO) " + employee.name;
+        labelText = employee.name;
 
         marker = new MarkerWithLabel({
-            position: new google.maps.LatLng(0,0),
+            position: new google.maps.LatLng(0, 0),
             draggable: false,
             raiseOnDrag: false,
             map: map,
             labelContent: labelText,
             labelAnchor: new google.maps.Point(20, 10),
             labelClass: "desk-number-label", // the CSS class for the label
-            labelStyle: {opacity: 1.0},
+            labelStyle: { opacity: 1.0 },
             icon: "http://placehold.it/1x1",
             visible: false
         });
 
-        google.maps.event.addListener(desk, "mousemove", function(event) {
+        google.maps.event.addListener(desk, "mousemove", function (event) {
             var temp = desk.getPoint();
             temp.y = (temp.y - 0.8) - (7 - map.getZoom());
             temp.x -= 0.3;
             marker.setPosition(maptype.projection.fromPointToLatLng(temp));
             marker.setVisible(true);
         });
-        google.maps.event.addListener(desk, "mouseout", function(event) {
+        google.maps.event.addListener(desk, "mouseout", function (event) {
             marker.setVisible(false);
         });
 
@@ -186,7 +186,7 @@
         desk.modBorder = function (color) {
             desk.setOptions({ strokeColor: color });
         }
-        desk.modPath = function (exx, why, rot) {
+        desk.modPath = function (newX, newY, rot) {
             var newPaths = null,
             rad0 = (Math.PI / 180) * rot,
             p0 = transformCoord(-DESK_CONSTANT_Y / 2, -DESK_CONSTANT_X / 2, rad0),
@@ -194,10 +194,10 @@
             p2 = transformCoord(DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
             p3 = transformCoord(-DESK_CONSTANT_Y / 2, DESK_CONSTANT_X / 2, rad0),
 
-            c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p0[0], why + p0[1])),
-            c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p1[0], why + p1[1])),
-            c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p2[0], why + p2[1])),
-            c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(exx + p3[0], why + p3[1]));
+            c1 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p0[0], newY + p0[1])),
+            c2 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p1[0], newY + p1[1])),
+            c3 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p2[0], newY + p2[1])),
+            c4 = maptype.projection.fromPointToLatLng(new google.maps.Point(newX + p3[0], newY + p3[1]));
 
             newPaths = [c1, c2, c3, c4];
 
@@ -210,7 +210,7 @@
 
     };
 
-    var initializeMap = function(floor) {
+    var initializeMap = function (floor) {
 
         var gallPetersMap,
             gallPetersMapType = new google.maps.ImageMapType({
@@ -263,14 +263,6 @@
         gallPetersMap.mapTypes.set('gallPetersMap', gallPetersMapType);
         gallPetersMap.setMapTypeId('gallPetersMap');
 
-
-
-        google.maps.event.addListener(gallPetersMap, 'click', function (event) {
-            console.log('Point.X.Y: ' + gallPetersMapType.projection.fromLatLngToPoint(event.latLng));
-            console.log('Point.lat.lng: ' + event.latLng);
-
-        });
-
         gallPetersMap.desks = [];
 
         gallPetersMap.addDesk = function (xpos, ypos, angle, employee, deskId, isAdmin) {
@@ -288,42 +280,7 @@
         };
         map = gallPetersMap;
 
-        // limit bounds for panning
-        var swlat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lat(),
-            swlng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(6, 69)).lng(),
-            nelat = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lat(),
-            nelng = gallPetersMapType.projection.fromPointToLatLng(new google.maps.Point(86, 11)).lng();
-
-        var allowedBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(swlat, swlng),
-          new google.maps.LatLng(nelat, nelng)
-        );
-
-        // Listen for the dragend event
-        //google.maps.event.addListener(gallPetersMap, 'dragend', function () { checkBounds(); });
-
-        function checkBounds() {
-            if (!allowedBounds.contains(gallPetersMap.getCenter())) {
-                var C = gallPetersMap.getCenter(),
-                    X = C.lng(),
-                    Y = C.lat(),
-                    AmaxX = allowedBounds.getNorthEast().lng(),
-                    AmaxY = allowedBounds.getNorthEast().lat(),
-                    AminX = allowedBounds.getSouthWest().lng(),
-                    AminY = allowedBounds.getSouthWest().lat();
-
-                if (X < AminX) { X = AminX; }
-                if (X > AmaxX) { X = AmaxX; }
-                if (Y < AminY) { Y = AminY; }
-                if (Y > AmaxY) { Y = AmaxY; }
-
-                gallPetersMap.setCenter(new google.maps.LatLng(Y, X));
-
-
-            }
-        }
-
-        gallPetersMap.getDesk = function(deskNumber) {
+        gallPetersMap.getDesk = function (deskNumber) {
             for (var i = 0; i < gallPetersMap.desks.length; i++) {
                 if (gallPetersMap.desks[i].deskNumber == deskNumber) {
                     return gallPetersMap.desks[i];

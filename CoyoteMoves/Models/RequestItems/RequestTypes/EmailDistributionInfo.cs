@@ -12,8 +12,8 @@ namespace CoyoteMoves.Models.RequestItems.RequestTypes
 
         public EmailDistributionInfo()
         {
-            GroupsToBeAddedTo = " ";
-            GroupsToBeRemovedFrom = " ";
+            GroupsToBeAddedTo = "test";
+            GroupsToBeRemovedFrom = "plese die";
         }
     }
 }

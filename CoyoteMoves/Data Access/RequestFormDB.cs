@@ -12,7 +12,6 @@ namespace CoyoteMoves.Data_Access
     public class RequestFormDB
     {
         public string _connectionString { get; set; }
-        public SqlToFormModelFactory _factory;
 
         public RequestFormDB()
         {
@@ -40,7 +39,7 @@ namespace CoyoteMoves.Data_Access
             command.Connection = connection;
             command.Connection.Open();
 
-            int result = command.ExecuteNonQuery();//why is it trying to access the guid string? 
+            int result = command.ExecuteNonQuery();
             command.Connection.Close();
 
             bool theOtherDepartmentHasApproved = CheckOtherDepartmentApproval(UniqueRequestID, ApprovalDept);
@@ -209,19 +208,25 @@ namespace CoyoteMoves.Data_Access
 
         public RequestForm RetrieveRequest (Guid uniqueRequestID)
         {
-            RequestForm toReturn = new RequestForm();
             SqlConnection connection = new SqlConnection(_connectionString);
-            string commandString = "EXEC dbo.spRequestData_GetRequestDataByUniqueID @guid = @druid";
-            SqlCommand command = new SqlCommand(commandString);
+            string commandstring = "EXEC [Intern_CoyoteMoves].[dbo].[spRequestData_GetRequestDataByUniqueID] @guid";
+            SqlCommand command = new SqlCommand(commandstring);
 
-            command.Parameters.AddWithValue("@druid", uniqueRequestID);
-            command.Connection = connection;
-            connection.Open();
-            SqlDataReader reader = command.ExecuteReader();
-            SqlToFormModelFactory RequestFactory = new SqlToFormModelFactory(reader);
-            toReturn = RequestFactory.GetRequest(uniqueRequestID);
-            connection.Close();
-            return toReturn;
+            try
+            {
+                command.Parameters.AddWithValue("@guid", uniqueRequestID);
+                command.Connection = connection;
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                SqlToFormModelFactory formFactory = new SqlToFormModelFactory(reader);
+                return formFactory.GetRequest(uniqueRequestID);
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
         }
     }
 }
