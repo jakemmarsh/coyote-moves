@@ -19,6 +19,13 @@ namespace CoyoteMoves.Controllers
             return User.Identity.Name;
         }
 
+        // GET api/User/GetUserEmail
+        public string GetUserEmail()
+        {
+            UserPrincipal user = UserPrincipal.FindByIdentity(new PrincipalContext(ContextType.Domain, "CoyoteLogistics"), User.Identity.Name);
+            return user.EmailAddress;
+        }
+
         // GET api/User/GetUserAuthType
         public string GetUserAuthType()
         {
