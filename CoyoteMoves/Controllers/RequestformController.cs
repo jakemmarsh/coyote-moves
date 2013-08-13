@@ -45,25 +45,9 @@ namespace CoyoteMoves.Controllers
                 return useForFailure;
             }
 
-            RequestForm obj = makeRequestForm(json);
-
-            Collection<string> to = new Collection<string>();
-            to.Add("kevin.jasieniecki@coyote.com");
-            EmailSender emailer = new EmailSender("Testes", to, "coyotemoves@coyote.com", "Testing.", HttpContext.Current.Server.MapPath("/CoyoteMoves/CoyoteMovesTemplate.pdf"));
-            emailer.sendMovesRequest(obj);
-
-            RequestFormDB formDB = new RequestFormDB();
-            formDB.StoreRequestFormInDatabaseAsPending(obj);
-
-            return new HttpResponseMessage(HttpStatusCode.OK);
-        }
-
-        public RequestForm makeRequestForm(JObject json)
-        {
-            string currManagerName = (string)json["current"]["bazookaInfo"]["managerId"];
-            string futureManagerName = (string)json["future"]["bazookaInfo"]["managerId"];
-            int managerID = GetIDFromName(currManagerName);
-            int f_managerID = GetIDFromName(futureManagerName);
+            //Front end passes the literal name of the manager, 
+            //so we have to reassign the name to actually be the ID
+            //this way, the JSON lines up with the data object. 
             json["current"]["bazookaInfo"]["managerId"] = managerID;
             json["current"]["ultiproInfo"]["supervisor"] = managerID;
             json["future"]["bazookaInfo"]["managerId"] = f_managerID;
@@ -75,8 +59,8 @@ namespace CoyoteMoves.Controllers
             int creatorID = GetIDFromName(creatorName);
 
             RequestForm obj = null;
-            using (var sr = new StringReader(json.ToString()))
-            using (var jr = new JsonTextReader(sr))
+            using(var sr = new StringReader(json.ToString()))
+            using(var jr = new JsonTextReader(sr))
             {
                 var js = new JsonSerializer();
                 obj = (RequestForm)js.Deserialize<RequestForm>(jr);
@@ -84,11 +68,20 @@ namespace CoyoteMoves.Controllers
             obj.EmployeeId = GetIDFromName((string)json["name"]);
             obj.CreatedByID = creatorID;
             obj.Current.BazookaInfo.SecurityItemRights = "";
-            obj.ReviewInfo.FilesToBeRemovedFrom = "(" + obj.Current.BazookaInfo.Group + ")" + currManagerName.Replace(" ", ".")+" ,"+obj.ReviewInfo.FilesToBeRemovedFrom;
-            obj.ReviewInfo.FilesToBeAddedTo = "(" + obj.Future.BazookaInfo.Group + ")" + futureManagerName.Replace(" ", ".")+" ,"+obj.ReviewInfo.FilesToBeAddedTo;
 
-            return obj;
+            //EmailSender emailer = new EmailSender();
+            //emailer.sendMovesRequestHR(obj);
+            //emailer.sendMovesRequestSD(obj);
 
+            Collection<string> to = new Collection<string>();
+            to.Add("jason.dibabbo@coyote.com");
+            EmailSender emailer = new EmailSender("Testes", to, "coyotemoves@coyote.com", "Testing.", HttpContext.Current.Server.MapPath("/CoyoteMoves/CoyoteMovesTemplate.pdf"));
+            emailer.sendMovesRequest(obj);
+
+            RequestFormDB formDB = new RequestFormDB();
+            formDB.StoreRequestFormInDatabaseAsPending(obj);
+
+            return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         //GET api/RequestForm/GetIDFromName

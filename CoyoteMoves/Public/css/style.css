@@ -128,6 +128,7 @@ h2.black-bg {
     color: #333;
     background-color: #eee;
     margin: 5px 0;
+    font-weight: normal;
     text-transform: uppercase;
     letter-spacing: .15em;
     margin-bottom: 10px;
@@ -222,7 +223,7 @@ input[type="text"] {
 .map-container {
     float: left;
     width: 85%;
-    height: 700px;
+    height: 600px;
     background:#fff;
     border: 1px solid #c9cace;
     z-index: 99;
@@ -237,7 +238,7 @@ input[type="text"] {
 #map-sidebar {
     float: left;
     width: 15%;
-    height: 700px;
+    height: 600px;
     border: 1px solid #c9cace;
     border-width: 1px 1px 1px 0;
 }
@@ -273,10 +274,7 @@ input[type="text"] {
 #displaced-employees {
     margin: 0;
     list-style-type: none;
-    -moz-padding-start: 0px;
     -webkit-padding-start: 0px;
-    -khtml-padding-start: 0px;
-    -o-padding-start: 0px;
     overflow: auto;
     height: 260px;
 }
@@ -284,7 +282,7 @@ input[type="text"] {
     #displaced-employees > li {
         margin-top: 8px;
     }
-    #displaced-employees > li:last-child {
+    #displaced-employees > li:last-child() {
         margin-bottom: 8px;
     }
 
@@ -317,7 +315,7 @@ input[type="text"] {
     }
 
     .employee-form .tr:nth-last-child(2n+1) 
-{        background:#fff;
+{        background:#f0f0f0;
     }
 
 h3.title {
@@ -433,29 +431,23 @@ input[type=text], input[type=password] {
 .btn--row {
     height: 34px;
 }
-
 .btn--right {
     -webkit-border-radius: 0px 3px 3px 0px;
     -moz-border-radius: 0px 3px 3px 0px;
     -ms-border-radius: 0px 3px 3px 0px;
     -o-border-radius: 0px 3px 3px 0px;
-    border-radius: 0px 3px 3px 0;
 }
-
 .btn--left {
     -webkit-border-radius: 3px 0px 0px 3px;
     -moz-border-radius: 3px 0px 0px 3px;
     -ms-border-radius: 3px 0px 0px 3px;
     -o-border-radius: 3px 0px 0px 3px;
-    border-radius: 3px 0px 0px 3px;
 }
-
 .btn--middle {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     -ms-border-radius: 0px;
     -o-border-radius: 0px;
-    border-radius: 0px;
 }
 
 .nudge--left {
@@ -551,12 +543,11 @@ input[type=text], input[type=password] {
 }
 .desk-number-label {
     color: #0592fa;
-    background-color: #ffffff;
+    background-color: white;
     font-size: 14px;
     font-weight: bold;
     text-align: center;
     border: 1px solid #111;
     white-space: nowrap;
-    position: relative;
-    padding: 3px;
+    
 }

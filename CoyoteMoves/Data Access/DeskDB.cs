@@ -50,6 +50,83 @@ namespace CoyoteMoves.Data_Access
             }
         }
 
+        public List<Desk> GetAllDesks()
+        {
+            List<Desk> deskList = new List<Desk>();
+            SqlConnection connection = new SqlConnection(_connectionString);
+            string commandString = "EXEC dbo.spDesk_GetAllDesks";
+            SqlCommand command = new SqlCommand(commandString);
+
+            try
+            {
+                command.Connection = connection;
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                SqlToDeskModelFactory DeskFactory = new SqlToDeskModelFactory(reader);
+                deskList = DeskFactory.GetAllDesks();
+                connection.Close();
+                return deskList;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void AddNamesAndDeskNumbersFromFile(string filePath)
+        {
+            //this should take a csv file
+            //assumes each line is :'firstname.lastname,desknumber,'
+            //use to populate desk table
+
+            StreamReader reader = new StreamReader(Path.GetFullPath(filePath));
+            string line = "";
+            int fifthFloorDeskIndex = 1;
+            while ((line = reader.ReadLine()) != null)
+            {
+                if (line.Contains("Name") == false)
+                {
+                    string[] arr = line.Split(',');
+                    string employeeName = arr[0];
+                    string newname = employeeName.Split('.')[0] + " " + employeeName.Split('.')[1];
+
+                    EmployeeDB emp = new EmployeeDB();
+                    int id = emp.GetIdFromName(newname);
+
+                    //something is weird for this person INSIDE the database, so the function above won't work, so just set it to their id
+                    if (newname.Contains("jordan brychell"))
+                    {
+                        id = 10184;
+                    }
+
+                    string deskNumber = arr[1];
+
+                    int floorNumber = Convert.ToInt32(arr[1][0].ToString());
+                    if (floorNumber == 5)
+                    {
+                        deskNumber += "-" + fifthFloorDeskIndex;
+                        fifthFloorDeskIndex++;
+                    }
+
+                    if (id != -1)
+                    {
+                        //finally, actually insert that info into the desk database
+                        //InsertInformationIntoDeskDB(deskNumber, 0, 0, 0, floorNumber, id);
+                    }
+                    else
+                    {
+                        Console.WriteLine(newname + "\n" + "\tid: " + id + "\n\tdesk: " + deskNumber + "\n\tfloor: " + floorNumber);
+                    }
+                    
+                    
+                }
+            }
+
+            reader.Close();
+        }
+
         public bool InsertInformationIntoDeskDB(string deskNumber, int topLeftX, int topLeftY, int orientation, int floorNumber, int employeeID)
         {
             SqlConnection connection = new SqlConnection(this._connectionString);
@@ -84,7 +161,7 @@ namespace CoyoteMoves.Data_Access
             return (result == 1);
         }
 
-        public bool CheckIfDeskExists(string deskNumber)
+        public bool CheckIfDeskExisits(string deskNumber)
         {
             SqlConnection conn = new SqlConnection(_connectionString);
             string command = "SELECT DeskNumber FROM [Intern_CoyoteMoves].[dbo].[Desk] WHERE DeskNumber = @num";
@@ -113,7 +190,7 @@ namespace CoyoteMoves.Data_Access
 
         public bool ChangeDeskPointAndOrientation(string deskNumber, double topLeftX, double topLeftY, double orientation)
         {
-            if (!CheckIfDeskExists(deskNumber))
+            if (!CheckIfDeskExisits(deskNumber))
             {
                 return false;
             }

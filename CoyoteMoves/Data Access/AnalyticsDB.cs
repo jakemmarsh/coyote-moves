@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 
@@ -13,24 +12,22 @@ namespace CoyoteMoves.Data_Access
     public class AnalyticsDB
     {
         private string _connectionString;
-        private RequestFormDB _requester;
         
         public AnalyticsDB()
-        {
-            _requester = new RequestFormDB();
+        {  
             _connectionString = (string)System.Web.Configuration.WebConfigurationManager.ConnectionStrings["DataClientRead"].ConnectionString;
         }
 
-        public Collection<RequestForm> GetAllApprovedRequests()
+        public Collection<RequestForm> GetAllRequestRecords()
         {
-            return GetApprovedRequestsBetweenDates(SqlDateTime.MinValue, SqlDateTime.MaxValue);
+            return GetRequestsBetweenDates(DateTime.MinValue, DateTime.MaxValue);
         }
 
-        public Collection<RequestForm> GetApprovedRequestsBetweenDates(SqlDateTime begin, SqlDateTime end)
+        public Collection<RequestForm> GetRequestsBetweenDates(DateTime begin, DateTime end)
         {
             Collection<RequestForm> requestCollection = new Collection<RequestForm>();
             SqlConnection connection = new SqlConnection(_connectionString);
-            string commandString = "SELECT [UniqueRequestID] FROM [Intern_CoyoteMoves].[dbo].[RequestData] WHERE [CreateDate] <= @end AND [CreateDate] >= @begin AND [Pending] = 0";
+            string commandString = "SELECT [UniqueRequestID], [CreateDate] FROM [Intern_CoyoteMoves].[dbo].[RequestData] WHERE [CreateDate] < @end AND [CreateDate] > @begin";
             SqlCommand command = new SqlCommand(commandString);
 
             command.Parameters.AddWithValue("@begin", begin);
@@ -38,11 +35,9 @@ namespace CoyoteMoves.Data_Access
             command.Connection = connection;
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
-            SqlToFormModelFactory RequestFactory = new SqlToFormModelFactory(reader);
-            while (reader.Read())
-            {
-                requestCollection.Add(_requester.RetrieveRequest(reader.GetGuid(reader.GetOrdinal("UniqueRequestID"))));
-            }
+            SqlToDeskModelFactory RequestFactory = new SqlToDeskModelFactory(reader);
+
+            //requestList = RequestFactory.RetrieveRequest(;
             connection.Close();
             return requestCollection;
         }

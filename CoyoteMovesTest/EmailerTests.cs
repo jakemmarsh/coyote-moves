@@ -16,6 +16,7 @@ namespace CoyoteMovesTest
         private EmailSender _emailer;
         private RequestForm _req;
         private Collection<string> _to;
+        private Mock<EmailSender> _mockedEmailer;
 
         [TestInitialize]
         public void Setup()
