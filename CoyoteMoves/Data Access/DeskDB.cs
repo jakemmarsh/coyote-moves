@@ -43,8 +43,8 @@ namespace CoyoteMoves.Data_Access
                 connection.Close();
                 return deskList;
             }
-            
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -119,8 +119,8 @@ namespace CoyoteMoves.Data_Access
                     {
                         Console.WriteLine(newname + "\n" + "\tid: " + id + "\n\tdesk: " + deskNumber + "\n\tfloor: " + floorNumber);
                     }
-                    
-                    
+
+
                 }
             }
 
@@ -131,8 +131,8 @@ namespace CoyoteMoves.Data_Access
         {
             SqlConnection connection = new SqlConnection(this._connectionString);
             string commandString = "INSERT INTO Intern_CoyoteMoves.dbo.Desk (DeskNumber, TopLeftX, TopLeftY, Orientation, FloorNumber, EmployeeID) Values (@DeskNumber, @TopLeftX, @TopLeftY, @Orientation, @FloorNumber, @EmployeeID);";
-           
-            SqlCommand command = new SqlCommand(commandString); 
+
+            SqlCommand command = new SqlCommand(commandString);
             command.Parameters.AddWithValue("@DeskNumber", deskNumber);
             command.Parameters.AddWithValue("@TopLeftX", topLeftX);
             command.Parameters.AddWithValue("@TopLeftY", topLeftY);
@@ -161,7 +161,7 @@ namespace CoyoteMoves.Data_Access
             return (result == 1);
         }
 
-        public bool CheckIfDeskExisits(string deskNumber)
+        public bool CheckIfDeskExists(string deskNumber)
         {
             SqlConnection conn = new SqlConnection(_connectionString);
             string command = "SELECT DeskNumber FROM [Intern_CoyoteMoves].[dbo].[Desk] WHERE DeskNumber = @num";
@@ -175,7 +175,7 @@ namespace CoyoteMoves.Data_Access
                 object temp = cmd.ExecuteScalar();
                 conn.Close();
 
-                if((temp == null) || (temp == DBNull.Value))
+                if ((temp == null) || (temp == DBNull.Value))
                 {
                     return false;
                 }
@@ -190,7 +190,7 @@ namespace CoyoteMoves.Data_Access
 
         public bool ChangeDeskPointAndOrientation(string deskNumber, double topLeftX, double topLeftY, double orientation)
         {
-            if (!CheckIfDeskExisits(deskNumber))
+            if (!CheckIfDeskExists(deskNumber))
             {
                 return false;
             }

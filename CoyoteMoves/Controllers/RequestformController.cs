@@ -119,6 +119,13 @@ namespace CoyoteMoves.Controllers
             return dbaccess.GetAllJobTitles();
         }
 
+        // POST api/RequestForm/ApproveMoves
+        public HttpResponseMessage ApproveMoves(Guid guid)
+        {
+            // kevin do sick shit here
+            return new HttpResponseMessage(HttpStatusCode.OK);
+        }
+
         /*
         * INB4: This should probably go in another class, just writing it down so I don't forget
         * Once the changes have been requested and have been approved at HR and service desk,

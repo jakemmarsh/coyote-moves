@@ -14,19 +14,21 @@ namespace CoyoteMoves.Emailer.Models
 {
     public class EmailTemplate
     {
-        private string _subject;   
+        private string _subject;
         private Collection<string> _to;
         private string _from;
         private string _emailBody;
         private string _mappedLocation;
+        private EmployeeDB _empDB;
 
-        public EmailTemplate(string subject, Collection<string> to,  string from, string emailBody, string pdfLocation)
+        public EmailTemplate(string subject, Collection<string> to, string from, string emailBody, string pdfLocation)
         {
             _subject = subject;
             _to = to;
             _from = from;
             _emailBody = emailBody;
             _mappedLocation = pdfLocation;
+            _empDB = new EmployeeDB();
         }
 
         public void addRecipient(string to)
@@ -34,7 +36,7 @@ namespace CoyoteMoves.Emailer.Models
             _to.Add(to);
         }
 
-        public MailMessage movesFormRequest (RequestForm req)
+        public MailMessage movesFormRequest(RequestForm req)
         {
 
             if (req == null)
@@ -45,7 +47,7 @@ namespace CoyoteMoves.Emailer.Models
             {
                 throw new ArgumentNullException("_templateLocation");
             }
-            
+
 
             PdfReader reader = new PdfReader(_mappedLocation);
             MemoryStream memory = new MemoryStream();
@@ -63,12 +65,12 @@ namespace CoyoteMoves.Emailer.Models
             {
                 message.To.Add(entry);
             }
-            message.Subject = _subject+" "+req.UniqueId;
+            message.Subject = _subject + " " + req.UniqueId;
             message.From = new System.Net.Mail.MailAddress(_from);
             message.Body = _emailBody;
             memory.Position = 0;
 
-            message.Attachments.Add(new Attachment(memory, "MovesForm"+req.UniqueId+".pdf")); 
+            message.Attachments.Add(new Attachment(memory, "MovesForm" + req.UniqueId + ".pdf"));
             reader.Close();
 
             return message;
@@ -76,7 +78,7 @@ namespace CoyoteMoves.Emailer.Models
 
         public void mapFieldsFromRequest(RequestForm req, AcroFields form)
         {
-  
+
             EmployeeDB empDB = new EmployeeDB();
             var fieldKeys = form.Fields.Keys;
 
@@ -84,7 +86,7 @@ namespace CoyoteMoves.Emailer.Models
             {
                 if (fieldKey.Equals("Employee Name"))
                     form.SetField(fieldKey, empDB.GetFullNameById(req.EmployeeId));
-                if (fieldKey.Equals("Date To Occur On"))   
+                if (fieldKey.Equals("Date To Occur On"))
                     form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7)).ToString());
                 if (fieldKey.Equals("CurrentJob Title"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTitle);
@@ -93,7 +95,7 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("CurrentGroup"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.Group);
                 if (fieldKey.Equals("CurrentManager") || fieldKey.Equals("Current Manager Name"))
-                    form.SetField(fieldKey, req.Current.BazookaInfo.ManagerID.ToString());
+                    form.SetField(fieldKey, empDB.GetFullNameById(req.Current.BazookaInfo.ManagerID));
                 if (fieldKey.Equals("CurrentTemplate"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTemplate);
                 if (fieldKey.Equals("CurrentSecurity ItemRights"))
@@ -105,7 +107,7 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("FutureGroup"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.Group);
                 if (fieldKey.Equals("FutureManager"))
-                    form.SetField(fieldKey, req.Future.BazookaInfo.ManagerID.ToString());
+                    form.SetField(fieldKey, empDB.GetFullNameById(req.Future.BazookaInfo.ManagerID));
                 if (fieldKey.Equals("FutureTemplate"))
                     form.SetField(fieldKey, req.Future.BazookaInfo.JobTemplate);
                 if (fieldKey.Equals("FutureSecurity ItemRights"))

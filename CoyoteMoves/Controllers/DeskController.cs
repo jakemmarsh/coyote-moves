@@ -21,6 +21,7 @@ namespace CoyoteMoves.Controllers
             return DeskList;
         }
 
+        // GET api/Desk/GetDesks
         public List<Desk> GetDesks()
         {
             return DeskDataBaseConnection.GetAllDesks();
