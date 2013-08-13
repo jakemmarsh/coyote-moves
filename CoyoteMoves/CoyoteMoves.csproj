@@ -276,12 +276,25 @@
   <ItemGroup>
     <Content Include="CoyoteMovesTemplate.pdf" />
     <Content Include="favicon.ico" />
+    <Content Include="favicon.png" />
     <Content Include="Global.asax" />
     <Content Include="logon.aspx" />
     <Content Include="Public\css\angular-slider.css" />
     <Content Include="Public\css\bootstrap.css" />
+    <Content Include="Public\css\login.css" />
     <Content Include="Public\css\normalize.css" />
     <Content Include="Public\css\style.css" />
+    <Content Include="Public\img\bg-01.jpg" />
+    <Content Include="Public\img\bg-02.jpg" />
+    <Content Include="Public\img\bg-03.jpg" />
+    <Content Include="Public\img\bg-04.jpg" />
+    <Content Include="Public\img\bg-05.jpg" />
+    <Content Include="Public\img\bg-06.jpg" />
+    <Content Include="Public\img\bg-07.jpg" />
+    <Content Include="Public\img\bg-08.jpg" />
+    <Content Include="Public\img\close.svg" />
+    <Content Include="Public\img\coyote-inv.png" />
+    <Content Include="Public\img\coyote-logo-large.png" />
     <Content Include="Public\img\coyote-symbol.png" />
     <Content Include="Public\img\coyote-text.png" />
     <Content Include="Public\img\floor-3\1_0_0.gif" />
@@ -2095,6 +2108,7 @@
     <Content Include="Public\js\lib\bootstrap-typeahead.js" />
     <Content Include="Public\js\lib\bootstrap.js" />
     <Content Include="Public\js\lib\jquery-1.10.2.js" />
+    <Content Include="Public\js\lib\jquery.backstretch.min.js" />
     <Content Include="Public\js\lib\modernizr.js" />
     <Content Include="Public\js\mapLogic.js" />
     <Content Include="Public\js\services.js" />
