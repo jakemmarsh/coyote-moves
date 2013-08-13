@@ -112,7 +112,7 @@
 
         paths = [coord1, coord2, coord3, coord4];
 
-        //if (isAdmin) {
+        if (isAdmin) {
             desk = new google.maps.Polygon({
                 paths: paths,
                 strokeColor: '#000000',
@@ -124,20 +124,20 @@
                 fillOpacity: 1,
                 id: employee.id,
             });
-        //}
-        //else {
-        //    desk = new google.maps.Polygon({
-        //        paths: paths,
-        //        strokeColor: '#000000',
-        //        strokeOpacity: 0.9,
-        //        strokeWeight: 1,
-        //        fillColor: '#f7f7f7',
-        //        draggable: false,
+        }
+        else {
+            desk = new google.maps.Polygon({
+                paths: paths,
+                strokeColor: '#000000',
+                strokeOpacity: 0.9,
+                strokeWeight: 1,
+                fillColor: '#f7f7f7',
+                draggable: false,
 
-        //        fillOpacity: 1,
-        //        id: employee.id,
-        //    });
-        //}
+                fillOpacity: 1,
+                id: employee.id,
+            });
+        }
 
         desk.getPoint = function () {
             var p0 = maptype.projection.fromLatLngToPoint(this.getPath().getAt(0)),
