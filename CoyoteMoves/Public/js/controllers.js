@@ -178,7 +178,7 @@
                 $scope.movesProcessed += 1;
             },
             function (errorMessage) {
-                $scope.sendFormError = "The following error occurred while requesting the above move(s): " + errorMessage + ". Please try again or contact the help desk.";
+                $scope.sendFormError = "The following error occurred while requesting the above move(s): " + errorMessage + " Please try again or contact the service desk.";
                 $scope.sendFormSuccess = "";
                 console.log(errorMessage);
                 return;
