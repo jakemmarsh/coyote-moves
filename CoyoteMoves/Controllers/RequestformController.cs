@@ -48,7 +48,7 @@ namespace CoyoteMoves.Controllers
             RequestForm obj = makeRequestForm(json);
 
             Collection<string> to = new Collection<string>();
-            to.Add("kevin.jasieniecki@coyote.com");
+            to.Add("jake.marsh@coyote.com");
             EmailSender emailer = new EmailSender("Coyote Moves Request ", to, "coyotemoves@coyote.com", "", HttpContext.Current.Server.MapPath("/CoyoteMoves/CoyoteMovesTemplate.pdf"));
             emailer.sendMovesRequest(obj);
 
