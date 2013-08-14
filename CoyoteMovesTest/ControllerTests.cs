@@ -4,20 +4,25 @@ using CoyoteMoves.Controllers;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using CoyoteMoves.Data_Access;
+using CoyoteMoves.Models.SeatingData;
+using System.Collections.Generic;
+using CoyoteMoves.Models.RequestItems;
 
 namespace CoyoteMovesTest
 {
     [TestClass]
     public class ControllerTests
     {
-        RequestFormController _controller;
-        JObject _jsonObject;
+        RequestFormController _requestController;
+        DeskController _deskController;
+        JObject _reqObject;
+        JObject _deskObject;
         InfoValidator _validator;
 
         [TestInitialize]
         public void setup()
         {
-            string json = @"{'name':'Brandon DSouza',
+            string requestJson = @"{'name':'Brandon DSouza',
                         'deskOrientation':0,
                         'current':{
                             'bazookaInfo':
@@ -64,18 +69,36 @@ namespace CoyoteMovesTest
                             {'filesToBeAddedTo':'sdfsdfgf',
                              'filesToBeRemovedFrom':'34345'}}";
 
-            _jsonObject = JObject.Parse(json);
-            _controller = new RequestFormController();
+            _reqObject = JObject.Parse(requestJson);
+            //_deskObject = JObject.Parse(
+            _deskController = new DeskController();
+            _requestController = new RequestFormController();
+            _validator = new InfoValidator();
         }
 
         [TestCategory("Unit")]
         [TestMethod]
-        public void RequestFormSuccess()
+        public void requestFormCreated()
         {
 
-            var response = _controller.SendChangeRequest(_jsonObject);
-            Assert.AreEqual(response, "200");
+            RequestForm newForm = _requestController.makeRequestForm(_reqObject);
+            Assert.IsNotNull(newForm);
 
+        }
+
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void deskByFloorSuccess()
+        {
+            bool validDesk = true;
+            List<Desk> deskList = _deskController.GetDesksByFloor(5);
+            foreach (Desk desk in deskList)
+            {
+                validDesk = _validator.ValidateDeskNumber(desk.DeskNumber);
+                validDesk = desk.Location.Floor == 5;
+            }
+
+            Assert.IsTrue(validDesk);
         }
     }
 }

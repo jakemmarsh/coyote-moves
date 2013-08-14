@@ -31,7 +31,7 @@ namespace CoyoteMovesTest
         public void GetGroupChangeSuccess()
         {
             string test = _analyticsDB.GetAllGroupChangeInformation();
-            Assert.Equals(test, "test");
+            Assert.AreEqual(test, "Group Unknown changed by -2 people\nGroup T7 changed by 1 people\nGroup C13 changed by -1 people\nGroup T22 changed by 2 people\n");
         }
     }
 }
