@@ -118,21 +118,5 @@ namespace CoyoteMoves.Controllers
             RequestDataDB dbaccess = new RequestDataDB();
             return dbaccess.GetAllJobTitles();
         }
-
-        /*
-        * INB4: This should probably go in another class, just writing it down so I don't forget
-        * Once the changes have been requested and have been approved at HR and service desk,
-        * we'll then have to update the database(s)
-        * */
-        public void UpdateDataSourcesWithApprovedChanges()
-        {
-            //idk what it should take in, or what it should return...
-
-            //remove this change request from the "unapproved" queue and (move it to the "approved" queue? or just delete it?)
-
-            //send the updated info to the proper data source (have to talk to Bazooka, Active Directory, Cisco, (Ultipro?)
-            //probably a helper function for updating each source...
-        }
-
     }
 }
