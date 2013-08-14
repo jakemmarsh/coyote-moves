@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using CoyoteMoves.Data_Access;
 using CoyoteMoves.Models.SeatingData;
 using System.Collections.Generic;
+using CoyoteMoves.Models.RequestItems;
 
 namespace CoyoteMovesTest
 {
@@ -75,13 +76,15 @@ namespace CoyoteMovesTest
             _validator = new InfoValidator();
         }
 
-        //[TestCategory("Unit")]
-        //[TestMethod]
-        //public void RequestFormSuccess()
-        //{
-        //    var response = _controller.SendChangeRequest(_jsonObject);
-        //    Assert.AreEqual(response, "200");
-        //}
+        [TestCategory("Unit")]
+        [TestMethod]
+        public void requestFormCreated()
+        {
+
+            RequestForm newForm = _requestController.makeRequestForm(_reqObject);
+            Assert.IsNotNull(newForm);
+
+        }
 
         [TestCategory("Unit")]
         [TestMethod]
