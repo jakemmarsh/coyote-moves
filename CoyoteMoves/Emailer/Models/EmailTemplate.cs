@@ -41,11 +41,11 @@ namespace CoyoteMoves.Emailer.Models
 
             if (req == null)
             {
-                throw new ArgumentNullException("req");
+                throw new NullReferenceException("req");
             }
             if (string.IsNullOrEmpty(_mappedLocation))
             {
-                throw new ArgumentNullException("_templateLocation");
+                throw new IOException("_templateLocation");
             }
 
 
@@ -86,8 +86,8 @@ namespace CoyoteMoves.Emailer.Models
             {
                 if (fieldKey.Equals("Employee Name"))
                     form.SetField(fieldKey, empDB.GetFullNameById(req.EmployeeId));
-                if (fieldKey.Equals("Date To Occur On"))
-                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7)).ToString());
+                if (fieldKey.Equals("Date to occur on"))
+                    form.SetField(fieldKey, (string)(DateTime.Now.AddDays(7)).ToString("d"));
                 if (fieldKey.Equals("CurrentJob Title"))
                     form.SetField(fieldKey, req.Current.BazookaInfo.JobTitle);
                 if (fieldKey.Equals("CurrentDepartment"))
@@ -121,9 +121,9 @@ namespace CoyoteMoves.Emailer.Models
                 if (fieldKey.Equals("FutureDepartment_2"))
                     form.SetField(fieldKey, req.Future.UltiproInfo.Department);
                 if (fieldKey.Equals("CurrentSupervisor"))
-                    form.SetField(fieldKey, req.Current.UltiproInfo.Supervisor);
+                    form.SetField(fieldKey, empDB.GetFullNameById(int.Parse(req.Current.UltiproInfo.Supervisor)));
                 if (fieldKey.Equals("FutureSupervisor"))
-                    form.SetField(fieldKey, req.Future.UltiproInfo.Supervisor);
+                    form.SetField(fieldKey, empDB.GetFullNameById(int.Parse(req.Future.UltiproInfo.Supervisor)));
                 if (fieldKey.Equals("CurrentOther"))
                     form.SetField(fieldKey, req.Current.UltiproInfo.Other);
                 if (fieldKey.Equals("FutureOther"))
